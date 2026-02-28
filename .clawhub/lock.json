@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "skills": {
+    "fis-architecture": {
+      "version": "3.2.11",
+      "installedAt": 1772218629908
+    },
+    "find-skills": {
+      "version": "0.1.0",
+      "installedAt": 1772262301019
+    },
+    "markdown-converter": {
+      "version": "1.0.0",
+      "installedAt": 1772262845870
+    },
+    "multi-search-engine": {
+      "version": "2.0.1",
+      "installedAt": 1772262853528
+    },
+    "openai-image-gen": {
+      "version": "1.0.1",
+      "installedAt": 1772262857517
+    },
+    "discord-voice": {
+      "version": "0.1.6",
+      "installedAt": 1772265182593
+    },
+    "openai-tts": {
+      "version": "1.0.0",
+      "installedAt": 1772265190406
+    },
+    "edge-tts": {
+      "version": "2.0.0",
+      "installedAt": 1772265194487
+    },
+    "obsidian": {
+      "version": "1.0.0",
+      "installedAt": 1772269080964
+    },
+    "openai-whisper": {
+      "version": "1.0.0",
+      "installedAt": 1772269086262
+    },
+    "openai-whisper-api": {
+      "version": "1.0.0",
+      "installedAt": 1772269090529
+    },
+    "summarize": {
+      "version": "1.0.0",
+      "installedAt": 1772269094666
+    },
+    "tavily-search": {
+      "version": "1.0.0",
+      "installedAt": 1772294613438
+    },
+    "proactive-agent-lite": {
+      "version": "1.0.0",
+      "installedAt": 1772294779489
+    }
+  }
+}
