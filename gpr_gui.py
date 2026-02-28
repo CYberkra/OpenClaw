@@ -20,6 +20,9 @@ from typing import Dict, Tuple, Optional
 
 import numpy as np
 
+import tkinter.font as tkfont
+import matplotlib
+from matplotlib import font_manager
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from matplotlib.figure import Figure
 
@@ -156,6 +159,7 @@ class GPRProcessor:
 class GPRApp(tk.Tk):
     def __init__(self):
         super().__init__()
+        self._setup_ui_fonts()
         self.title("GPR 简易处理GUI")
         self.geometry("1300x840")
 
@@ -165,6 +169,43 @@ class GPRApp(tk.Tk):
         self.current_total_time_ns: Optional[float] = None
 
         self._build_ui()
+
+    def _setup_ui_fonts(self):
+        # Tk 字体候选（按优先级）
+        tk_candidates = [
+            "Noto Sans CJK SC",
+            "Microsoft YaHei",
+            "WenQuanYi Zen Hei",
+            "SimHei",
+            "PingFang SC",
+            "Arial Unicode MS",
+            "DejaVu Sans",
+        ]
+        available = set(tkfont.families())
+        chosen_tk = next((f for f in tk_candidates if f in available), "TkDefaultFont")
+
+        try:
+            self.option_add("*Font", f"{chosen_tk} 10")
+            style = ttk.Style(self)
+            style.configure(".", font=(chosen_tk, 10))
+            style.configure("TLabelframe.Label", font=(chosen_tk, 10, "bold"))
+        except Exception:
+            pass
+
+        # Matplotlib 中文字体候选
+        mpl_candidates = [
+            "Noto Sans CJK SC",
+            "Microsoft YaHei",
+            "WenQuanYi Zen Hei",
+            "SimHei",
+            "PingFang SC",
+            "Arial Unicode MS",
+            "DejaVu Sans",
+        ]
+        mpl_available = {f.name for f in font_manager.fontManager.ttflist}
+        chosen_mpl = next((f for f in mpl_candidates if f in mpl_available), "DejaVu Sans")
+        matplotlib.rcParams["font.sans-serif"] = [chosen_mpl]
+        matplotlib.rcParams["axes.unicode_minus"] = False
 
     def _build_ui(self):
         left = ttk.Frame(self)

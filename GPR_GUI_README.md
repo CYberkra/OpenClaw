@@ -27,6 +27,12 @@ python3 gpr_gui.py
 pip install numpy matplotlib
 ```
 
+如果中文字体显示异常（方块/乱码），在 Ubuntu/WSL 执行：
+```bash
+sudo apt update
+sudo apt install -y fonts-noto-cjk
+```
+
 ## 输入格式说明（与你当前数据一致）
 前4行：
 - Number of Samples = xxx
