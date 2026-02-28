@@ -160,6 +160,7 @@ class GPRApp(tk.Tk):
         self.geometry("1300x840")
 
         self.gpr: Optional[GPRData] = None
+        self.original_data: Optional[np.ndarray] = None
         self.current_data: Optional[np.ndarray] = None
         self.current_total_time_ns: Optional[float] = None
 
@@ -190,14 +191,21 @@ class GPRApp(tk.Tk):
         self.var_runavg = tk.StringVar(value="9")
         self.var_gain_start = tk.StringVar(value="0")
         self.var_gain_end = tk.StringVar(value="24")
+        self.var_trace_idx = tk.StringVar(value="0")
 
-        self._row_entry(f_param, "dewow window", self.var_dewow)
-        self._row_entry(f_param, "new zero time(ns)", self.var_zero)
-        self._row_entry(f_param, "agc window", self.var_agc)
-        self._row_entry(f_param, "subtract ntraces", self.var_subavg)
-        self._row_entry(f_param, "running ntraces", self.var_runavg)
-        self._row_entry(f_param, "gain start(db)", self.var_gain_start)
-        self._row_entry(f_param, "gain end(db)", self.var_gain_end)
+        ttk.Label(f_param, text="预处理参数", foreground="#666").pack(anchor="w", padx=6, pady=(2, 0))
+        self._row_entry(f_param, "dewow 窗口", self.var_dewow)
+        self._row_entry(f_param, "零时刻(ns)", self.var_zero)
+        self._row_entry(f_param, "AGC 窗口", self.var_agc)
+
+        ttk.Label(f_param, text="空间处理参数", foreground="#666").pack(anchor="w", padx=6, pady=(4, 0))
+        self._row_entry(f_param, "背景抑制 ntraces", self.var_subavg)
+        self._row_entry(f_param, "平滑 ntraces", self.var_runavg)
+
+        ttk.Label(f_param, text="增益与A-scan", foreground="#666").pack(anchor="w", padx=6, pady=(4, 0))
+        self._row_entry(f_param, "增益起点(db)", self.var_gain_start)
+        self._row_entry(f_param, "增益终点(db)", self.var_gain_end)
+        self._row_entry(f_param, "A-scan 道号", self.var_trace_idx)
 
         # Actions
         f_action = ttk.LabelFrame(left, text="处理操作")
@@ -210,6 +218,7 @@ class GPRApp(tk.Tk):
         ttk.Button(f_action, text="subtracting average 2D", command=self.apply_subavg).pack(fill=tk.X, padx=6, pady=4)
         ttk.Button(f_action, text="running average 2D", command=self.apply_runavg).pack(fill=tk.X, padx=6, pady=4)
         ttk.Button(f_action, text="compensating gain", command=self.apply_comp_gain).pack(fill=tk.X, padx=6, pady=4)
+        ttk.Button(f_action, text="查看A-scan单道", command=self.plot_ascan).pack(fill=tk.X, padx=6, pady=4)
         ttk.Button(f_action, text="一键推荐流程", command=self.apply_recommended_pipeline).pack(fill=tk.X, padx=6, pady=6)
 
         # Info text
@@ -219,14 +228,18 @@ class GPRApp(tk.Tk):
         self.info_text = tk.Text(f_info, height=20, width=44)
         self.info_text.pack(fill=tk.BOTH, expand=True, padx=6, pady=6)
 
-        # Plot
-        fig = Figure(figsize=(9, 7), dpi=100)
-        self.ax = fig.add_subplot(111)
-        self.ax.set_title("B-scan")
-        self.ax.set_xlabel("Trace")
-        self.ax.set_ylabel("Time Sample")
+        # Plot (双图对比: 原始 vs 当前)
+        self.fig = Figure(figsize=(10, 7), dpi=100)
+        self.ax_raw = self.fig.add_subplot(121)
+        self.ax_cur = self.fig.add_subplot(122)
+        self.ax_raw.set_title("原始 B-scan")
+        self.ax_cur.set_title("当前 B-scan")
+        self.ax_raw.set_xlabel("Trace")
+        self.ax_cur.set_xlabel("Trace")
+        self.ax_raw.set_ylabel("Time Sample")
+        self.ax_cur.set_ylabel("Time Sample")
 
-        self.canvas = FigureCanvasTkAgg(fig, master=right)
+        self.canvas = FigureCanvasTkAgg(self.fig, master=right)
         self.canvas.draw()
         self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
 
@@ -255,10 +268,11 @@ class GPRApp(tk.Tk):
             return
         try:
             self.gpr = self._parse_gpr_csv(path)
+            self.original_data = self.gpr.matrix.copy()
             self.current_data = self.gpr.matrix.copy()
             self.current_total_time_ns = float(self.gpr.header.get("Time windows (ns)", self.gpr.matrix.shape[0] - 1))
             self._refresh_info_panel()
-            self.plot_bscan(self.current_data)
+            self.plot_bscan()
             self.log_info(f"[OK] 已加载文件: {path}")
         except Exception as e:
             messagebox.showerror("读取失败", str(e))
@@ -344,14 +358,30 @@ class GPRApp(tk.Tk):
 
         self.set_info("\n".join(txt))
 
-    def plot_bscan(self, data: np.ndarray):
-        self.ax.clear()
-        vmax = np.percentile(np.abs(data), 99)
-        vmax = max(vmax, 1e-9)
-        self.ax.imshow(data, aspect="auto", cmap="seismic", vmin=-vmax, vmax=vmax, origin="upper")
-        self.ax.set_title("B-scan")
-        self.ax.set_xlabel("Trace")
-        self.ax.set_ylabel("Time Sample")
+    def plot_bscan(self):
+        if self.current_data is None:
+            return
+
+        self.ax_raw.clear()
+        self.ax_cur.clear()
+
+        raw = self.original_data if self.original_data is not None else self.current_data
+        cur = self.current_data
+
+        vmax_raw = max(np.percentile(np.abs(raw), 99), 1e-9)
+        vmax_cur = max(np.percentile(np.abs(cur), 99), 1e-9)
+
+        self.ax_raw.imshow(raw, aspect="auto", cmap="seismic", vmin=-vmax_raw, vmax=vmax_raw, origin="upper")
+        self.ax_cur.imshow(cur, aspect="auto", cmap="seismic", vmin=-vmax_cur, vmax=vmax_cur, origin="upper")
+
+        self.ax_raw.set_title("原始 B-scan")
+        self.ax_cur.set_title("当前 B-scan")
+        self.ax_raw.set_xlabel("Trace")
+        self.ax_cur.set_xlabel("Trace")
+        self.ax_raw.set_ylabel("Time Sample")
+        self.ax_cur.set_ylabel("Time Sample")
+
+        self.fig.tight_layout()
         self.canvas.draw_idle()
 
     def _check_loaded(self):
@@ -366,7 +396,7 @@ class GPRApp(tk.Tk):
             return
         self.current_data = self.gpr.matrix.copy()
         self.current_total_time_ns = float(self.gpr.header.get("Time windows (ns)", self.current_data.shape[0] - 1))
-        self.plot_bscan(self.current_data)
+        self.plot_bscan()
         self._refresh_info_panel()
         self.log_info("[OK] 已重置为原始数据")
 
@@ -375,7 +405,7 @@ class GPRApp(tk.Tk):
             return
         w = int(self.var_dewow.get())
         self.current_data = GPRProcessor.dewow(self.current_data, w)
-        self.plot_bscan(self.current_data)
+        self.plot_bscan()
         self._refresh_info_panel()
         self.log_info(f"[OK] dewow(window={w})")
 
@@ -386,7 +416,7 @@ class GPRApp(tk.Tk):
         self.current_data, self.current_total_time_ns = GPRProcessor.set_zero_time(
             self.current_data, float(self.current_total_time_ns), z
         )
-        self.plot_bscan(self.current_data)
+        self.plot_bscan()
         self._refresh_info_panel()
         self.log_info(f"[OK] set_zero_time(new_zero_time_ns={z})")
 
@@ -395,7 +425,7 @@ class GPRApp(tk.Tk):
             return
         w = int(self.var_agc.get())
         self.current_data = GPRProcessor.agc_gain(self.current_data, w)
-        self.plot_bscan(self.current_data)
+        self.plot_bscan()
         self._refresh_info_panel()
         self.log_info(f"[OK] agc(window={w})")
 
@@ -404,7 +434,7 @@ class GPRApp(tk.Tk):
             return
         n = int(self.var_subavg.get())
         self.current_data = GPRProcessor.subtracting_average_2d(self.current_data, n)
-        self.plot_bscan(self.current_data)
+        self.plot_bscan()
         self._refresh_info_panel()
         self.log_info(f"[OK] subtracting_average_2D(ntraces={n})")
 
@@ -413,7 +443,7 @@ class GPRApp(tk.Tk):
             return
         n = int(self.var_runavg.get())
         self.current_data = GPRProcessor.running_average_2d(self.current_data, n)
-        self.plot_bscan(self.current_data)
+        self.plot_bscan()
         self._refresh_info_panel()
         self.log_info(f"[OK] running_average_2D(ntraces={n})")
 
@@ -423,9 +453,41 @@ class GPRApp(tk.Tk):
         gs = float(self.var_gain_start.get())
         ge = float(self.var_gain_end.get())
         self.current_data = GPRProcessor.compensating_gain(self.current_data, gs, ge)
-        self.plot_bscan(self.current_data)
+        self.plot_bscan()
         self._refresh_info_panel()
         self.log_info(f"[OK] compensating_gain(start_db={gs}, end_db={ge})")
+
+    def plot_ascan(self):
+        if not self._check_loaded():
+            return
+        try:
+            idx = int(self.var_trace_idx.get())
+            idx = max(0, min(idx, self.current_data.shape[1] - 1))
+        except Exception:
+            idx = 0
+
+        y = self.current_data[:, idx]
+        win = tk.Toplevel(self)
+        win.title(f"A-scan 预览 - Trace {idx}")
+        win.geometry("780x460")
+
+        fig = Figure(figsize=(7, 4), dpi=100)
+        ax = fig.add_subplot(111)
+        ax.plot(y, linewidth=1.1)
+        ax.set_title(f"A-scan | Trace {idx}")
+        ax.set_xlabel("Time Sample")
+        ax.set_ylabel("Amplitude")
+        ax.grid(True, alpha=0.3)
+
+        canvas = FigureCanvasTkAgg(fig, master=win)
+        canvas.draw()
+        canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+
+        tb = NavigationToolbar2Tk(canvas, win, pack_toolbar=False)
+        tb.update()
+        tb.pack(fill=tk.X)
+
+        self.log_info(f"[OK] A-scan预览 trace={idx}")
 
     def apply_recommended_pipeline(self):
         if not self._check_loaded():
