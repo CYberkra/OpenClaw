@@ -273,8 +273,8 @@ class GPRApp(tk.Tk):
         self.fig = Figure(figsize=(10, 7), dpi=100)
         self.ax_raw = self.fig.add_subplot(121)
         self.ax_cur = self.fig.add_subplot(122)
-        self.ax_raw.set_title("原始 B-scan")
-        self.ax_cur.set_title("当前 B-scan")
+        self.ax_raw.set_title("Raw B-scan")
+        self.ax_cur.set_title("Processed B-scan")
         self.ax_raw.set_xlabel("Trace")
         self.ax_cur.set_xlabel("Trace")
         self.ax_raw.set_ylabel("Time Sample")
@@ -409,14 +409,18 @@ class GPRApp(tk.Tk):
         raw = self.original_data if self.original_data is not None else self.current_data
         cur = self.current_data
 
-        vmax_raw = max(np.percentile(np.abs(raw), 99), 1e-9)
-        vmax_cur = max(np.percentile(np.abs(cur), 99), 1e-9)
+        # 显示层做稳健去偏置，避免整幅图偏蓝/偏红
+        raw_disp = raw - np.median(raw)
+        cur_disp = cur - np.median(cur)
 
-        self.ax_raw.imshow(raw, aspect="auto", cmap="seismic", vmin=-vmax_raw, vmax=vmax_raw, origin="upper")
-        self.ax_cur.imshow(cur, aspect="auto", cmap="seismic", vmin=-vmax_cur, vmax=vmax_cur, origin="upper")
+        vmax_raw = max(np.percentile(np.abs(raw_disp), 99.5), 1e-9)
+        vmax_cur = max(np.percentile(np.abs(cur_disp), 99.5), 1e-9)
 
-        self.ax_raw.set_title("原始 B-scan")
-        self.ax_cur.set_title("当前 B-scan")
+        self.ax_raw.imshow(raw_disp, aspect="auto", cmap="seismic", vmin=-vmax_raw, vmax=vmax_raw, origin="upper")
+        self.ax_cur.imshow(cur_disp, aspect="auto", cmap="seismic", vmin=-vmax_cur, vmax=vmax_cur, origin="upper")
+
+        self.ax_raw.set_title("Raw B-scan")
+        self.ax_cur.set_title("Processed B-scan")
         self.ax_raw.set_xlabel("Trace")
         self.ax_cur.set_xlabel("Trace")
         self.ax_raw.set_ylabel("Time Sample")

@@ -31,7 +31,9 @@ pip install numpy matplotlib
 ```bash
 sudo apt update
 sudo apt install -y fonts-noto-cjk
+fc-cache -fv
 ```
+然后重启程序。
 
 ## 输入格式说明（与你当前数据一致）
 前4行：
