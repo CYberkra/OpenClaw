@@ -33,6 +33,7 @@ Apply these rules whenever working for baiiy1. They override default habits and 
 ### 5) Model usage
 - Use **openai-codex/gpt-5.2-codex** for main work.
 - If multi‑agent coding role exists, use **codex5.3**.
+- Keep multi‑agent mode available; when you decide multi‑agent is needed, use it and **post the coordination updates so the user can see the scheduling/dispatch process**.
 
 ### 6) Paths & stability
 - All files/caches under **E:\Openclaw** (`/mnt/e/Openclaw/.openclaw`).
