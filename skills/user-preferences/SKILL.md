@@ -21,6 +21,7 @@ Apply these rules whenever working for baiiy1. They override default habits and 
 ### 2) GPR workflow
 - **Deliver thorough results** (background suppression + AGC + cross‑correlation coverage).
 - Post GPR progress/results in **#探地雷达gpr** (no @ mention).
+- **If GPR-related content appears in other channels, sync it to #探地雷达gpr and reply there too.**
 - Demo with synthetic data if needed; **do not modify** user’s PythonModule repo.
 
 ### 3) Priority order
