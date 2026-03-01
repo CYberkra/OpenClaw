@@ -1,0 +1,3 @@
+[submodule "skills/subagent-manager"]
+	path = skills/subagent-manager
+	url = https://github.com/oneles/openclaw-skill-subagent-manager.git
