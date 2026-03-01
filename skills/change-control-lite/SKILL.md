@@ -6,9 +6,11 @@ description: Light change-control rules for configuration changes, backups, and 
 # Change Control (Lite)
 
 - Before any configuration change that could impact connectivity or availability, notify the user and explicitly ask for approval.
+- Always include a rollback plan before changes (e.g., which backup to restore, or exact commands to revert).
 - Create a backup before making the change.
   - Prefer a timestamped copy in `backups/` under the workspace.
   - Keep the backup until the user confirms no safety risk; delete only after confirmation.
+- Backup scope should be explicit (e.g., MEMORY.md, memory/*, key config files).
 - If a disconnection occurs or is likely, inform the user immediately and explain what happened.
 
 ## Periodic GitHub Updates
