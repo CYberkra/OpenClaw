@@ -10,7 +10,7 @@ description: Light change-control rules for configuration changes, backups, and 
 - Create a backup before making the change.
   - Prefer a timestamped copy in `backups/` under the workspace.
   - Keep the backup until the user confirms no safety risk; delete only after confirmation.
-- Backup scope should be explicit (e.g., MEMORY.md, memory/*, key config files).
+- Backup scope should be explicit (default list: MEMORY.md, memory/*, key OpenClaw config files).
 - If a disconnection occurs or is likely, inform the user immediately and explain what happened.
 
 ## Periodic GitHub Updates
