@@ -17,10 +17,6 @@
       "version": "2.0.1",
       "installedAt": 1772262853528
     },
-    "openai-image-gen": {
-      "version": "1.0.1",
-      "installedAt": 1772262857517
-    },
     "discord-voice": {
       "version": "0.1.6",
       "installedAt": 1772265182593
@@ -32,10 +28,6 @@
     "edge-tts": {
       "version": "2.0.0",
       "installedAt": 1772265194487
-    },
-    "obsidian": {
-      "version": "1.0.0",
-      "installedAt": 1772269080964
     },
     "openai-whisper": {
       "version": "1.0.0",
@@ -49,13 +41,13 @@
       "version": "1.0.0",
       "installedAt": 1772269094666
     },
-    "tavily-search": {
-      "version": "1.0.0",
-      "installedAt": 1772294613438
-    },
     "proactive-agent-lite": {
       "version": "1.0.0",
       "installedAt": 1772294779489
+    },
+    "obsidian": {
+      "version": "1.0.0",
+      "installedAt": 1772305181469
     }
   }
 }
