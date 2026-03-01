@@ -48,6 +48,7 @@ Apply these rules whenever working for baiiy1. They override default habits and 
 ### 9) Memory & Git
 - Important behavior changes/preferences: write to memory.
 - Auto‑push meaningful memory changes to GitHub (rebase, no force).
+- **If any task has progress, proactively sync updates to the user.**
 
 ## Usage Notes
 - When outputting plots, ensure data parsing is correct (respect column definitions and A‑scan reshaping). If input format is ambiguous, ask or infer carefully, and state assumptions.
