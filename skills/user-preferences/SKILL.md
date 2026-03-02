@@ -24,6 +24,9 @@ Apply these rules whenever working for baiiy1. They override default habits and 
 - **If GPR-related content appears in other channels, sync it to #探地雷达gpr and reply there too.**
 - Demo with synthetic data if needed; **do not modify** user’s PythonModule repo.
 
+### 2.1) Multi-agent sync
+- Sub-agent dispatch/progress/completion must be synchronized to **#multi-agent**.
+
 ### 3) Priority order
 - **QMD > GPR > 语音**. Keep QMD enabled. No A/B testing that disables it.
 

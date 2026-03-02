@@ -20,7 +20,8 @@ Store and apply user-defined operating rules so they survive restarts. Treat the
 9) 交付循环：每15分钟至少1个可验证交付（memory/reports/scripts/commit），无则“无交付+原因+预计”；交付前自检并给 qmd 证据；每小时汇报必须基于证据。
 10) 证据命令固定：qmd get qmd://openclaw_workspace/memory/YYYY-MM-DD.md --from <行号> -l 80。
 11) GPR 规则：所有进展落盘 memory 并 git push；同步到 #探地雷达gpr；禁止 @。
-12) 规则存档：变更需写入 memory 并提交。
+12) 多Agent协作：派单/进度/完成需同步到 #multi-agent 频道。
+13) 规则存档：变更需写入 memory 并提交。
 
 ## Workflow
 1) 用户新增/修改规则 → 追加到 memory/YYYY-MM-DD.md。
