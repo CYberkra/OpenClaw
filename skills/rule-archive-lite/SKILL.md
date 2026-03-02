@@ -23,7 +23,7 @@ Store and apply user-defined operating rules so they survive restarts. Treat the
    - 次选：tail -n 20 <file>
    - 仅在 grep 得到真实行号后，允许 qmd get --from <真实行号> -l 30。
 11) GPR 规则：所有进展落盘 memory 并 git push；同步到 #探地雷达gpr；禁止 @。
-12) 多Agent协作：派单/进度/完成需同步到 #multi-agent 频道。
+12) 多Agent协作：派单/进度/完成需同步到 channel:1477202149728587952 频道。
 13) 规则存档：变更需写入 memory 并提交。
 14) 证据/交付路径：一律 /mnt/e/Openclaw/.openclaw/...；允许 ~/.openclaw 作为别名但不得出现在证据里。
 

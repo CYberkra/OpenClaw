@@ -25,7 +25,7 @@ Apply these rules whenever working for baiiy1. They override default habits and 
 - Demo with synthetic data if needed; **do not modify** user’s PythonModule repo.
 
 ### 2.1) Multi-agent sync
-- Sub-agent dispatch/progress/completion must be synchronized to **#multi-agent**.
+- Sub-agent dispatch/progress/completion must be synchronized to **channel:1477202149728587952**.
 
 ### 3) Priority order
 - **QMD > GPR > 语音**. Keep QMD enabled. No A/B testing that disables it.
