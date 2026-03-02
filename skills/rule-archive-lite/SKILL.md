@@ -14,14 +14,18 @@ Store and apply user-defined operating rules so they survive restarts. Treat the
 3) 分两段走：先给计划/要点/需输入，待“继续”再执行。
 4) 子代理串行：coder → reviewer → researcher；每次只启1个。
 5) 控制上下文注入：仅引用今天 memory + 本次必要变量。
-6) 模型分层：默认 gpt-5.3-codex；低风险可用 5.2；关键结论回 5.3；切换需说明原因；gpt-5.3 reasoning=medium。
+6) 模型分层：默认 5.2；关键代码/关键结论用 5.3；切换需说明原因。
 7) 工具调用最小化：不跑 qmd embed/query 深探针，除非明确要求。
 8) 用量提醒：已用百分比每消耗 10% 提醒；Brave 额度剩余5%停止；并在用量不可查时说明。
 9) 交付循环：每15分钟至少1个可验证交付（memory/reports/scripts/commit），无则“无交付+原因+预计”；交付前自检并给 qmd 证据；每小时汇报必须基于证据。
-10) 证据命令固定：qmd get qmd://openclaw_workspace/memory/YYYY-MM-DD.md --from <行号> -l 80。
+10) 证据命令顺序：
+   - 默认：grep -n "EDL-ID:" <file>
+   - 次选：tail -n 20 <file>
+   - 仅在 grep 得到真实行号后，允许 qmd get --from <真实行号> -l 30。
 11) GPR 规则：所有进展落盘 memory 并 git push；同步到 #探地雷达gpr；禁止 @。
 12) 多Agent协作：派单/进度/完成需同步到 #multi-agent 频道。
 13) 规则存档：变更需写入 memory 并提交。
+14) 证据/交付路径：一律 /mnt/e/Openclaw/.openclaw/...；允许 ~/.openclaw 作为别名但不得出现在证据里。
 
 ## Workflow
 1) 用户新增/修改规则 → 追加到 memory/YYYY-MM-DD.md。

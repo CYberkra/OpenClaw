@@ -53,6 +53,8 @@ Apply these rules whenever working for baiiy1. They override default habits and 
 - Important behavior changes/preferences: write to memory.
 - Auto‑push meaningful memory changes to GitHub (rebase, no force).
 - **If any task has progress, proactively sync updates to the user.**
+- **禁止将任何 token/apiKey/含key的URL 写入 memory 或 commit。**
+- **push 前必须 git diff --stat；并在 memory 留 commit hash 指针。**
 
 ## Usage Notes
 - When outputting plots, ensure data parsing is correct (respect column definitions and A‑scan reshaping). If input format is ambiguous, ask or infer carefully, and state assumptions.
