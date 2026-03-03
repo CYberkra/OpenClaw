@@ -38,3 +38,16 @@ G) GPR 工作流
 - 交付：去背景 + AGC + 互相关覆盖率
 - 需要时可用合成数据演示
 - 不修改用户 PythonModule repo
+
+## Boot Command (copy-paste)
+```
+# low-context boot
+read user-preferences
+read rule-archive-lite
+read PROJECT_CONTEXT
+# pipeline (serial)
+coder -> reviewer -> researcher
+# evidence first
+prefer: tail -n <N> / grep -n <pattern>
+if line numbers unknown: do NOT guess
+```
