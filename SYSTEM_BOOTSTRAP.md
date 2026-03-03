@@ -41,13 +41,28 @@ G) GPR 工作流
 
 ## Boot Command (copy-paste)
 ```
-# low-context boot
-read user-preferences
-read rule-archive-lite
-read PROJECT_CONTEXT
-# pipeline (serial)
-coder -> reviewer -> researcher
-# evidence first
-prefer: tail -n <N> / grep -n <pattern>
-if line numbers unknown: do NOT guess
+# low-context boot (executable)
+qmd get -l 120 /mnt/e/Openclaw/.openclaw/workspace/skills/user-preferences/SKILL.md
+qmd get -l 120 /mnt/e/Openclaw/.openclaw/workspace/skills/rule-archive-lite/SKILL.md
+[ -f /mnt/e/Openclaw/.openclaw/workspace/PROJECT_CONTEXT.md ] || cat <<'EOF' > /mnt/e/Openclaw/.openclaw/workspace/PROJECT_CONTEXT.md
+# PROJECT_CONTEXT
+- root: /mnt/e/Openclaw/.openclaw/
+- workspace: /mnt/e/Openclaw/.openclaw/workspace
+- priorities: QMD > GPR > 语音
+- evidence: run git diff --stat before add/commit/push
+- paths: all under /mnt/e/Openclaw/.openclaw/
+- output: report <=8 lines, evidence <=30 lines
+- channels: daily=1478098802937303100, multi-agent=1477202149728587952, gpr=1477018099432685800
+- no-mentions: Discord 禁止 @mention
+- memory: 结果类 commit+push；过程类仅 memory
+EOF
+qmd get -l 120 /mnt/e/Openclaw/.openclaw/workspace/PROJECT_CONTEXT.md
+# pipeline (serial): coder -> reviewer -> researcher
+# plan template (6 lines)
+# 1) Goal:
+# 2) Inputs:
+# 3) Steps:
+# 4) Output:
+# 5) Evidence:
+# 6) Next:
 ```
