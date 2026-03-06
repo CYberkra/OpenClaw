@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>探地雷达 (GPR) 信号处理技术报告</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f5; }
+        .slide {
+            width: 1280px; height: 720px; margin: 30px auto;
+            background: #ffffff; box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            padding: 50px 70px; position: relative;
+            page-break-after: always; overflow: hidden;
+        }
+        .cover {
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center; background: #ffffff; color: #2d3748;
+        }
+        .cover h1 { font-size: 72px; font-weight: 700; margin-bottom: 20px; color: #2d3748; }
+        .cover .subtitle { font-size: 28px; color: #4a5568; margin-bottom: 60px; }
+        .cover .features { display: flex; gap: 50px; margin-top: 40px; }
+        .cover .feature-item {
+            background: #f7fafc; padding: 25px 35px;
+            border-radius: 12px; border: 2px solid #4a6fa5;
+        }
+        .cover .feature-item .icon { font-size: 40px; margin-bottom: 10px; }
+        .cover .feature-item .text { font-size: 18px; color: #2d3748; }
+        
+        h2 {
+            font-size: 36px; font-weight: 600; color: #2d3748;
+            margin-bottom: 30px; padding-bottom: 12px;
+            border-bottom: 3px solid #4a6fa5;
+            display: flex; align-items: center; gap: 15px;
+        }
+        h3 {
+            font-size: 22px; font-weight: 600; color: #4a5568;
+            margin: 20px 0 12px 0;
+        }
+        p, li { font-size: 18px; line-height: 1.8; color: #4a5568; }
+        ul, ol { margin: 12px 0; padding-left: 25px; }
+        li { margin: 8px 0; }
+        
+        .two-column {
+            display: flex; gap: 25px; margin-top: 20px;
+        }
+        .column { flex: 1; }
+        
+        .card {
+            background: #f7fafc; border-radius: 12px;
+            padding: 12px; margin: 8px 0;
+            border-left: 4px solid #4a6fa5;
+        }
+        .card-title {
+            font-weight: 600; color: #2d3748;
+            margin-bottom: 8px; font-size: 18px;
+        }
+        
+        pre {
+            background: #1a202c; color: #e2e8f0;
+            padding: 10px; border-radius: 8px;
+            margin: 6px 0; font-family: "SF Mono", Monaco, monospace;
+            font-size: 11px; line-height: 1.4; overflow-x: auto;
+        }
+        code {
+            font-family: "SF Mono", Monaco, monospace;
+            background: #edf2f7; padding: 2px 8px;
+            border-radius: 4px; font-size: 15px; color: #c53030;
+        }
+        pre code { background: none; color: inherit; padding: 0; }
+        
+        .tip {
+            background: #c6f6d5; border-left: 4px solid #38a169;
+            padding: 10px 12px; border-radius: 0 8px 8px 0;
+            margin: 8px 0;
+        }
+        .tip-title {
+            font-weight: 600; color: #22543d;
+            margin-bottom: 5px; font-size: 14px;
+        }
+        
+        table {
+            width: 100%; border-collapse: collapse;
+            margin: 15px 0; font-size: 14px;
+        }
+        th, td {
+            padding: 8px 10px; text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th { background: #edf2f7; font-weight: 600; color: #2d3748; }
+        
+        .footer {
+            position: absolute; bottom: 30px;
+            left: 70px; right: 70px;
+            display: flex; justify-content: space-between;
+            font-size: 14px; color: #a0aec0;
+        }
+        
+        .tag {
+            display: inline-block; background: #e6ffed;
+            padding: 4px 10px; border-radius: 4px;
+            font-size: 14px; margin: 2px;
+        }
+        
+        @media print {
+            .slide { margin: 0; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="slide cover">
+    <div style="font-size: 80px; margin-bottom: 10px;">🦞</div>
+    <h1>探地雷达 (GPR) 信号处理技术报告</h1>
+    <p class="subtitle"></p>
+    <div class="features">
+                <div class="feature-item">
+                    <div class="icon">🎯</div>
+                    <div class="text">生成日期：2026-03-02</div>
+                </div>
+                <div class="feature-item">
+                    <div class="icon">数据：A8-NEW-1.csv</div>
+                    <div class="text">(801×79)</div>
+                </div>
+                <div class="feature-item">
+                    <div class="icon">主题：背景抑制</div>
+                    <div class="text">+ AGC 改进</div>
+                </div></div>
+    <div style="margin-top: 80px; font-size: 16px; opacity: 0.8;">
+        Slide 1 / 12
+    </div>
+</div>
+<div class="slide">
+    <h2><span>📄</span>目录</h2>
+    <ul>
+    <li>背景与原始流程</li>
+    <li>调研与改进方法</li>
+    <li>处理链与消融对比</li>
+    <li>指标定义</li>
+    <li>问题与下一步</li>
+</ul>
+
+    <div class="footer">
+        <span>Presentation</span>
+        <span>2 / 12</span>
+    </div>
+</div>
+<div class="slide">
+    <h2><span>🔄</span>原始流程（Baseline）</h2>
+    
+<div class="card">
+    <div class="card-title">处理链路</div>
+    <ul><li>readcsv → reshape(801,79)</li>
+<li>AGC → 背景抑制 → 输出 PNG</li>
+</ul>
+</div>
+<div class="card">
+    <div class="card-title">核心脚本</div>
+    <ul><li>agcGain.py</li>
+<li>subtracting_average_2D.py</li>
+<li>read_file_data.py</li>
+</ul>
+</div>
+    <div class="footer">
+        <span>Presentation</span>
+        <span>3 / 12</span>
+    </div>
+</div>
+<div class="slide">
+    <h2><span>📄</span>原始方法的痛点</h2>
+    <ul>
+    <li>AGC 增益无上限 → 噪声放大</li>
+    <li>背景抑制窗口固定 → 适应性差</li>
+    <li>第 79 道 NaN → 指标失真</li>
+</ul>
+
+<div class="tip">
+    <div class="tip-title">💡 Tip</div>
+    <p>Tip</p>
+</div><p>后续优先处理 NaN trace 与参数消融。</p>
+
+    <div class="footer">
+        <span>Presentation</span>
+        <span>4 / 12</span>
+    </div>
+</div>
+<div class="slide">
+    <h2><span>📄</span>调研结论（15 篇初筛）</h2>
+    <p>| 编号 | 方法 | 核心思路 | 可实现要点 |</p>
+<p>|---|---|---|---|</p>
+<p>| 4 | F-K 域杂波抑制 | 角度阻带滤波 | 10°–65° 抑制 |</p>
+<p>| 5 | WNNM | 加权核范数 | 替代 SVD |</p>
+<p>| 6 | Learned RPCA | 学习式低秩分解 | 降低迭代开销 |</p>
+<p>| 9 | Hankel-SVD | 滑窗矩阵 SVD | 去噪稳健 |</p>
+<p>| 13 | DTVM | 方向性 TV | 方向权重选择 |</p>
+
+    <div class="footer">
+        <span>Presentation</span>
+        <span>5 / 12</span>
+    </div>
+</div>
+<div class="slide">
+    <h2><span>📄</span>复刻改进 A：SVD 低秩背景抑制</h2>
+    <pre><code>U, S, Vt = svd(agc_output, full_matrices=False)
+rank = 1
+background = U[:, :rank] @ diag(S[:rank]) @ Vt[:rank, :]
+output = agc_output - background</code></pre>
+<ul>
+    <li><strong>效果</strong>：SNR 11.64 dB；SSIM 0.995</li>
+    <li><strong>速度</strong>：0.65s（比基线快 44%）</li>
+</ul>
+
+    <div class="footer">
+        <span>Presentation</span>
+        <span>6 / 12</span>
+    </div>
+</div>
+<div class="slide">
+    <h2><span>📄</span>复刻改进 B：AGC + 增益上限</h2>
+    <pre><code>window = 301
+gain_cap = 10
+# AGC 限幅 → subtracting_average_2D</code></pre>
+<ul>
+    <li><strong>效果</strong>：SNR 8.33 dB；SSIM 0.210</li>
+    <li><strong>结论</strong>：当前参数下性能下降，需要调参</li>
+</ul>
+
+    <div class="footer">
+        <span>Presentation</span>
+        <span>7 / 12</span>
+    </div>
+</div>
+<div class="slide">
+    <h2><span>📄</span>完整 6 步处理链（GPR_GUI）</h2>
+    
+<div class="two-column">
+    <div class="column">
+<div class="card" style="padding: 14px; margin: 8px 0;">
+    <div class="card-title" style="margin-bottom: 6px;">Step 1–3</div>
+    <ul style="margin: 0; padding-left: 20px;"><li style="font-size: 15px; margin: 4px 0;">compensatingGain</li><li style="font-size: 15px; margin: 4px 0;">dewow (window=23)</li><li style="font-size: 15px; margin: 4px 0;">set_zero_time (5.7ns)</li></ul>
+</div></div>
+    <div class="column">
+<div class="card" style="padding: 14px; margin: 8px 0;">
+    <div class="card-title" style="margin-bottom: 6px;">Step 4–6</div>
+    <ul style="margin: 0; padding-left: 20px;"><li style="font-size: 15px; margin: 4px 0;">agcGain (window=151)</li><li style="font-size: 15px; margin: 4px 0;">subtracting_average_2D (ntraces=79)</li><li style="font-size: 15px; margin: 4px 0;">running_average_2D (ntraces=9)</li></ul>
+</div></div>
+</div>
+    <div class="footer">
+        <span>Presentation</span>
+        <span>8 / 12</span>
+    </div>
+</div>
+<div class="slide">
+    <h2><span>📄</span>消融指标对比</h2>
+    <p>| 方法 | SNR (dB) | 对比度 | SSIM | 耗时 (s) |</p>
+<p>|---|---:|---:|---:|---:|</p>
+<p>| Baseline | 11.97 | 4.26 | 1.000 | 1.16 |</p>
+<p>| SVD 背景抑制 | 11.64 | 4.04 | 0.995 | 0.65 |</p>
+<p>| AGC 改进 | 8.33 | 2.65 | 0.210 | 0.71 |</p>
+
+<div class="tip">
+    <div class="tip-title">💡 Tip</div>
+    <p>Tip</p>
+</div><p>SVD 方案在速度与质量之间更平衡。</p>
+
+    <div class="footer">
+        <span>Presentation</span>
+        <span>9 / 12</span>
+    </div>
+</div>
+<div class="slide">
+    <h2><span>📄</span>指标定义</h2>
+    <ul>
+    <li><strong>SNR</strong>：`20*log10(RMS_target/RMS_noise)`</li>
+    <li><strong>对比度</strong>：`(max_target - min_target)/(max_noise - min_noise)`</li>
+    <li><strong>SSIM</strong>：min-max 归一化后全局 SSIM</li>
+</ul>
+
+    <div class="footer">
+        <span>Presentation</span>
+        <span>10 / 12</span>
+    </div>
+</div>
+<div class="slide">
+    <h2><span>📄</span>待解决问题</h2>
+    <ul>
+    <li>NaN trace：第 79 道需剔除/填补</li>
+    <li>SVD 秩选择：rank=1 为经验值</li>
+    <li>AGC 参数：窗口与 cap 需系统消融</li>
+    <li>文献精读：需外网获取细节</li>
+</ul>
+
+    <div class="footer">
+        <span>Presentation</span>
+        <span>11 / 12</span>
+    </div>
+</div>
+<div class="slide">
+    <h2><span>📄</span>输出与交付</h2>
+    <ul>
+    <li>报告：`reports/GPR_技术报告_2026-03-02.md`</li>
+    <li>PPT：`reports/探地雷达_背景抑制与AGC改进_汇报_2026-03-02.pptx`</li>
+    <li>图像：`repos/GPR_GUI/output/A8-NEW-1_*.png`</li>
+</ul>
+
+<div class="tip">
+    <div class="tip-title">💡 Tip</div>
+    <p>Tip</p>
+</div><p>建议：优先产出 SVD 方案的参数消融实验。</p>
+
+    <div class="footer">
+        <span>Presentation</span>
+        <span>12 / 12</span>
+    </div>
+</div>
+</body>
+</html>

@@ -1,8 +1,9 @@
-# Large/generated artifacts
-bun-linux-x64/
-repos/
-*.png
-*.csv
-
-# OpenClaw runtime state (do not sync)
-.openclaw/
+.venv/
+node_modules/
+shared/
+isolated/
+tmp/
+reports/screenshots/
+reports/*.xwd
+__pycache__/
+*.pyc
