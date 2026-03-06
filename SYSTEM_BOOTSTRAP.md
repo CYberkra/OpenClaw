@@ -34,7 +34,14 @@ E) 交付与证据（EDL）
 F) 流水线
 - coder → reviewer → researcher
 
-G) GPR 工作流
+G) capability-evolver 使用规则
+- 允许创新/重构，但仅限隔离区 + review
+- EVOLVE_ALLOW_SELF_MODIFY=false
+- EVOLVE_STRATEGY=innovate
+- 仅输出建议 + 补丁 + 证据
+- 禁止直接改主线
+
+H) GPR 工作流
 - 交付：去背景 + AGC + 互相关覆盖率
 - 需要时可用合成数据演示
 - 不修改用户 PythonModule repo
