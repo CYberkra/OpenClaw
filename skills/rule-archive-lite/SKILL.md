@@ -26,6 +26,7 @@ Store and apply user-defined operating rules so they survive restarts. Treat the
 12) 多Agent协作：派单/进度/完成需同步到 channel:1477202149728587952 频道。
 13) 规则存档：变更需写入 memory 并提交。
 14) 证据/交付路径：一律 /mnt/e/Openclaw/.openclaw/...；允许 ~/.openclaw 作为别名但不得出现在证据里。
+15) Subagent Manager 强制策略：凡任务存在正向收益（效率/质量/并行/上下文隔离），必须优先使用 subagent_manager skill；仅在明显不适配的极小任务可豁免，并简要说明。
 
 ## Workflow
 1) 用户新增/修改规则 → 追加到 memory/YYYY-MM-DD.md。
