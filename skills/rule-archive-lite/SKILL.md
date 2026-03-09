@@ -30,6 +30,10 @@ Store and apply user-defined operating rules so they survive restarts. Treat the
 16) Token 回报规则：用户要求“今天每次对话都汇报该次 token 消耗”，每条回复末尾都附本次 token（in/out）。
 17) 节流落地规则（不降质）：固定提示前缀顺序以提高缓存命中；只注入必要上下文；复杂任务用子代理，简单任务低thinking。
 18) 复述压缩规则：状态汇报优先“结论+证据路径+下一步”，避免重复粘贴长日志；长日志改摘要+命令可复现。
+19) self-improving-agent 策略：仅部分启用（不全局常开）。
+   - 启用：代码修复（首轮失败/跨文件）、多步骤交付（>3步、跨工具、有产物）
+   - 禁用：短问答、秒回场景、强可控一步到位场景
+   - 护栏：条件触发 + 最多1轮自改进 + token/时延阈值停机 + 超限降级 baseline
 
 ## Workflow
 1) 用户新增/修改规则 → 追加到 memory/YYYY-MM-DD.md。
