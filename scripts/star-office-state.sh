@@ -14,12 +14,26 @@ input_state="$1"
 shift || true
 text="${*:-}"
 
+# 兼容旧输入，同时对齐 Star-Office 推荐状态语义
 case "$input_state" in
-  coding|debugging|reviewing|idle)
+  coding)
+    state="executing"
+    ;;
+  debugging)
+    state="researching"
+    ;;
+  reviewing)
+    state="writing"
+    ;;
+  idle)
+    state="idle"
+    ;;
+  # 允许直接传 Star-Office 推荐状态
+  executing|researching|writing)
     state="$input_state"
     ;;
   *)
-    state="reviewing"
+    state="researching"
     ;;
 esac
 
@@ -31,7 +45,7 @@ import json
 import sys
 state = sys.argv[1]
 text = sys.argv[2]
-print(json.dumps({"state": state, "text": text}, ensure_ascii=False))
+print(json.dumps({"state": state, "text": text, "detail": text}, ensure_ascii=False))
 PY
 )"
 

@@ -5,6 +5,15 @@
 - **优先**：在关键动作发生时立刻上报（任务开始/结束、子任务派发/完成）。
 - **兜底**：保留轮询脚本用于补偿漏报或异常场景，不再作为唯一来源。
 
+## 输入状态 -> Star-Office 状态映射
+
+- `coding` -> `executing`
+- `debugging` -> `researching`
+- `reviewing` -> `writing`
+- `idle` -> `idle`
+
+> 兼容说明：`scripts/star-office-state.sh` 仍接受旧输入（`coding/debugging/reviewing/idle`），并在内部转换为 Star-Office 推荐状态。发送 `/set_state` 时会同时带上 `text` 与 `detail` 字段（双字段兼容）。
+
 ## 接入点
 
 1. **开始复杂任务前**
