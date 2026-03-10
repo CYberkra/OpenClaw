@@ -12,8 +12,8 @@ TTL_SECONDS = 300
 def iso_now() -> str:
     return dt.datetime.now(dt.timezone.utc).isoformat().replace('+00:00','Z')
 
-def j(ok: bool, partial: bool=False, reason: str|None=None, next_action: str|None=None, **extra: Any) -> Dict[str, Any]:
-    d = {"ok": ok, "partial": partial, "generatedAt": iso_now()}
+def j(ok: bool, partial: bool=False, reason: str|None=None, next_action: str|None=None, details: Any=None, **extra: Any) -> Dict[str, Any]:
+    d = {"ok": ok, "partial": partial, "generatedAt": iso_now(), "details": details if details is not None else {}}
     if reason: d['reason'] = reason
     if next_action: d['nextAction'] = next_action
     d.update(extra)
@@ -118,6 +118,9 @@ def dispatch(action: str, params: Dict[str, Any]) -> Dict[str, Any]:
         return call_py('active_sessions.py', args)
     if action == 'health.snapshot':
         return call_py('health_snapshot.py', [])
+
+    if action in {'ops.model.switch.prepare', 'ops.model.switch.commit', 'ops.model.switch.bulk.prepare', 'ops.model.switch.bulk.commit'}:
+        return call_py('model_switch.py', ['--action', action, '--params', json.dumps(params, ensure_ascii=False)])
 
     if action == 'danger.gateway_restart.prepare':
         return prepare(action, str(params.get('operator','')), 'gateway')

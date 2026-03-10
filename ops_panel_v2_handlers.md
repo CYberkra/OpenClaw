@@ -17,6 +17,10 @@
 | `ops.danger.restart.confirm` | `danger.restart.confirm` | 危险动作：重启确认 |
 | `ops.danger.channel_delete.request` | `danger.channel_delete.request` | 危险动作：删频道申请 |
 | `ops.danger.channel_delete.confirm` | `danger.channel_delete.confirm` | 危险动作：删频道确认 |
+| `ops.model.switch.prepare` | `ops.model.switch.prepare` | 模型切换参数预检 |
+| `ops.model.switch.commit` | `ops.model.switch.commit` | 模型切换执行 |
+| `ops.model.switch.bulk.prepare` | `ops.model.switch.bulk.prepare` | 批量模型切换准备（双确认） |
+| `ops.model.switch.bulk.commit` | `ops.model.switch.bulk.commit` | 批量模型切换提交（双确认） |
 
 ---
 
@@ -83,22 +87,50 @@
 
 ---
 
-## 5) brief1 -> v2 迁移步骤（6 步）
+## 5) 模型切换流程（v2.1 新增）
 
-1. 将面板投递文件切换为 `ops_panel_v2_components.json`。
-2. 主进程路由由“文案匹配”改为“优先 actionKey，文案仅兜底”。
-3. 接入 `scripts/ops/panel_dispatcher.py`，所有按钮/下拉统一走 dispatcher。
-4. 危险动作改造为 request/confirm 两阶段，必须带 `operatorId/channelId`。
-5. 删除频道动作接入 `targetChannelId + channelIdAgain` 一致性校验。
-6. 回帖统一读取 dispatcher JSON：`ok/partial/reason/nextAction`，形成闭环反馈。
+### 5.1 普通模型切换（prepare -> commit）
+
+1. `ops.model.switch.prepare` 预检参数：
+   - `model` 必须在白名单（`codex5.2-main/codex5.2-backup/miaomiao/Kimi for Coding`）
+   - `channel_id` 必须是 Discord snowflake（17-22 位数字）
+   - `scope` 必须在 `current_session/channel_default/channel_active_bulk`
+2. `ops.model.switch.commit` 执行：
+   - `current_session`：以等价方案执行 `openclaw agent --session-id <session_key> --message "/model <model>"`
+   - `channel_default`：若无官方“频道持久默认模型”入口，返回 `partial=true` + `reason` + `nextAction`
+   - `channel_active_bulk`：自动枚举频道活跃会话并逐个切换，输出成功/失败列表
+
+### 5.2 批量模型切换（双确认）
+
+1. `ops.model.switch.bulk.prepare`：要求 `operator/channel_id/model`，生成 `confirm_code`，绑定操作者并设置 5 分钟 TTL。
+2. `ops.model.switch.bulk.commit`：必须提供完全匹配的 `operator/channel_id/model/confirm_code` 才会执行。
+3. 输出统一 JSON：`ok/partial/reason/nextAction/details`。
 
 ---
 
-## 6) 示例命令（可直接运行）
+## 6) v2 -> v2.1 迁移说明（5 步）
+
+1. 面板文件从 `ops_panel_v2_components.json` 升级到 `ops_panel_v2_1_components.json`。
+2. 主路由增加 4 个稳定 action key：
+   `ops.model.switch.prepare/commit/bulk.prepare/bulk.commit`。
+3. dispatcher 接入 `scripts/ops/model_switch.py`，模型切换统一由该脚本处理。
+4. 对批量切换启用二次确认（操作者绑定 + 5 分钟 TTL + confirm_code）。
+5. 主 handler 回帖按统一 JSON 字段读取：`ok/partial/reason/nextAction/details`。
+
+---
+
+## 7) 示例命令（可直接运行）
 
 ```bash
-python3 scripts/ops/panel_dispatcher.py --action quota.all --params '{}'
-python3 scripts/ops/panel_dispatcher.py --action codex.sessions.history --params '{"limit":10}'
-python3 scripts/ops/panel_dispatcher.py --action health.snapshot --params '{}'
-python3 scripts/ops/panel_dispatcher.py --action danger.restart.request --params '{"operatorId":"u1","channelId":"c1"}'
+# 1) prepare（普通切换预检）
+python3 scripts/ops/panel_dispatcher.py --action ops.model.switch.prepare --params '{"scope":"current_session","session_key":"agent:main:discord:channel:1480620479722295316","channel_id":"1480620479722295316","model":"codex5.2-main"}'
+
+# 2) commit（current_session 真执行）
+python3 scripts/ops/panel_dispatcher.py --action ops.model.switch.commit --params '{"scope":"current_session","session_key":"agent:main:discord:channel:1480620479722295316","channel_id":"1480620479722295316","model":"codex5.2-backup"}'
+
+# 3) bulk.prepare（二次确认）
+python3 scripts/ops/panel_dispatcher.py --action ops.model.switch.bulk.prepare --params '{"operator":"u_ops_1","channel_id":"1480620479722295316","model":"miaomiao","minutes":1440}'
+
+# 4) bulk.commit（二次确认提交）
+python3 scripts/ops/panel_dispatcher.py --action ops.model.switch.bulk.commit --params '{"operator":"u_ops_1","channel_id":"1480620479722295316","model":"miaomiao","confirm_code":"REPLACE_CODE","minutes":1440}'
 ```
