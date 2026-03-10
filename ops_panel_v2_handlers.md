@@ -17,6 +17,7 @@
 | `ops.danger.restart.confirm` | `danger.restart.confirm` | 危险动作：重启确认 |
 | `ops.danger.channel_delete.request` | `danger.channel_delete.request` | 危险动作：删频道申请 |
 | `ops.danger.channel_delete.confirm` | `danger.channel_delete.confirm` | 危险动作：删频道确认 |
+| `ops.model.switch.channel.preview` | `ops.model.switch.channel.preview` | 选频道即回显当前模型 |
 | `ops.model.switch.prepare` | `ops.model.switch.prepare` | 模型切换参数预检 |
 | `ops.model.switch.commit` | `ops.model.switch.commit` | 模型切换执行 |
 | `ops.model.switch.bulk.prepare` | `ops.model.switch.bulk.prepare` | 批量模型切换准备（双确认） |
@@ -89,6 +90,14 @@
 
 ## 5) 模型切换流程（v2.1 新增）
 
+### 5.0 选频道即回显当前模型（preview）
+
+1. 当 `ops.model.switch.channel` 下拉选择频道后，主 handler 调 `ops.model.switch.channel.preview`。
+2. 入参：`channel_id`（Discord snowflake）。
+3. 行为：从 `openclaw sessions --json` 中按 `agent:main:discord:channel:<channel_id>` 查找会话并回显。
+4. 返回：`channel_id`、`session_key`、`current_model`、`updated_at`。
+5. 若不存在会话：返回 `partial=true` + `reason` + `nextAction`（提示先在该频道发一条消息再重试）。
+
 ### 5.1 普通模型切换（prepare -> commit）
 
 1. `ops.model.switch.prepare` 预检参数：
@@ -96,7 +105,7 @@
    - `channel_id` 必须是 Discord snowflake（17-22 位数字）
    - `scope` 必须在 `current_session/channel_default/channel_active_bulk`
 2. `ops.model.switch.commit` 执行：
-   - `current_session`：以等价方案执行 `openclaw agent --session-id <session_key> --message "/model <model>"`
+   - `current_session`：优先走 `sessions_send` 等价链路（`sessions_list` 解析 key→sessionId，再向目标会话发送 `/model <alias>`）；失败后回退原有 `--session-id <session_key>` 方式
    - `channel_default`：若无官方“频道持久默认模型”入口，返回 `partial=true` + `reason` + `nextAction`
    - `channel_active_bulk`：自动枚举频道活跃会话并逐个切换，输出成功/失败列表
 
@@ -122,15 +131,18 @@
 ## 7) 示例命令（可直接运行）
 
 ```bash
-# 1) prepare（普通切换预检）
+# 1) channel.preview（选频道即回显）
+python3 scripts/ops/panel_dispatcher.py --action ops.model.switch.channel.preview --params '{"channel_id":"1480620479722295316"}'
+
+# 2) prepare（普通切换预检）
 python3 scripts/ops/panel_dispatcher.py --action ops.model.switch.prepare --params '{"scope":"current_session","session_key":"agent:main:discord:channel:1480620479722295316","channel_id":"1480620479722295316","model":"codex5.2-main"}'
 
-# 2) commit（current_session 真执行）
+# 3) commit（current_session 真执行）
 python3 scripts/ops/panel_dispatcher.py --action ops.model.switch.commit --params '{"scope":"current_session","session_key":"agent:main:discord:channel:1480620479722295316","channel_id":"1480620479722295316","model":"codex5.2-backup"}'
 
-# 3) bulk.prepare（二次确认）
+# 4) bulk.prepare（二次确认）
 python3 scripts/ops/panel_dispatcher.py --action ops.model.switch.bulk.prepare --params '{"operator":"u_ops_1","channel_id":"1480620479722295316","model":"miaomiao","minutes":1440}'
 
-# 4) bulk.commit（二次确认提交）
+# 5) bulk.commit（二次确认提交）
 python3 scripts/ops/panel_dispatcher.py --action ops.model.switch.bulk.commit --params '{"operator":"u_ops_1","channel_id":"1480620479722295316","model":"miaomiao","confirm_code":"REPLACE_CODE","minutes":1440}'
 ```

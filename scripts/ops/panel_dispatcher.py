@@ -119,7 +119,7 @@ def dispatch(action: str, params: Dict[str, Any]) -> Dict[str, Any]:
     if action == 'health.snapshot':
         return call_py('health_snapshot.py', [])
 
-    if action in {'ops.model.switch.prepare', 'ops.model.switch.commit', 'ops.model.switch.bulk.prepare', 'ops.model.switch.bulk.commit'}:
+    if action in {'ops.model.switch.channel.preview', 'ops.model.switch.prepare', 'ops.model.switch.commit', 'ops.model.switch.bulk.prepare', 'ops.model.switch.bulk.commit'}:
         return call_py('model_switch.py', ['--action', action, '--params', json.dumps(params, ensure_ascii=False)])
 
     if action == 'danger.gateway_restart.prepare':

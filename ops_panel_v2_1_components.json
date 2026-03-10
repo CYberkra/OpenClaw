@@ -37,6 +37,7 @@
       ]
     },
     "actions": {
+      "ops.model.switch.channel.preview": "选择频道后回显当前模型",
       "ops.model.switch.prepare": "模型切换参数预检",
       "ops.model.switch.commit": "模型切换执行",
       "ops.model.switch.bulk.prepare": "批量切换准备（双确认）",

@@ -8,7 +8,7 @@ import os
 import re
 import subprocess
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 ROOT = Path('/home/baiiy1/.openclaw/workspace')
 STATE = ROOT / '.cache' / 'ops_panel_confirm_state.json'
@@ -74,30 +74,83 @@ def make_code(slot: str, operator: str, channel_id: str, model: str) -> str:
     return hashlib.sha1(seed.encode()).hexdigest()[:8].upper()
 
 
-def run_cmd(cmd: List[str]) -> Dict[str, Any]:
+def run_cmd(cmd: List[str], max_chars: int = 2000) -> Dict[str, Any]:
     p = subprocess.run(cmd, capture_output=True, text=True, check=False)
     return {
         'rc': p.returncode,
-        'stdout': (p.stdout or '').strip()[:2000],
-        'stderr': (p.stderr or '').strip()[:2000],
+        'stdout': (p.stdout or '').strip()[:max_chars],
+        'stderr': (p.stderr or '').strip()[:max_chars],
         'cmd': cmd,
     }
 
 
+def list_sessions(limit: int = 500) -> List[Dict[str, Any]]:
+    r = run_cmd(['openclaw', 'sessions', '--json'], max_chars=500000)
+    if r['rc'] != 0:
+        return []
+    try:
+        obj = json.loads(r['stdout'] or '{}')
+        rows = obj.get('sessions', []) if isinstance(obj, dict) else []
+        if not isinstance(rows, list):
+            return []
+        return rows[:max(1, min(limit, 5000))]
+    except Exception:
+        return []
+
+
+def find_session_by_key(session_key: str) -> Optional[Dict[str, Any]]:
+    for s in list_sessions(limit=2000):
+        if str(s.get('key', '')) == session_key:
+            return s
+    return None
+
+
 def apply_model_to_session(session_key: str, model: str) -> Dict[str, Any]:
-    # 等价执行方案：向指定 session 发送 in-band model control 指令
     payload = f'/model {model}'
-    r = run_cmd(['openclaw', 'agent', '--session-id', session_key, '--message', payload, '--json'])
-    ok = (r['rc'] == 0)
-    return {
+    details: Dict[str, Any] = {
         'sessionKey': session_key,
         'model': model,
-        'ok': ok,
-        'rc': r['rc'],
-        'stdout': r['stdout'],
-        'stderr': r['stderr'],
-        'strategy': 'openclaw agent --session-id ... --message "/model <model>"',
+        'ok': False,
+        'rc': 1,
+        'stdout': '',
+        'stderr': '',
+        'strategy': '',
+        'attempts': [],
     }
+
+    # Strategy 1 (preferred): sessions_send equivalent path
+    # 先从 sessions_list 解析 session key -> UUID sessionId，再向该会话发送 /model 指令
+    ss = find_session_by_key(session_key)
+    if ss and ss.get('sessionId'):
+        sid = str(ss.get('sessionId'))
+        r1 = run_cmd(['openclaw', 'agent', '--session-id', sid, '--message', payload, '--json'])
+        details['attempts'].append({
+            'strategy': 'sessions_list.resolve_key_to_sessionId -> openclaw agent --session-id <uuid> --message "/model <model>"',
+            'sessionId': sid,
+            'rc': r1['rc'],
+            'stdout': r1['stdout'],
+            'stderr': r1['stderr'],
+        })
+        if r1['rc'] == 0:
+            details.update({'ok': True, 'rc': 0, 'stdout': r1['stdout'], 'stderr': r1['stderr'], 'strategy': 'resolved_session_id'})
+            return details
+
+    # Strategy 2 (fallback): legacy direct session-id param (兼容原链路)
+    r2 = run_cmd(['openclaw', 'agent', '--session-id', session_key, '--message', payload, '--json'])
+    details['attempts'].append({
+        'strategy': 'legacy_direct_session_key -> openclaw agent --session-id <session_key> --message "/model <model>"',
+        'rc': r2['rc'],
+        'stdout': r2['stdout'],
+        'stderr': r2['stderr'],
+    })
+    details.update({
+        'ok': (r2['rc'] == 0),
+        'rc': r2['rc'],
+        'stdout': r2['stdout'],
+        'stderr': r2['stderr'],
+        'strategy': 'legacy_direct_session_key',
+    })
+    return details
 
 
 def list_active_sessions_by_channel(channel_id: str, minutes: int = 1440, limit: int = 200) -> List[str]:
@@ -117,6 +170,35 @@ def list_active_sessions_by_channel(channel_id: str, minutes: int = 1440, limit:
         if len(found) >= limit:
             break
     return found
+
+
+def do_channel_preview(params: Dict[str, Any]) -> Dict[str, Any]:
+    channel_id = str(params.get('channel_id', ''))
+    if not validate_channel_id(channel_id):
+        return out(False, partial=True, reason='invalid channel_id format', next_action='use discord snowflake id', details={'channel_id': channel_id})
+
+    target_key = f'agent:main:discord:channel:{channel_id}'
+    ss = find_session_by_key(target_key)
+    if not ss:
+        return out(
+            False,
+            partial=True,
+            reason='no session found for channel',
+            next_action='send a message in this channel to create/refresh session, then retry preview',
+            details={'channel_id': channel_id, 'session_key': None, 'current_model': None, 'updated_at': None},
+            strategy='sessions_list.by_channel_key',
+        )
+
+    return out(
+        True,
+        details={
+            'channel_id': channel_id,
+            'session_key': ss.get('key'),
+            'current_model': ss.get('model') or ss.get('modelOverride'),
+            'updated_at': ss.get('updatedAt'),
+        },
+        strategy='sessions_list.by_channel_key',
+    )
 
 
 def do_prepare(params: Dict[str, Any]) -> Dict[str, Any]:
@@ -159,7 +241,14 @@ def do_commit(params: Dict[str, Any]) -> Dict[str, Any]:
         if not session_key:
             return out(False, reason='missing session_key', next_action='pass session_key')
         r = apply_model_to_session(session_key, model)
-        return out(r['ok'], partial=not r['ok'], reason=None if r['ok'] else 'session switch command failed', next_action='check stderr/stdout and session permissions', details=r)
+        return out(
+            r['ok'],
+            partial=not r['ok'],
+            reason=None if r['ok'] else 'session switch command failed',
+            next_action='check stderr/stdout and session permissions',
+            details=r,
+            strategy=r.get('strategy', 'unknown'),
+        )
 
     if scope == 'channel_default':
         if not validate_channel_id(channel_id):
@@ -320,7 +409,9 @@ def main() -> int:
         return 1
 
     action = args.action.strip()
-    if action == 'ops.model.switch.prepare':
+    if action == 'ops.model.switch.channel.preview':
+        res = do_channel_preview(params)
+    elif action == 'ops.model.switch.prepare':
         res = do_prepare(params)
     elif action == 'ops.model.switch.commit':
         res = do_commit(params)
