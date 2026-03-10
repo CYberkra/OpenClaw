@@ -1,0 +1,143 @@
+{
+  "version": "v2",
+  "schema": "discord-components-v2",
+  "routing": {
+    "buttons": {
+      "ops.quota.all": "全部模型额度",
+      "ops.codex.history": "Codex历史会话",
+      "ops.codex.refresh": "刷新Codex缓存",
+      "ops.usage.channel_model": "频道/帖子模型",
+      "ops.health.snapshot": "本机健康状态",
+      "ops.danger.restart.request": "重启网关",
+      "ops.danger.channel_delete.request": "频道预览/删除"
+    },
+    "selects": {
+      "ops.quota.provider": [
+        "quota_openai",
+        "quota_anthropic",
+        "quota_google",
+        "quota_groq",
+        "quota_deepseek"
+      ],
+      "ops.sessions.active.channel": "channel_select"
+    }
+  },
+  "panel_send_payload": {
+    "action": "send",
+    "channel": "discord",
+    "target": "channel:REPLACE_CHANNEL_ID",
+    "message": "🛠️ 运维面板（V2）",
+    "components": {
+      "reusable": true,
+      "text": "请选择操作（稳定 action key 已启用）",
+      "container": {
+        "accentColor": "#5865F2"
+      },
+      "blocks": [
+        {
+          "type": "section",
+          "text": "**快捷操作**"
+        },
+        {
+          "type": "actions",
+          "buttons": [
+            {
+              "label": "全部模型额度",
+              "style": "primary",
+              "actionKey": "ops.quota.all"
+            },
+            {
+              "label": "Codex历史会话",
+              "style": "secondary",
+              "actionKey": "ops.codex.history"
+            },
+            {
+              "label": "刷新Codex缓存",
+              "style": "secondary",
+              "actionKey": "ops.codex.refresh"
+            },
+            {
+              "label": "频道/帖子模型",
+              "style": "secondary",
+              "actionKey": "ops.usage.channel_model"
+            },
+            {
+              "label": "本机健康状态",
+              "style": "success",
+              "actionKey": "ops.health.snapshot"
+            }
+          ]
+        },
+        {
+          "type": "section",
+          "text": "**按平台查看单项额度**"
+        },
+        {
+          "type": "actions",
+          "select": {
+            "type": "string",
+            "placeholder": "选择平台",
+            "minValues": 1,
+            "maxValues": 1,
+            "actionKey": "ops.quota.provider",
+            "options": [
+              {
+                "label": "OpenAI",
+                "value": "quota_openai"
+              },
+              {
+                "label": "Anthropic",
+                "value": "quota_anthropic"
+              },
+              {
+                "label": "Google",
+                "value": "quota_google"
+              },
+              {
+                "label": "Groq",
+                "value": "quota_groq"
+              },
+              {
+                "label": "DeepSeek",
+                "value": "quota_deepseek"
+              }
+            ]
+          }
+        },
+        {
+          "type": "section",
+          "text": "**按频道查看活跃会话**"
+        },
+        {
+          "type": "actions",
+          "select": {
+            "type": "channel",
+            "placeholder": "选择频道",
+            "minValues": 1,
+            "maxValues": 1,
+            "actionKey": "ops.sessions.active.channel"
+          }
+        },
+        {
+          "type": "section",
+          "text": "**危险操作（双确认+TTL+操作者绑定）**"
+        },
+        {
+          "type": "actions",
+          "buttons": [
+            {
+              "label": "重启网关",
+              "style": "danger",
+              "actionKey": "ops.danger.restart.request"
+            },
+            {
+              "label": "频道预览/删除",
+              "style": "danger",
+              "actionKey": "ops.danger.channel_delete.request"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
