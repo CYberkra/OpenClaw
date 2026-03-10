@@ -22,76 +22,43 @@ fi
 
 get_active_count() {
   local out
-  local cmd_ok=0
 
-  if out="$(openclaw sessions list --kinds spawn --limit 50 2>/dev/null)"; then
-    cmd_ok=1
-  elif out="$(openclaw subagents list 2>/dev/null)"; then
-    cmd_ok=1
-  fi
-
-  if [[ $cmd_ok -ne 1 ]]; then
+  # 兼容当前 OpenClaw CLI：读取最近活跃会话，按 key 包含 :subagent: 计数
+  if ! out="$(openclaw sessions --json --active 10 2>/dev/null)"; then
     echo "ERR"
     return
   fi
 
   python3 - <<'PY' "$out"
-import json, re, sys
+import json, sys
 raw = sys.argv[1].strip()
 if not raw:
     print(0)
     raise SystemExit
 
-# 优先按 JSON 解析
 try:
     data = json.loads(raw)
-    items = []
-    if isinstance(data, list):
-        items = data
-    elif isinstance(data, dict):
-        for k in ("items", "sessions", "data", "results"):
-            v = data.get(k)
-            if isinstance(v, list):
-                items = v
-                break
-    cnt = 0
-    for it in items:
-        if not isinstance(it, dict):
-            continue
-        kind = str(it.get("kind", "")).lower()
-        status = str(it.get("status", "")).lower()
-        is_spawn = (kind == "spawn") or ("spawn" in kind)
-        active = status in {"running", "active", "in_progress", "working", "pending"} or status == ""
-        if is_spawn and active:
-            cnt += 1
-    print(cnt)
-    raise SystemExit
 except Exception:
-    pass
+    print("ERR")
+    raise SystemExit
 
-# 表格/文本输出兜底：去掉头部，统计看起来“活跃”的 spawn 行
-lines = [ln for ln in raw.splitlines() if ln.strip()]
-filtered = []
-for ln in lines:
-    l = ln.strip().lower()
-    if any(h in l for h in ("session", "id", "status", "kind")) and ("spawn" in l or "kinds" in l):
+sessions = []
+if isinstance(data, dict):
+    v = data.get("sessions")
+    if isinstance(v, list):
+        sessions = v
+elif isinstance(data, list):
+    sessions = data
+
+cnt = 0
+for s in sessions:
+    if not isinstance(s, dict):
         continue
-    if l.startswith("-") or l.startswith("="):
-        continue
-    filtered.append(ln)
+    key = str(s.get("key", ""))
+    if ":subagent:" in key:
+        cnt += 1
 
-active_re = re.compile(r"\b(running|active|in[_ -]?progress|working|pending)\b", re.I)
-spawn_re = re.compile(r"\bspawn\b", re.I)
-count = 0
-for ln in filtered:
-    if spawn_re.search(ln) and active_re.search(ln):
-        count += 1
-
-# 若没有显式状态列，且都是 spawn 列表，则按非空行计数
-if count == 0 and filtered and all(spawn_re.search(ln) for ln in filtered):
-    count = len(filtered)
-
-print(count)
+print(cnt)
 PY
 }
 
