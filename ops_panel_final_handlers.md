@@ -7,6 +7,7 @@
 | UI actionKey | dispatcher action | 说明 |
 |---|---|---|
 | `ops.quota.all` | `quota.all` | 全部模型额度 |
+| `ops.gpr.progress` | `ops.gpr.progress` | 查询 GPR 当前进展（真实数据） |
 | `ops.quota.provider` | `quota.provider` | 平台单项额度（OpenAI/Anthropic/Google/Groq/DeepSeek） |
 | `ops.codex.history` | `codex.sessions.history` | Codex 历史会话 |
 | `ops.codex.refresh` | `codex.sessions.refresh` | 刷新 Codex 缓存 |
@@ -30,6 +31,16 @@
 ### 2.1 查询区
 - 纯查询，不改配置。
 - `ops.quota.provider` 建议主 handler 将选项值映射成 `provider=openai/anthropic/google/groq/deepseek` 传给 dispatcher。
+- `ops.gpr.progress` 为真实进展聚合查询，数据源优先级：
+  1) `reports/` 最新 GPR 报告文件；
+  2) `memory/` 最新日记中的 GPR 关键词条目；
+  3) `isolated/GPR_GUI_evolve/` 近期变更状态。
+- 返回字段：`ok/partial/generatedAt/summary/latestReports/latestMemoryNotes/isolationStatus`。
+- 推荐回帖模板：
+  - `summary`
+  - `latestReports` 前 1-3 条（path + mtime）
+  - `latestMemoryNotes` 前 1-3 条
+  - `isolationStatus.note`
 
 ### 2.2 会话区
 - `ops.sessions.active.channel` 建议默认 `minutes=1440`（24h），高噪声/低活跃场景支持 `minutes=10080`（7d）。

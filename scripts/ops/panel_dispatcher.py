@@ -4,6 +4,8 @@ import argparse, datetime as dt, json, subprocess, hashlib
 from pathlib import Path
 from typing import Any, Dict
 
+GPR_KEYWORD = 'gpr'
+
 ROOT = Path('/home/baiiy1/.openclaw/workspace')
 SCRIPTS = ROOT / 'scripts' / 'ops'
 STATE = ROOT / '.cache' / 'ops_panel_confirm_state.json'
@@ -18,6 +20,123 @@ def j(ok: bool, partial: bool=False, reason: str|None=None, next_action: str|Non
     if next_action: d['nextAction'] = next_action
     d.update(extra)
     return d
+
+def _safe_iso_mtime(path: Path) -> str:
+    try:
+        return dt.datetime.fromtimestamp(path.stat().st_mtime, tz=dt.timezone.utc).isoformat().replace('+00:00', 'Z')
+    except Exception:
+        return ''
+
+
+def _latest_gpr_reports(limit: int = 5) -> list[Dict[str, str]]:
+    reports_dir = ROOT / 'reports'
+    if not reports_dir.exists():
+        return []
+    items: list[tuple[float, Path]] = []
+    for p in reports_dir.rglob('*'):
+        if not p.is_file():
+            continue
+        if GPR_KEYWORD in p.name.lower():
+            try:
+                items.append((p.stat().st_mtime, p))
+            except Exception:
+                continue
+    items.sort(key=lambda x: x[0], reverse=True)
+    out = []
+    for _, p in items[:limit]:
+        out.append({"path": str(p.relative_to(ROOT)), "mtime": _safe_iso_mtime(p)})
+    return out
+
+
+def _latest_gpr_memory_notes(limit: int = 5) -> list[str]:
+    memory_dir = ROOT / 'memory'
+    if not memory_dir.exists():
+        return []
+    files = sorted(memory_dir.glob('*.md'), key=lambda p: p.stat().st_mtime, reverse=True)
+    notes: list[str] = []
+    for f in files:
+        try:
+            lines = f.read_text(encoding='utf-8', errors='ignore').splitlines()
+        except Exception:
+            continue
+        for line in lines:
+            s = line.strip()
+            if not s:
+                continue
+            if GPR_KEYWORD in s.lower():
+                notes.append(f"{f.name}: {s[:180]}")
+                if len(notes) >= limit:
+                    return notes
+    return notes
+
+
+def _gpr_isolation_status() -> Dict[str, Any]:
+    d = ROOT / 'isolated' / 'GPR_GUI_evolve'
+    if not d.exists() or not d.is_dir():
+        return {
+            "exists": False,
+            "lastUpdated": None,
+            "note": "isolated/GPR_GUI_evolve/ 不存在，无法检查近期变更"
+        }
+    last_mtime = 0.0
+    last_path: Path | None = None
+    for p in d.rglob('*'):
+        if not p.exists():
+            continue
+        try:
+            m = p.stat().st_mtime
+        except Exception:
+            continue
+        if m > last_mtime:
+            last_mtime = m
+            last_path = p
+    note = "已检查目录近期变更"
+    if last_path is not None:
+        rel = str(last_path.relative_to(ROOT))
+        note = f"最近变更: {rel}"
+    return {
+        "exists": True,
+        "lastUpdated": dt.datetime.fromtimestamp(last_mtime, tz=dt.timezone.utc).isoformat().replace('+00:00', 'Z') if last_mtime else None,
+        "note": note,
+    }
+
+
+def gpr_progress() -> Dict[str, Any]:
+    latest_reports = _latest_gpr_reports(limit=5)
+    latest_notes = _latest_gpr_memory_notes(limit=5)
+    isolation = _gpr_isolation_status()
+
+    partial = False
+    summary_lines = []
+    if latest_reports:
+        summary_lines.append(f"reports 命中 {len(latest_reports)} 条最新 GPR 报告")
+    else:
+        partial = True
+        summary_lines.append("reports 未命中 GPR 报告文件")
+
+    if latest_notes:
+        summary_lines.append(f"memory 命中 {len(latest_notes)} 条 GPR 相关笔记")
+    else:
+        partial = True
+        summary_lines.append("memory 未命中 GPR 关键词条目")
+
+    if isolation.get('exists'):
+        summary_lines.append(f"隔离目录存在，lastUpdated={isolation.get('lastUpdated')}")
+    else:
+        partial = True
+        summary_lines.append("隔离目录不存在")
+
+    return {
+        "ok": True,
+        "partial": partial,
+        "generatedAt": iso_now(),
+        "summary": "\n".join(summary_lines[:3]),
+        "latestReports": latest_reports,
+        "latestMemoryNotes": latest_notes,
+        "isolationStatus": isolation,
+        "details": {},
+    }
+
 
 def call_py(script: str, args: list[str]) -> Dict[str, Any]:
     p = subprocess.run(['python3', str(SCRIPTS / script), *args, '--json'], capture_output=True, text=True, check=False)
@@ -98,6 +217,8 @@ def commit(action: str, operator: str, target: str, confirm_code: str, channel_i
 def dispatch(action: str, params: Dict[str, Any]) -> Dict[str, Any]:
     if action == 'quota.all':
         return call_py('model_quota.py', ['--all'])
+    if action == 'ops.gpr.progress':
+        return gpr_progress()
     if action == 'quota.provider':
         provider = params.get('provider')
         if not provider:

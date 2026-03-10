@@ -9,6 +9,7 @@
   "routing": {
     "buttons": {
       "ops.quota.all": "全部模型额度",
+      "ops.gpr.progress": "GPR当前进展",
       "ops.codex.history": "Codex历史会话",
       "ops.codex.refresh": "刷新Codex缓存",
       "ops.usage.channel_model": "频道/帖子模型",
@@ -73,6 +74,11 @@
               "label": "全部模型额度",
               "style": "primary",
               "actionKey": "ops.quota.all"
+            },
+            {
+              "label": "GPR当前进展",
+              "style": "primary",
+              "actionKey": "ops.gpr.progress"
             },
             {
               "label": "Codex历史会话",
