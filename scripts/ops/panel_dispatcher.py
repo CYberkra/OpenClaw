@@ -139,6 +139,33 @@ def dispatch(action: str, params: Dict[str, Any]) -> Dict[str, Any]:
 
     return j(False, reason=f'unknown action: {action}', next_action='check ops_panel_v2_handlers.md')
 
+def classify_error(reason: str) -> str:
+    r = (reason or '').lower()
+    if any(k in r for k in ['missing', 'invalid', 'mismatch', 'params', 'scope', 'model alias', 'channel_id']):
+        return 'PARAM_MISSING_OR_INVALID'
+    if any(k in r for k in ['no session', 'no active sessions', 'no pending', 'expired']):
+        return 'NO_SESSION_OR_CONFIRMATION'
+    if any(k in r for k in ['permission', 'forbidden', 'denied', 'operator mismatch']):
+        return 'PERMISSION_DENIED'
+    return 'OPERATION_FAILED'
+
+
+def attach_error_template(res: Dict[str, Any]) -> Dict[str, Any]:
+    if res.get('ok'):
+        return res
+    reason = str(res.get('reason', 'operation failed'))
+    code = classify_error(reason)
+    templates = {
+        'PARAM_MISSING_OR_INVALID': '❌ 参数不完整或不合法：{reason}。请按面板提示补齐后重试。',
+        'NO_SESSION_OR_CONFIRMATION': '⚠️ 未找到有效会话/确认记录：{reason}。请先执行查询或重新发起 prepare。',
+        'PERMISSION_DENIED': '⛔ 权限校验未通过：{reason}。请使用同一操作者或确认权限后重试。',
+        'OPERATION_FAILED': '❌ 操作失败：{reason}。可根据 nextAction 继续处理。',
+    }
+    res['errorCode'] = code
+    res['userMessage'] = templates.get(code, templates['OPERATION_FAILED']).format(reason=reason)
+    return res
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description='Ops panel dispatcher')
     ap.add_argument('--action', required=True)
@@ -149,9 +176,9 @@ def main() -> int:
         if not isinstance(params, dict):
             raise ValueError('params must be object')
     except Exception as e:
-        print(json.dumps(j(False, reason=f'invalid params json: {e}'), ensure_ascii=False, indent=2))
+        print(json.dumps(attach_error_template(j(False, reason=f'invalid params json: {e}')), ensure_ascii=False, indent=2))
         return 1
-    res = dispatch(args.action, params)
+    res = attach_error_template(dispatch(args.action, params))
     print(json.dumps(res, ensure_ascii=False, indent=2))
     return 0 if res.get('ok') else 1
 
