@@ -1,0 +1,55 @@
+{
+  "version": "1.0",
+  "default": {
+    "action": "idle",
+    "icon": "🟢",
+    "label": "Idle",
+    "color": "#22c55e"
+  },
+  "states": {
+    "reviewing": {
+      "action": "sit",
+      "icon": "🔍",
+      "label": "Reviewing",
+      "color": "#3b82f6",
+      "animation": {
+        "spriteKey": "sit_reading",
+        "fps": 6,
+        "loop": true
+      }
+    },
+    "idle": {
+      "action": "idle",
+      "icon": "🟢",
+      "label": "Idle",
+      "color": "#22c55e",
+      "animation": {
+        "spriteKey": "idle_breath",
+        "fps": 4,
+        "loop": true
+      }
+    },
+    "debugging": {
+      "action": "sit",
+      "icon": "🧪",
+      "label": "Debugging",
+      "color": "#f59e0b",
+      "animation": {
+        "spriteKey": "sit_typing_fast",
+        "fps": 8,
+        "loop": true
+      }
+    },
+    "coding": {
+      "action": "sit",
+      "icon": "💻",
+      "label": "Coding",
+      "color": "#8b5cf6",
+      "animation": {
+        "spriteKey": "sit_typing",
+        "fps": 7,
+        "loop": true
+      }
+    }
+  }
+}

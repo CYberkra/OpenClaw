@@ -1,0 +1,73 @@
+{
+  "version": "0.2",
+  "project": "star-office",
+  "updatedAt": "2026-03-10",
+  "assets": [
+    {
+      "id": "oga-office-space-tileset",
+      "category": "tileset",
+      "sourceUrl": "https://opengameart.org/content/office-space-tileset",
+      "license": "CC0",
+      "commercialUse": "allowed",
+      "attributionRequired": false,
+      "localPath": "assets/star-office/tiles/office-space-tileset/",
+      "useCase": "办公室地面、工位、家具基础拼图",
+      "integrationDifficulty": "low"
+    },
+    {
+      "id": "oga-lab-office-tiles",
+      "category": "tileset",
+      "sourceUrl": "https://opengameart.org/content/pixel-art-laboffice-tiles",
+      "license": "CC-BY-3.0",
+      "commercialUse": "allowed_with_attribution",
+      "attributionRequired": true,
+      "localPath": "assets/star-office/tiles/lab-office-tiles/",
+      "useCase": "实验室/办公混合区域扩展",
+      "integrationDifficulty": "low"
+    },
+    {
+      "id": "lpc-expanded-sit-run-jump-more",
+      "category": "character-sprite",
+      "sourceUrl": "https://opengameart.org/content/lpc-expanded-sit-run-jump-more",
+      "license": "CC-BY-SA-3.0_or_GPLv3_check_source",
+      "commercialUse": "allowed_with_conditions",
+      "attributionRequired": true,
+      "localPath": "assets/star-office/characters/lpc-expanded/",
+      "useCase": "人物 sit/walk/idle 核心动作",
+      "integrationDifficulty": "medium"
+    },
+    {
+      "id": "ulpc-character-generator",
+      "category": "character-sprite",
+      "sourceUrl": "https://github.com/LiberatedPixelCup/Universal-LPC-Spritesheet-Character-Generator",
+      "license": "CC-BY-SA-3.0",
+      "commercialUse": "allowed_with_conditions",
+      "attributionRequired": true,
+      "localPath": "assets/star-office/characters/ulpc-generated/",
+      "useCase": "快速生成不同角色外观，保持动作规范一致",
+      "integrationDifficulty": "medium"
+    },
+    {
+      "id": "shadcn-ui-badge",
+      "category": "state-ui",
+      "sourceUrl": "https://github.com/shadcn-ui/ui",
+      "license": "MIT",
+      "commercialUse": "allowed",
+      "attributionRequired": false,
+      "localPath": "src/components/ui/badge/",
+      "useCase": "状态标签（reviewing/idle/debugging/coding）",
+      "integrationDifficulty": "low"
+    },
+    {
+      "id": "socketio-presence",
+      "category": "realtime-presence",
+      "sourceUrl": "https://github.com/socketio/socket.io",
+      "license": "MIT",
+      "commercialUse": "allowed",
+      "attributionRequired": false,
+      "localPath": "services/realtime/socketio/",
+      "useCase": "多人在线状态、位置、房间广播",
+      "integrationDifficulty": "low"
+    }
+  ]
+}
