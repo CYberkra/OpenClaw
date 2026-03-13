@@ -1,0 +1,18 @@
+{
+  "lastChecks": {
+    "gateway": null,
+    "disk": null,
+    "subagents": null,
+    "queue": null,
+    "memory": null,
+    "token": null,
+    "isolation": null,
+    "skillSync": null,
+    "perfBaseline": null
+  },
+  "baselines": {
+    "tokenDailyAvg": null,
+    "gprOptRuntime": 57.42,
+    "gprDepthConvert": 7.00
+  }
+}
