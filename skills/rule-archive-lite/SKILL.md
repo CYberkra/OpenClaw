@@ -36,10 +36,10 @@ Store and apply user-defined operating rules so they survive restarts. Treat the
    - 护栏：条件触发 + 最多1轮自改进 + token/时延阈值停机 + 超限降级 baseline
 20) GUI 迭代提交规范（主线程+子线程统一）：每次 GUI 迭代必须使用固定提交模板 `type(scope): summary`；提交前完成最小检查（`git status`、关键功能自检、变更文件清单确认）；提交后必须输出简报（变更点/风险/回滚点/产物路径）；严禁提交环境噪音文件（cache/log/dist 中间产物等）；main session 与 all subagents 必须执行同一规则。
 21) Discord 结构术语规范：
-   - “子分区” = 用于短期事项/一次性问题；处理完通常不再保留。
-   - “频道” = 用于长期事项/持续跟进。
-   - “类别” = 用于不同大项目/复杂事项的高层级容器，其下可承载多个频道/子分区。
-   执行时必须先按“短期/长期/项目级复杂度”判断，再选择创建子分区、频道或类别，避免误建结构。
+   - “子区” = Discord 线程（Thread），用于短期事项/一次性问题；通常挂在某个频道下，处理完通常不再保留。
+   - “频道” = Discord 频道（Channel），用于长期事项/持续跟进。
+   - “类别” = Discord 类别（Category），用于不同大项目/复杂事项的高层级容器，其下承载多个频道。
+   执行时必须先按“短期/长期/项目级复杂度”判断，再选择创建子区、频道或类别，避免误建结构。
 
 ## Workflow
 1) 用户新增/修改规则 → 追加到 memory/YYYY-MM-DD.md。
