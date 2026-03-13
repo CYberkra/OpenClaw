@@ -27,7 +27,7 @@ Store and apply user-defined operating rules so they survive restarts. Treat the
 13) 规则存档：变更需写入 memory 并提交。
 14) 证据/交付路径：一律 /mnt/e/Openclaw/.openclaw/...；允许 ~/.openclaw 作为别名但不得出现在证据里。
 15) Subagent Manager 强制策略：凡任务存在正向收益（效率/质量/并行/上下文隔离），必须优先使用 subagent_manager skill；仅在明显不适配的极小任务可豁免，并简要说明。
-16) Token 回报规则：用户要求“今天每次对话都汇报该次 token 消耗”，每条回复末尾都附本次 token（in/out）。
+16) Token 回报规则：用户已取消“每次对话都汇报该次 token 消耗”的要求；默认后续回复不再附 token in/out，除非用户再次明确要求恢复。
 17) 节流落地规则（不降质）：固定提示前缀顺序以提高缓存命中；只注入必要上下文；复杂任务用子代理，简单任务低thinking。
 18) 复述压缩规则：状态汇报优先“结论+证据路径+下一步”，避免重复粘贴长日志；长日志改摘要+命令可复现。
 19) self-improving-agent 策略：仅部分启用（不全局常开）。
