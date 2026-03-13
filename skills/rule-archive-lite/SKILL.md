@@ -35,7 +35,7 @@ Store and apply user-defined operating rules so they survive restarts. Treat the
    - 禁用：短问答、秒回场景、强可控一步到位场景
    - 护栏：条件触发 + 最多1轮自改进 + token/时延阈值停机 + 超限降级 baseline
 20) GUI 迭代提交规范（主线程+子线程统一）：每次 GUI 迭代必须使用固定提交模板 `type(scope): summary`；提交前完成最小检查（`git status`、关键功能自检、变更文件清单确认）；提交后必须输出简报（变更点/风险/回滚点/产物路径）；严禁提交环境噪音文件（cache/log/dist 中间产物等）；main session 与 all subagents 必须执行同一规则。
-21) 术语规范：用户说“创建子分区”时，一律按“短期/一次性事件”处理；用户说“创建频道”时，一律按“长期优化/持续保留事件”处理。不得混用这两个术语的执行语义。
+21) 术语规范：用户说“创建子分区”时，一律按“创建 Discord 子分区（Category）”处理；用户说“创建频道”时，一律按“创建 Discord 频道（Channel）”处理。不得再将这两个术语映射为“短期/长期任务”语义。
 
 ## Workflow
 1) 用户新增/修改规则 → 追加到 memory/YYYY-MM-DD.md。
