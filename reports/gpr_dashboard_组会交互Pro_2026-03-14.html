@@ -244,6 +244,11 @@ function updateMethodControls(activeKey){
 function setMethod(key){
   const m=methodProfiles[key], meta=methodMeta[key];
   if(!m||!meta) return;
+  const absMax=Math.max(...[...m.before,...m.after].map(v=>Math.abs(v)),1)*1.15;
+  beforeChart.options.scales.y.min=-absMax;
+  beforeChart.options.scales.y.max=absMax;
+  afterChart.options.scales.y.min=-absMax;
+  afterChart.options.scales.y.max=absMax;
   beforeChart.data.datasets[0].data=m.before; beforeChart.update();
   afterChart.data.datasets[0].data=m.after; afterChart.data.datasets[0].label=meta.label; afterChart.update();
   const sourceTag=m.source==='real'?'真实数据':'合成补充';
