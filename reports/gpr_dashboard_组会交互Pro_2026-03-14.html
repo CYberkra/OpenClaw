@@ -244,7 +244,10 @@ function updateMethodControls(activeKey){
 function setMethod(key){
   const m=methodProfiles[key], meta=methodMeta[key];
   if(!m||!meta) return;
-  const absMax=Math.max(...[...m.before,...m.after].map(v=>Math.abs(v)),1)*1.15;
+  const absVals=[...m.before,...m.after].map(v=>Math.abs(v)).filter(v=>Number.isFinite(v)).sort((a,b)=>a-b);
+  const qIdx=Math.max(0,Math.min(absVals.length-1,Math.floor(absVals.length*0.98)));
+  const q98=absVals[qIdx] || 1;
+  const absMax=Math.max(q98*1.1,0.12);
   beforeChart.options.scales.y.min=-absMax;
   beforeChart.options.scales.y.max=absMax;
   afterChart.options.scales.y.min=-absMax;
