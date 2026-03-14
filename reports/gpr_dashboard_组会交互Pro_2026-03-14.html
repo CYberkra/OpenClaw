@@ -274,7 +274,10 @@ function cardClass(c){return c.emphasis==='primary'?'compare-card primary':'comp
 function tagClass(c){return c.emphasis==='primary'?'insight-tag':'insight-tag muted'}
 function drawCompareSpark(id,key){
  const el=document.getElementById(id); if(!el||!methodProfiles[key]) return;
- compareCharts.push(new Chart(el,{type:'line',data:{labels:x,datasets:[{data:methodProfiles[key].before,borderColor:'#2563eb',pointRadius:0,borderWidth:1.7,tension:.2},{data:methodProfiles[key].after,borderColor:'#0f766e',pointRadius:0,borderWidth:1.7,tension:.2}]},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false}},scales:{x:{display:false},y:{display:false}}}}));
+ const beforeVals=methodProfiles[key].before||[];
+ const afterVals=methodProfiles[key].after||[];
+ const absMax=Math.max(...[...beforeVals,...afterVals].map(v=>Math.abs(v)),1)*1.15;
+ compareCharts.push(new Chart(el,{type:'line',data:{labels:x,datasets:[{data:beforeVals,borderColor:'#2563eb',pointRadius:0,borderWidth:1.7,tension:.2},{data:afterVals,borderColor:'#0f766e',pointRadius:0,borderWidth:1.7,tension:.2}]},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false}},scales:{x:{display:false},y:{display:false,min:-absMax,max:absMax}}}}));
 }
 function renderCategory(cat){
  compareCharts.splice(0).forEach(c=>c.destroy());
