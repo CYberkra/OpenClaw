@@ -116,6 +116,17 @@ When a rule affects both execution and traceability, update multiple layers toge
 - If the action is high-risk (delete / install / push / enable experimental high-autonomy mode), the button message must clearly state what will happen before the user clicks.
 - If buttons are unavailable or unsuitable in the current context, fall back to typed confirmation.
 
+## SYSTEM_BOOTSTRAP Maintenance Policy
+
+- `SYSTEM_BOOTSTRAP.md` is a live bootstrap entry, not a historical note.
+- It must be checked and updated whenever any of the following becomes stably true:
+  - default workflow topology changes
+  - routing / acceptance / mode system changes
+  - rule entrypoints or rule priority changes
+  - key constants change (paths, channels, priorities, default execution assumptions)
+- In addition to event-driven updates, run a lightweight consistency review every **7–14 days**.
+- Updates should keep the file short, bootstrap-oriented, and aligned with `rules/INDEX.md` + `skills/user-preferences/SKILL.md`.
+
 ## Usage Notes
 - When outputting plots, ensure data parsing is correct (respect column definitions and A‑scan reshaping). If input format is ambiguous, ask or infer carefully, and state assumptions.
 - Always include a short analysis paragraph after posting plots.
