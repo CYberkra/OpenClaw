@@ -48,6 +48,14 @@ Store and apply user-defined operating rules so they survive restarts. Treat the
 26) 规则分流准则 v1：临时上下文写 `memory/YYYY-MM-DD.md`；用户可执行长期偏好/约束写 `skills/user-preferences/SKILL.md`；规则历史/快照留在 `skills/rule-archive-lite/SKILL.md`；用户画像写 `USER.md`；环境特定映射写 `TOOLS.md`；项目级规则优先写项目目录内文档；工作区级高层规则写 `AGENTS.md`。凡规则同时影响执行与追溯时，应联动更新主生效文件 + 归档文件 + 当日 memory。
 27) 默认路由判定表 v1：1) 纯问答/即时澄清 → 主进程直答；2) 代码改动 → 默认 opencode 执行，主进程验收回传；3) 多步骤/多工具任务（>=3步，或跨工具/跨文件）→ 必走 subagent_manager，若含代码步骤则子任务内 opencode 优先；4) 资料调研/方案比较 → researcher 路由；5) 高风险/用户要求复核/结果不稳定 → reviewer 复核；6) 适合自动验收的项目任务 → 启用 CI。冲突时：多步骤优先 manager 拆解；质量复核为强制附加闸门；可做 CI 且成本可接受时默认开启。
 28) 验收闸门 SOP v1：标准顺序为 G1 执行完成 → G2 执行者自检 → G3 主进程人工核验（强制）→ G4 CI/自动验收（适用即强制）→ G5 reviewer 质量复核（命中时强制）→ G6 对外回传。任一闸门失败不得宣称完成，必须回退修复；连续两轮失败则升级为人工决策点。
+29) 角色边界补丁 v1.1：subagent_manager 负责拆解/编排/聚合；opencode 为默认代码执行器；coder 仅在 opencode 不可用、连续失败或明确指定时兜底。决策顺序：manager(编排) → opencode(默认执行) → coder(降级兜底)。
+30) 模式切换补丁 v1.1：默认模式 default；用户关键词可切 strict/proactive/evolver/ralph。冲突优先级：strict > ralph > evolver > proactive > default。任何模式不得绕过 G1-G6。
+31) 规则优先级补丁 v1.1：用户当轮明确指令 > user-preferences > AGENTS 硬规则 > rule-archive 快照 > 其他文档；其中 user-preferences 为执行主源（SSOT），rule-archive 仅保留历史。
+32) 关键词规范补丁 v1.1：
+   - 路由：直答 / 走 manager / 走 opencode / 加 reviewer / 开 CI
+   - 模式：切 strict / 切 proactive / 切 evolver / 切 ralph / 恢复 default
+   - 验收：仅到 G3 / 执行全闸门 / 跳过 CI（需理由）
+   若关键词与硬规则冲突，以更安全、更高闸门优先；不可消解时先澄清。
 
 ## Workflow
 1) 用户新增/修改规则 → 追加到 memory/YYYY-MM-DD.md。

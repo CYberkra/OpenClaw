@@ -74,6 +74,17 @@ When a rule affects both execution and traceability, update multiple layers toge
 - User profile change that affects execution → `USER.md` + `user-preferences` (if it changes behavior)
 - Project workflow change → project-local docs/rules first; only elevate to workspace-level files if it generalizes across projects
 
+## Workflow Clarifications v1.1（执行细化）
+
+1) 角色边界：`subagent_manager` 负责拆解编排；`opencode` 为默认代码执行器；`coder` 仅在 opencode 不可用/失败或明确指定时兜底。
+2) 模式切换：默认 `default`；可由用户关键词切到 `strict/proactive/evolver/ralph`；冲突优先级 `strict > ralph > evolver > proactive > default`。
+3) 规则优先级：`用户当轮明确指令 > user-preferences > AGENTS 硬规则 > rule-archive 快照 > 其他`。
+4) 防漂移：新增/变更硬规则必须同轮联动更新 `user-preferences + rule-archive-lite + memory/YYYY-MM-DD.md`。
+5) 关键词规范：
+   - 路由：`直答` / `走 manager` / `走 opencode` / `加 reviewer` / `开 CI`
+   - 模式：`切 strict` / `切 proactive` / `切 evolver` / `切 ralph` / `恢复 default`
+   - 验收：`仅到 G3` / `执行全闸门` / `跳过 CI（需理由）`
+
 ## Usage Notes
 - When outputting plots, ensure data parsing is correct (respect column definitions and A‑scan reshaping). If input format is ambiguous, ask or infer carefully, and state assumptions.
 - Always include a short analysis paragraph after posting plots.

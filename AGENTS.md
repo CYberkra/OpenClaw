@@ -268,6 +268,37 @@ The following rules are enforced by the user and must be followed strictly:
 - G5 质量复核（命中路由时强制）：失败则回退到执行/核验
 - G6 对外回传：仅在必需闸门通过后，按“结论 + 证据 + 下一步”回传
 
+### Workflow Clarifications v1.1（增量）
+
+#### A) 角色边界补丁（manager / opencode / coder）
+- `subagent_manager`：仅负责任务拆解、并行调度、依赖编排、进度聚合，不直接作为代码最终执行器。
+- `opencode`：默认代码主执行器（实现/修改/修复）。
+- `coder`：仅在 `opencode` 不可用、连续失败、或任务明确要求特定实现风格时作为降级/补位执行器。
+- 决策顺序：`manager(是否需要编排)` → `opencode(默认执行)` → `coder(降级兜底)`。
+
+#### B) 模式切换补丁（default / strict / proactive / evolver / ralph）
+- 默认模式：`default`（按默认路由判定表 v1 执行）。
+- 用户显式关键词优先切换模式（命中即生效，直到用户取消或切回 default）：
+  - `strict`：强制保守执行；高风险任务默认加 reviewer；能不开外部动作就不开。
+  - `proactive`：允许主动给“下一步候选”，但不跳过验收闸门。
+  - `evolver`：允许小步试错优化（最多 1 轮自改进），超限回落 default。
+  - `ralph`：仅作为“高强度推进”标签；仍必须遵守 G1-G6，不得绕过主进程核验与 CI。
+- 同一轮多模式冲突优先级：`strict > ralph > evolver > proactive > default`。
+
+#### C) 规则优先级与防漂移补丁
+- 规则生效优先级（高→低）：`用户当轮明确指令 > user-preferences(SKILL) > AGENTS 硬规则 > rule-archive 历史快照 > 其他文档`。
+- `user-preferences/SKILL.md` 为执行规则主源（SSOT）；`AGENTS.md` 保留高层摘要；`rule-archive-lite` 仅做历史留痕。
+- 任何新增/变更硬规则必须同轮最少更新：
+  1) `user-preferences/SKILL.md`（主生效）
+  2) `skills/rule-archive-lite/SKILL.md`（快照追加）
+  3) `memory/YYYY-MM-DD.md`（变更记录）
+
+#### D) 用户可直接调用关键词（最小规范）
+- 路由关键词：`直答`、`走 manager`、`走 opencode`、`加 reviewer`、`开 CI`。
+- 模式关键词：`切 strict`、`切 proactive`、`切 evolver`、`切 ralph`、`恢复 default`。
+- 验收关键词：`仅到 G3`、`执行全闸门`、`跳过 CI（需理由）`。
+- 关键词若与硬规则冲突，以“更安全、更高闸门”解释优先；若冲突不可消解，先澄清再执行。
+
 ## Make It Yours
 
 This is a starting point. Add your own conventions, style, and rules as you figure out what works.
