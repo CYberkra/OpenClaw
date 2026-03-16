@@ -56,6 +56,9 @@ Store and apply user-defined operating rules so they survive restarts. Treat the
    - 模式：切 strict / 切 proactive / 切 evolver / 切 ralph / 恢复 default
    - 验收：仅到 G3 / 执行全闸门 / 跳过 CI（需理由）
    若关键词与硬规则冲突，以更安全、更高闸门优先；不可消解时先澄清。
+33) 防死循环补丁 v1.2（Max Iterations）：任何单步任务内的“自检→自动修复”循环（如改代码/修 bug）最多 3 次；连续 3 次未解决或未达 G2 标准，必须强制打断并判定该节点失败，触发失败回退并上报主进程与用户。
+34) Timeout 熔断补丁 v1.2：凡外部依赖环节（G4 CI、测试脚本、外部工具等待）若长时间无输出即主动熔断；超时等同闸门失败，直接走降级/回退，并向用户明确报告“执行超时”。
+35) 按需加载补丁 v1.2：主进程在闲聊/简单路由阶段仅常驻核心骨架规则与 `rules/INDEX.md`，禁止每轮加载全部长文规则；仅在复杂路由时按 INDEX 动态读取对应规则文档。
 
 ## Workflow
 1) 用户新增/修改规则 → 追加到 memory/YYYY-MM-DD.md。

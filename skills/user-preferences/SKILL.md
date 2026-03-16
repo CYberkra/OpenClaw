@@ -85,6 +85,25 @@ When a rule affects both execution and traceability, update multiple layers toge
    - 模式：`切 strict` / `切 proactive` / `切 evolver` / `切 ralph` / `恢复 default`
    - 验收：`仅到 G3` / `执行全闸门` / `跳过 CI（需理由）`
 
+## Defensive Patches v1.2（防御性补丁，强制）
+
+### A) 防死循环机制（Max Iterations）
+- 适用范围：任何单步任务中的“自检 → 自动修复”内部循环（例如 opencode 改代码、修 bug）。
+- 硬上限：同一节点最多 **3 次**迭代。
+- 触发条件：连续 3 次仍未解决，或仍未达到 **G2 执行者自检通过标准**。
+- 强制动作：立即打断循环，判定该节点失败，进入失败回退/降级流程，并向主进程与用户报告失败原因。
+
+### B) 防僵尸状态（Timeout 熔断）
+- 适用范围：所有外部依赖环节（含 G4 CI/自动验收、测试脚本、外部工具响应等待）。
+- 规则：长时间卡死且无有效输出时，必须主动超时熔断。
+- 结果等价：**超时 = 该闸门失败**，不得继续“假等待”。
+- 强制动作：直接走失败降级/回退，并向用户明确回报：`执行超时`。
+
+### C) 上下文与 Token 消耗管理（按需加载）
+- 日常闲聊、轻量问答、简单路由判定：默认仅常驻核心骨架规则 + `rules/INDEX.md`。
+- 禁止每轮预加载所有长文规则文件。
+- 仅当进入复杂路由（多步骤/多工具/高风险/需专项规则）时，按 `rules/INDEX.md` 动态读取所需细分文档。
+
 ## Usage Notes
 - When outputting plots, ensure data parsing is correct (respect column definitions and A‑scan reshaping). If input format is ambiguous, ask or infer carefully, and state assumptions.
 - Always include a short analysis paragraph after posting plots.
