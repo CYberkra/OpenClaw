@@ -127,6 +127,11 @@ When a rule affects both execution and traceability, update multiple layers toge
 - In addition to event-driven updates, run a lightweight consistency review every **7–14 days**.
 - Updates should keep the file short, bootstrap-oriented, and aligned with `rules/INDEX.md` + `skills/user-preferences/SKILL.md`.
 
-## Usage Notes
-- When outputting plots, ensure data parsing is correct (respect column definitions and A‑scan reshaping). If input format is ambiguous, ask or infer carefully, and state assumptions.
-- Always include a short analysis paragraph after posting plots.
+## Workflow Mode Persistence Policy
+
+- **Default:** All workflow modes (`strict`, `proactive`, `evolver`, `ralph`) are **single-task ephemeral** by default. After a task initiated in a specific mode is completed, the agent automatically reverts to `default` mode.
+- **Exception for Persistent Mode (Requires Explicit User Consent):** If the user explicitly requests a mode to be `persistent` (`长期有效` / `持续启动`), the agent must:
+  1. Confirm the high-risk nature of persistent mode (especially for `ralph` / `evolver`).
+  2. Upon each subsequent task or interaction, re-confirm with the user if they wish to `maintain the persistent mode` or `revert to default` (using a clickable component).
+  3. If the persistent mode is `strict`, no re-confirmation is needed on each task, but the user must explicitly cancel it to revert to default.
+  4. The user can explicitly cancel a persistent mode at any time by stating `恢复 default` or clicking a corresponding button.
