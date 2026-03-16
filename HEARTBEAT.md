@@ -25,6 +25,7 @@
 - [ ] **Log Cleanup** - Review and archive old logs if needed
 - [ ] **Skill Sync** - Check subagent-manager skill version consistency between `repos/openclaw-skill-subagent-manager/` and `skills/`
 - [ ] **GPR Performance Baseline** - Check isolated optimization results haven't regressed (compare to 236s→57s, 223ms→7ms benchmarks)
+- [ ] **Rule Backup & Drift Audit** - Every 3 days, review core rule files (`AGENTS.md`, `rules/INDEX.md`, `SYSTEM_BOOTSTRAP.md`, `skills/user-preferences/SKILL.md`, `skills/rule-archive-lite/SKILL.md`, `HEARTBEAT.md`) for drift, archive gaps, and commit/push needs
 - [ ] **Rule Backup & Drift Audit (7-14 days)** - Follow `rules/self-backup-audit-v1.md` for lightweight rule consistency check + optional backup snapshot + commit/push decision
 
 ## When to Report (Not Just HEARTBEAT_OK)
