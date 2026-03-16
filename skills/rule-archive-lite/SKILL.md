@@ -42,6 +42,7 @@ Store and apply user-defined operating rules so they survive restarts. Treat the
    - “类别” = Discord 类别（Category），用于不同大项目/复杂事项的高层级容器，其下承载多个频道。
    执行时必须先按“短期/长期/项目级复杂度”判断，再选择创建子区、频道或类别，避免误建结构。
 22) 截图/界面改动反馈规则：凡是用户要求“截图”，或任务涉及界面布局、UI 改动、界面瘦身、可视化布局调整，改完后必须直接在 Discord 发送截图给用户；不能只回复文件路径或纯文字说明。
+23) 代码执行代理偏好：若 WSL 中已接入并可用 opencode，后续“写代码/改代码/实现功能/修 bug”类任务默认优先由我调用 opencode 处理；我负责分派、验收、汇总与回传。若 opencode 不可用、失败或任务明显更适合当前代理，再切回其他执行路径，并明确说明原因。
 
 ## Workflow
 1) 用户新增/修改规则 → 追加到 memory/YYYY-MM-DD.md。
