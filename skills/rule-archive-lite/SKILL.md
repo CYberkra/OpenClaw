@@ -45,6 +45,7 @@ Store and apply user-defined operating rules so they survive restarts. Treat the
 23) 代码执行代理偏好：若 WSL 中已接入并可用 opencode，后续“写代码/改代码/实现功能/修 bug”类任务默认优先由我调用 opencode 处理；我负责分派、验收、汇总与回传。若 opencode 不可用、失败或任务明显更适合当前代理，再切回其他执行路径，并明确说明原因。
 24) 子代理/外部执行结果核验规则：凡是我调用 opencode、子进程或其他执行器完成代码/UI/截图类任务，不能直接照单转发，必须先由我自己做结果核验（至少包含与用户反馈点直接相关的可见验证；涉及界面/中文显示时必须亲自看截图或等效证据）后再回复用户。
 25) GitHub Actions/CI 通用策略：GitHub Actions 不仅用于 GUI 项目；后续只要项目存在自动化验收、回归检测、性能/质量门禁、构建/测试/产物归档等正向收益，就应优先评估并可直接采用 Actions/CI 方案来优化处理流程，而不是仅限于 GPR_GUI。
+26) 规则分流准则 v1：临时上下文写 `memory/YYYY-MM-DD.md`；用户可执行长期偏好/约束写 `skills/user-preferences/SKILL.md`；规则历史/快照留在 `skills/rule-archive-lite/SKILL.md`；用户画像写 `USER.md`；环境特定映射写 `TOOLS.md`；项目级规则优先写项目目录内文档；工作区级高层规则写 `AGENTS.md`。凡规则同时影响执行与追溯时，应联动更新主生效文件 + 归档文件 + 当日 memory。
 
 ## Workflow
 1) 用户新增/修改规则 → 追加到 memory/YYYY-MM-DD.md。

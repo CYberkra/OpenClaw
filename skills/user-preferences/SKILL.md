@@ -56,6 +56,24 @@ Apply these rules whenever working for baiiy1. They override default habits and 
 - **禁止将任何 token/apiKey/含key的URL 写入 memory 或 commit。**
 - **push 前必须 git diff --stat；并在 memory 留 commit hash 指针。**
 
+## Rule Routing & Archival Policy (v1)
+
+When deciding where a new rule, preference, or note should live, use this routing policy:
+
+- **Temporary / same-day context** → `memory/YYYY-MM-DD.md`
+- **User-executable long-term preferences and constraints** → `skills/user-preferences/SKILL.md`
+- **Rule history / snapshot / audit trail** → `skills/rule-archive-lite/SKILL.md`
+- **User profile facts** (name, preferred form of address, long-term focus) → `USER.md`
+- **Environment-specific mappings** (paths, devices, hosts, aliases) → `TOOLS.md`
+- **Project-specific rules** → the project directory (`README`, `docs`, project `AGENTS.md`, or a dedicated `RULES.md`)
+- **Workspace-wide high-level operating rules** → `AGENTS.md`
+
+When a rule affects both execution and traceability, update multiple layers together:
+- New/changed user hard rule → `user-preferences` + `rule-archive-lite` + `memory/YYYY-MM-DD.md`
+- Environment change with execution impact → `TOOLS.md` + `memory/YYYY-MM-DD.md` (and `user-preferences` if it becomes a hard constraint)
+- User profile change that affects execution → `USER.md` + `user-preferences` (if it changes behavior)
+- Project workflow change → project-local docs/rules first; only elevate to workspace-level files if it generalizes across projects
+
 ## Usage Notes
 - When outputting plots, ensure data parsing is correct (respect column definitions and A‑scan reshaping). If input format is ambiguous, ask or infer carefully, and state assumptions.
 - Always include a short analysis paragraph after posting plots.

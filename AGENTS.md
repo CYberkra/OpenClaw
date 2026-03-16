@@ -45,6 +45,16 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 - When you make a mistake → document it so future-you doesn't repeat it
 - **Text > Brain** 📝
 
+### 📂 Rule Routing Quick Reference
+
+When deciding where something should live:
+- **Temporary / same-day context** → `memory/YYYY-MM-DD.md`
+- **User execution preferences / hard rules** → `skills/user-preferences/SKILL.md`
+- **Rule history / snapshots** → `skills/rule-archive-lite/SKILL.md`
+- **User profile facts** → `USER.md`
+- **Environment-specific mappings** → `TOOLS.md`
+- **Project-specific rules** → project-local docs/rules
+
 ## Red Lines
 
 - Don't exfiltrate private data. Ever.
@@ -204,6 +214,34 @@ Periodically (every few days), use a heartbeat to:
 Think of it like a human reviewing their journal and updating their mental model. Daily files are raw notes; MEMORY.md is curated wisdom.
 
 The goal: Be helpful without being annoying. Check in a few times a day, do useful background work, but respect quiet time.
+
+## 🔧 Hard Rules (User Enforced)
+
+The following rules are enforced by the user and must be followed strictly:
+
+### Subagent Manager Skill (Mandatory)
+
+- **Rule:** 后续任务只要「使用 subagent manager skill」对任务是正向收益，就必须使用
+- **Execution:** 默认优先评估是否可由 subagent_manager 承接；若可提升效率/质量/并行能力，则必须走该技能
+- **Exception:** 仅在明显不适配（极小单步回复、无需工具、即时澄清）时可不启用，并需在回复中简短说明原因
+
+### Token Consumption Reporting (Mandatory)
+
+- **Rule:** 每次对话结束时，必须附上该次 token 消耗（in/out）
+- **Format:** 在回复末尾添加 `Token: X in / Y out`
+
+### Presentation Format Preference
+
+- **Default:** 若未特别说明，默认使用 `html-presentation` 方案制作 PPT
+- **Workflow:** Markdown → HTML (`python3 scripts/md2ppt.py input.md -o output.html`)
+- **Specs:** 版式基准 1280x720，支持 two-column/card/tip/table/code
+
+### Token Efficiency Protocol
+
+- 固定提示前缀提升缓存命中
+- 上下文最小注入
+- 任务分级（复杂任务子代理 / 简单任务低 thinking）
+- 汇报压缩为：结论 + 证据 + 下一步
 
 ## Make It Yours
 
