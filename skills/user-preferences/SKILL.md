@@ -104,6 +104,18 @@ When a rule affects both execution and traceability, update multiple layers toge
 - 禁止每轮预加载所有长文规则文件。
 - 仅当进入复杂路由（多步骤/多工具/高风险/需专项规则）时，按 `rules/INDEX.md` 动态读取所需细分文档。
 
+## Discord Interactive Controls Preference
+
+- When user authorization, selection, confirmation, or mode switching is needed in Discord, **prefer clickable buttons/components over requiring typed replies**.
+- Priority use cases:
+  - authorization (allow / cancel)
+  - option selection (plan A/B/C, choose skill, choose route)
+  - workflow progression (continue / pause / direct apply / plan only)
+  - acceptance level (仅到 G3 / 执行全闸门 / 加 reviewer)
+  - mode switching (`default` / `strict` / `proactive` / `evolver` / `ralph`)
+- If the action is high-risk (delete / install / push / enable experimental high-autonomy mode), the button message must clearly state what will happen before the user clicks.
+- If buttons are unavailable or unsuitable in the current context, fall back to typed confirmation.
+
 ## Usage Notes
 - When outputting plots, ensure data parsing is correct (respect column definitions and A‑scan reshaping). If input format is ambiguous, ask or infer carefully, and state assumptions.
 - Always include a short analysis paragraph after posting plots.
