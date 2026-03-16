@@ -47,6 +47,8 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 
 ### 📂 Rule Routing Quick Reference
 
+Rule map/index entrypoint: `rules/INDEX.md` (navigation + priority, no full rule bodies).
+
 When deciding where something should live:
 - **Temporary / same-day context** → `memory/YYYY-MM-DD.md`
 - **User execution preferences / hard rules** → `skills/user-preferences/SKILL.md`
