@@ -243,6 +243,31 @@ The following rules are enforced by the user and must be followed strictly:
 - 任务分级（复杂任务子代理 / 简单任务低 thinking）
 - 汇报压缩为：结论 + 证据 + 下一步
 
+### Default Routing Table v1
+
+按优先级命中，命中即停：
+- 纯问答 / 即时澄清（单轮可答、无需改文件/跑工具）→ 主进程直答
+- 代码改动（新增/修改代码、脚本、配置）→ 默认 opencode 执行，主进程验收回传
+- 多步骤 / 多工具任务（>=3步，或跨工具/跨文件）→ 必走 subagent_manager；若含代码步骤，子任务内仍 opencode 优先
+- 资料调研 / 方案比较 → researcher 路由（可由 subagent_manager 调度）
+- 需要质量复核（高风险、用户要求复核、或结果不稳定）→ 追加 reviewer 复核
+- 适合 CI/自动验收的项目任务 → 启用 CI 验收（本地/Actions 均可）
+
+冲突决策：
+- 同时命中“代码改动”与“多步骤/多工具” → 先走 subagent_manager，总控拆解；代码子任务仍 opencode 优先
+- 同时命中“质量复核” → 复核为强制附加闸门，不可跳过
+- 若可做 CI 且成本可接受 → CI 默认开启；仅在明确不适配时关闭并说明原因
+
+### Acceptance Gate SOP v1
+
+标准顺序：
+- G1 执行完成：产出可检查结果（代码/文件/截图/日志）
+- G2 执行者自检：检查目标是否命中，并形成最小证据
+- G3 主进程人工核验（强制）：不通过则回退修复
+- G4 CI/自动验收（适用即强制）：失败则回退修复；必要时先回滚到最近稳定点
+- G5 质量复核（命中路由时强制）：失败则回退到执行/核验
+- G6 对外回传：仅在必需闸门通过后，按“结论 + 证据 + 下一步”回传
+
 ## Make It Yours
 
 This is a starting point. Add your own conventions, style, and rules as you figure out what works.

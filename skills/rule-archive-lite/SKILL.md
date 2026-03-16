@@ -46,6 +46,8 @@ Store and apply user-defined operating rules so they survive restarts. Treat the
 24) 子代理/外部执行结果核验规则：凡是我调用 opencode、子进程或其他执行器完成代码/UI/截图类任务，不能直接照单转发，必须先由我自己做结果核验（至少包含与用户反馈点直接相关的可见验证；涉及界面/中文显示时必须亲自看截图或等效证据）后再回复用户。
 25) GitHub Actions/CI 通用策略：GitHub Actions 不仅用于 GUI 项目；后续只要项目存在自动化验收、回归检测、性能/质量门禁、构建/测试/产物归档等正向收益，就应优先评估并可直接采用 Actions/CI 方案来优化处理流程，而不是仅限于 GPR_GUI。
 26) 规则分流准则 v1：临时上下文写 `memory/YYYY-MM-DD.md`；用户可执行长期偏好/约束写 `skills/user-preferences/SKILL.md`；规则历史/快照留在 `skills/rule-archive-lite/SKILL.md`；用户画像写 `USER.md`；环境特定映射写 `TOOLS.md`；项目级规则优先写项目目录内文档；工作区级高层规则写 `AGENTS.md`。凡规则同时影响执行与追溯时，应联动更新主生效文件 + 归档文件 + 当日 memory。
+27) 默认路由判定表 v1：1) 纯问答/即时澄清 → 主进程直答；2) 代码改动 → 默认 opencode 执行，主进程验收回传；3) 多步骤/多工具任务（>=3步，或跨工具/跨文件）→ 必走 subagent_manager，若含代码步骤则子任务内 opencode 优先；4) 资料调研/方案比较 → researcher 路由；5) 高风险/用户要求复核/结果不稳定 → reviewer 复核；6) 适合自动验收的项目任务 → 启用 CI。冲突时：多步骤优先 manager 拆解；质量复核为强制附加闸门；可做 CI 且成本可接受时默认开启。
+28) 验收闸门 SOP v1：标准顺序为 G1 执行完成 → G2 执行者自检 → G3 主进程人工核验（强制）→ G4 CI/自动验收（适用即强制）→ G5 reviewer 质量复核（命中时强制）→ G6 对外回传。任一闸门失败不得宣称完成，必须回退修复；连续两轮失败则升级为人工决策点。
 
 ## Workflow
 1) 用户新增/修改规则 → 追加到 memory/YYYY-MM-DD.md。
