@@ -127,11 +127,27 @@ When a rule affects both execution and traceability, update multiple layers toge
 - In addition to event-driven updates, run a lightweight consistency review every **7–14 days**.
 - Updates should keep the file short, bootstrap-oriented, and aligned with `rules/INDEX.md` + `skills/user-preferences/SKILL.md`.
 
-## Workflow Mode Persistence Policy
+## Intelligent Interactive Prompt Policy v1.4
 
-- **Default:** All workflow modes (`strict`, `proactive`, `evolver`, `ralph`) are **single-task ephemeral** by default. After a task initiated in a specific mode is completed, the agent automatically reverts to `default` mode.
-- **Exception for Persistent Mode (Requires Explicit User Consent):** If the user explicitly requests a mode to be `persistent` (`长期有效` / `持续启动`), the agent must:
-  1. Confirm the high-risk nature of persistent mode (especially for `ralph` / `evolver`).
-  2. Upon each subsequent task or interaction, re-confirm with the user if they wish to `maintain the persistent mode` or `revert to default` (using a clickable component).
-  3. If the persistent mode is `strict`, no re-confirmation is needed on each task, but the user must explicitly cancel it to revert to default.
-  4. The user can explicitly cancel a persistent mode at any time by stating `恢复 default` or clicking a corresponding button.
+- **Trigger Conditions** (automatically pop up interactive prompts with buttons):
+  1. **Complex Task Start**: When a task has ≥2 distinct execution paths → offer [Plan Only] [Direct Implementation] [Research First]
+  2. **High-Impact Actions**: Before git push / delete / install / config changes → require explicit [✅ Confirm] [❌ Cancel]
+  3. **Workflow Mode Selection**: At task start when a specific mode is recommended → offer [default] [strict] [proactive] [evolver] [ralph]
+  4. **Task Blocked**: After 3 failed self-checks or timeout → offer [Retry] [Alternative] [Skip] [Human Intervention]
+  5. **Acceptance Gate**: After G3/CI/reviewer completion → offer [Continue CI] [Deliver] [Refine]
+  6. **Periodic Audit (every 3 days)**: When uncommitted rule changes detected → offer [Commit Now] [Later] [View Details]
+
+- **Button Design**:
+  - 🟢 Green (success): Confirm/Allow/Continue
+  - 🔴 Red (danger): Cancel/Stop/Risky operations
+  - 🔵 Blue (primary): Main recommended option
+  - ⚪ Gray (secondary): Alternative options
+
+- **Constraints**:
+  1. Content must be presented BEFORE buttons (never buttons-only)
+  2. High-risk actions must explicitly state what will happen above buttons
+  3. Buttons expire after 15 minutes (requires re-trigger if timeout)
+  4. Typed replies override button clicks
+  5. Mode persistence rules still apply (confirm before each task if persistent)
+
+- **Fallback**: If Discord components unavailable, fall back to numbered list for typed selection.
