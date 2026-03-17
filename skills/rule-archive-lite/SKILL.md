@@ -1,4 +1,6 @@
 ---
+# 注意：本文件为归档快照，版本号体系锁定，不再更新编号
+# 新规则请直接写入 user-preferences/SKILL.md
 id: rule-archive-lite-snapshot
 type: core-system
 priority: medium

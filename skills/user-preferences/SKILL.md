@@ -107,17 +107,27 @@ When a rule affects both execution and traceability, update multiple layers toge
 - 禁止每轮预加载所有长文规则文件。
 - 仅当进入复杂路由（多步骤/多工具/高风险/需专项规则）时，按 `rules/INDEX.md` 动态读取所需细分文档。
 
+## Response Style Preference
+
+- **Default**: Standard (balanced)
+- **Format**: Conclusion (1 sentence) + Key Evidence (2-3 points) + Next Step (if applicable)
+- **Avoid**: Verbose replies unless explicitly requested
+- **Buttons**: Offer [View Details] or [Expand] for users who want more
+
 ## Discord Interactive Controls Preference
 
-- When user authorization, selection, confirmation, or mode switching is needed in Discord, **prefer clickable buttons/components over requiring typed replies**.
-- Priority use cases:
+- **Message Format (Mandatory)**: Use **separate messages** for content and buttons:
+  - Message 1: Pure text with full explanation/details
+  - Message 2: Pure buttons for selection/confirmation
+  - Never mix complex text blocks with buttons in a single message
+- **Priority use cases**:
   - authorization (allow / cancel)
   - option selection (plan A/B/C, choose skill, choose route)
   - workflow progression (continue / pause / direct apply / plan only)
   - acceptance level (仅到 G3 / 执行全闸门 / 加 reviewer)
   - mode switching (`default` / `strict` / `proactive` / `evolver` / `ralph`)
-- If the action is high-risk (delete / install / push / enable experimental high-autonomy mode), the button message must clearly state what will happen before the user clicks.
-- If buttons are unavailable or unsuitable in the current context, fall back to typed confirmation.
+- **High-risk actions** (delete / install / push / enable experimental high-autonomy mode): Must clearly state what will happen in the text message (Message 1) before showing buttons (Message 2).
+- **Fallback**: If buttons fail to render, automatically fall back to numbered list selection (reply with number 1-N).
 
 ## SYSTEM_BOOTSTRAP Maintenance Policy
 

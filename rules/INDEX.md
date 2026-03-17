@@ -2,67 +2,84 @@
 id: rule-index-registry
 type: core-system
 priority: high
-scope: [index, registry, rule, navigation, frontmatter]
-description: "规则注册表与导航中心，汇总所有文档的 Frontmatter 元数据供按需加载"
+scope: [index, registry, rule, navigation]
+description: 规则注册表与导航中心，汇总所有文档的 Frontmatter 元数据供按需加载
+last_updated: 2026-03-17
+auto_generated: true
 ---
 
-# 规则注册表（Frontmatter Registry）
+# 规则注册表 (Rule Registry)
 
-> **按需加载指引**：主进程默认只读取本 INDEX 和各文件的 Frontmatter，命中 scope 或匹配 description 意图时才加载全文。
+> 本文件由 `scripts/sync-index.py` 自动生成，请勿手动编辑。
+> 如需更新，运行：`python scripts/sync-index.py`
 
 ## 核心执行规则
 
-| id | type | priority | scope | description |
-|---|---|---|---|---|
-| rule-user-preferences-main | core-system | high | [user, preference, rule, execution, routing, mode] | 用户长期执行偏好与硬规则的主源（SSOT），包含路由、验收、模式、交互等核心执行策略 |
-| rule-agents-overview | core-system | high | [agent, session, startup, memory, bootstrap] | 工作区高层规则与代理启动指引，包含内存管理、红线和技能速查 |
-| rule-index-registry | core-system | high | [index, registry, rule, navigation, frontmatter] | 规则注册表与导航中心，汇总所有文档的 Frontmatter 元数据供按需加载 |
-| rule-archive-lite-snapshot | core-system | medium | [archive, history, snapshot, rule] | 规则历史归档快照，用于追溯和审计，非执行主源 |
-| rule-self-backup-audit | skill-detail | medium | [backup, audit, maintenance, drift] | 自我规则定期备份与漂移巡检方案，每3天执行一次一致性检查 |
+| id | type | priority | scope | description | path |
+|---|---|---|---|---|---|
+| rule-user-preferences-main | core-system | high | user, preference, rule... | 用户长期执行偏好与硬规则的主源（SSOT），包含路由、验收、模式、交互等核心执行策略 | skills/user-preferences/SKILL.md |
+| rule-index-registry | core-system | high | index, registry, rule... | 规则注册表与导航中心，汇总所有文档的 Frontmatter 元数据供按需加载 | rules/INDEX.md |
+| rule-agents-overview | core-system | high | agent, session, startup... | 工作区高层规则与代理启动指引，包含内存管理、红线和社交指南 | AGENTS.md |
+| rule-index-registry | core-system | high | index, registry, rule... | 规则注册表与导航中心，汇总所有文档的 Frontmatter 元数据供按需加载 | rules/INDEX.md |
+| rule-user-preferences-main | core-system | high | user, preference, rule... | 用户长期执行偏好与硬规则的主源（SSOT），包含路由、验收、模式、交互等核心执行策略 | skills/user-preferences/SKILL.md |
 
 ## 辅助配置文档
 
-| id | type | priority | scope | description |
-|---|---|---|---|---|
-| rule-system-bootstrap | core-system | medium | [bootstrap, startup, quickstart, agent] | 新代理快速启动入口，提供最小启动流程和规则优先级摘要 |
-| rule-user-profile | agent-profile | medium | [user, profile, identity, preference] | 用户画像与稳定偏好事实，包含称呼、长期关注点等 |
-| rule-tools-mappings | tool-spec | medium | [tools, environment, mapping, config, alias] | 环境特定映射与本地配置，包含路径、设备、主机、别名等 |
+| id | type | priority | scope | description | path |
+|---|---|---|---|---|---|
+| unknown | unknown | medium |  | Light change-control rules for configuration chang... | skills/change-control-lite/SKILL.md |
+| unknown | unknown | medium |  | Real-time voice conversations in Discord voice cha... | skills/discord-voice/SKILL.md |
+| unknown | unknown | medium |  | Use this skill whenever the user wants to create, ... | skills/docx-master/SKILL.md |
+| unknown | unknown | medium |  | Text-to-speech conversion using node-edge-tts npm ... | skills/edge-tts/SKILL.md |
+| unknown | unknown | medium |  | Helps users discover and install agent skills when... | skills/find-skills/SKILL.md |
+| unknown | unknown | medium |  | Multi-agent workflow framework using JSON tickets ... | skills/fis-architecture/SKILL.md |
+| unknown | unknown | medium |  | Convert documents and files to Markdown using mark... | skills/markdown-converter/SKILL.md |
+| unknown | unknown | medium |  | Multi search engine integration with 17 engines (8... | skills/multi-search-engine/SKILL.md |
+| unknown | unknown | medium |  | Work with Obsidian vaults (plain Markdown notes) a... | skills/obsidian/SKILL.md |
+| unknown | unknown | medium |  | Text-to-speech via OpenAI Audio Speech API. | skills/openai-tts/SKILL.md |
+| unknown | unknown | medium |  | Local speech-to-text with the Whisper CLI (no API ... | skills/openai-whisper/SKILL.md |
+| unknown | unknown | medium |  | Transcribe audio via OpenAI Audio Transcriptions A... | skills/openai-whisper-api/SKILL.md |
+| unknown | unknown | medium |  | Use this skill any time a .pptx file is involved i... | skills/pptx-master/SKILL.md |
+| unknown | unknown | medium |  | Transform AI agents from task-followers into proac... | skills/proactive-agent-lite/SKILL.md |
+| unknown | unknown | medium |  | Security-first skill vetting for AI agents. Use be... | skills/skill-vetter/SKILL.md |
+| unknown | unknown | medium |  | Manager skill that delegates all tasks to sub-agen... | skills/subagent-manager/SKILL.md |
+| unknown | unknown | medium |  | Summarize URLs or files with the summarize CLI (we... | skills/summarize/SKILL.md |
+| rule-self-backup-audit | skill-detail | medium | backup, audit, maintenance... | 自我规则定期备份与漂移巡检方案，每3天执行一次一致性检查 | rules/self-backup-audit-v1.md |
+| rule-system-bootstrap | core-system | medium | bootstrap, startup, quickstart... | 新代理快速启动入口，提供最小启动流程和规则优先级摘要 | SYSTEM_BOOTSTRAP.md |
+| rule-tools-mappings | tool-spec | medium | tools, environment, mapping... | 环境特定映射与本地配置，包含路径、设备、主机、别名等 | TOOLS.md |
+| rule-user-profile | agent-profile | medium | user, profile, identity... | 用户画像与稳定偏好事实，包含称呼、长期关注点等 | USER.md |
+| rule-self-backup-audit | skill-detail | medium | backup, audit, maintenance... | 自我规则定期备份与漂移巡检方案，每3天执行一次一致性检查 | rules/self-backup-audit-v1.md |
+| unknown | unknown | medium |  | Self-reflection + Self-criticism + Self-learning +... | self-improving/SKILL.md |
+| unknown | unknown | medium |  | Light change-control rules for configuration chang... | skills/change-control-lite/SKILL.md |
+| unknown | unknown | medium |  | Real-time voice conversations in Discord voice cha... | skills/discord-voice/SKILL.md |
+| unknown | unknown | medium |  | Use this skill whenever the user wants to create, ... | skills/docx-master/SKILL.md |
+| unknown | unknown | medium |  | Text-to-speech conversion using node-edge-tts npm ... | skills/edge-tts/SKILL.md |
+| unknown | unknown | medium |  | Helps users discover and install agent skills when... | skills/find-skills/SKILL.md |
+| unknown | unknown | medium |  | Multi-agent workflow framework using JSON tickets ... | skills/fis-architecture/SKILL.md |
+| unknown | unknown | medium |  | Convert documents and files to Markdown using mark... | skills/markdown-converter/SKILL.md |
+| unknown | unknown | medium |  | Multi search engine integration with 17 engines (8... | skills/multi-search-engine/SKILL.md |
+| unknown | unknown | medium |  | Work with Obsidian vaults (plain Markdown notes) a... | skills/obsidian/SKILL.md |
+| unknown | unknown | medium |  | Text-to-speech via OpenAI Audio Speech API. | skills/openai-tts/SKILL.md |
+| unknown | unknown | medium |  | Local speech-to-text with the Whisper CLI (no API ... | skills/openai-whisper/SKILL.md |
+| unknown | unknown | medium |  | Transcribe audio via OpenAI Audio Transcriptions A... | skills/openai-whisper-api/SKILL.md |
+| unknown | unknown | medium |  | Use this skill any time a .pptx file is involved i... | skills/pptx-master/SKILL.md |
+| unknown | unknown | medium |  | Transform AI agents from task-followers into proac... | skills/proactive-agent-lite/SKILL.md |
+| unknown | unknown | medium |  | Security-first skill vetting for AI agents. Use be... | skills/skill-vetter/SKILL.md |
+| unknown | unknown | medium |  | Manager skill that delegates all tasks to sub-agen... | skills/subagent-manager/SKILL.md |
+| unknown | unknown | medium |  | Summarize URLs or files with the summarize CLI (we... | skills/summarize/SKILL.md |
+| unknown | unknown | medium |  | Create distinctive, production-grade frontend inte... | tmp/skill_frontend_design_3/SKILL.md |
 
-## 规则优先级（高 → 低）
+## 按需加载指引
 
-1. 用户当轮明确指令
-2. `skills/user-preferences/SKILL.md` (rule-user-preferences-main)
-3. `AGENTS.md` (rule-agents-overview)
-4. `skills/rule-archive-lite/SKILL.md` (rule-archive-lite-snapshot)
-5. 其他文档
+主进程默认只读取本 INDEX 和各文件的 Frontmatter，命中 scope 或匹配 description 意图时才加载全文。
 
-## 文档路由速查
+### 快速路由
 
-- 需要"现在就怎么执行" → `skills/user-preferences/SKILL.md`
-- 需要"规则怎么来的/历史版本" → `skills/rule-archive-lite/SKILL.md`
-- 需要"用户身份/称呼/长期偏好" → `USER.md`
-- 需要"路径/设备/环境映射" → `TOOLS.md`
-- 需要"今天发生过什么" → `memory/YYYY-MM-DD.md`
-- 需要"专项规则细节" → `rules/` 对应文件
+- 代码任务 → 找 scope 含 `code` / `opencode` 的规则
+- 多步骤任务 → 找 scope 含 `manager` / `multi-step` 的规则
+- 调研任务 → 找 scope 含 `research` / `investigate` 的规则
+- 高风险任务 → 找 priority 为 `high` 且 scope 含 `review` 的规则
 
-## 变更联动原则（防漂移）
+---
 
-- 新增/修改**硬规则**：必改 `user-preferences` + 必留痕 `rule-archive-lite` + `memory/YYYY-MM-DD.md`
-- 仅当日临时约束：只写 `memory/YYYY-MM-DD.md`
-- 用户画像变化：更新 `USER.md`，若影响执行行为再同步 `user-preferences`
-- 环境/路径/设备变化：更新 `TOOLS.md`，若升格为硬约束再同步 `user-preferences`
-
-## 用户关键词速查
-
-- **路由**：`直答` / `走 manager` / `走 opencode` / `加 reviewer` / `开 CI`
-- **模式**：`切 strict` / `切 proactive` / `切 evolver` / `切 ralph` / `恢复 default`
-- **验收**：`仅到 G3` / `执行全闸门` / `跳过 CI（需理由）`
-
-## 维护说明
-
-本注册表仅在以下情况更新：
-- 新增/删除规则文档
-- 规则 Frontmatter 元数据变更
-- 规则优先级或路由关系变化
-
-日常规则内容变更无需修改本文件，只需确保各文档自身的 Frontmatter 准确即可。
+*最后同步时间: 2026-03-17 14:09:01*
