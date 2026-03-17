@@ -1,1 +1,33 @@
+# API Keys and Secrets
+examples/config.json
+config.json.local
+*.key
+*.secret
+
+# Logs
+*.log
+brain_llm_interactions.log
+actor_llm_interactions.log
+planner_llm_interactions.log
+
+# Temporary files
 .turix_tmp/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
