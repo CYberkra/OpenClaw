@@ -132,8 +132,14 @@ When a rule affects both execution and traceability, update multiple layers toge
 
 - **Message Format (Mandatory)**: Use **separate messages** for content and buttons:
   - Message 1: Pure text with full explanation/details
-  - Message 2: Pure buttons for selection/confirmation
+  - Message 2: Pure buttons for selection/confirmation (simplified format)
   - Never mix complex text blocks with buttons in a single message
+- **Button Format (Working)**: Use simplified structure only:
+  ```json
+  {"blocks": [{"type": "actions", "buttons": [...]}]}
+  ```
+  - Do NOT include "text" elements in the same message as buttons
+  - Do NOT use "accessory" or complex nested structures
 - **Priority use cases**:
   - authorization (allow / cancel)
   - option selection (plan A/B/C, choose skill, choose route)
