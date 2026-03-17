@@ -107,6 +107,20 @@ When a rule affects both execution and traceability, update multiple layers toge
 - 禁止每轮预加载所有长文规则文件。
 - 仅当进入复杂路由（多步骤/多工具/高风险/需专项规则）时，按 `rules/INDEX.md` 动态读取所需细分文档。
 
+## New Channel Rule Application Policy
+
+- **Default**: All new Discord channels created within this workspace automatically inherit the current rule system
+- **Scope**: Includes but not limited to:
+  - YAML Frontmatter + Lazy Loading mechanism
+  - Default routing table (v1)
+  - Acceptance gates (G1-G6)
+  - Workflow modes (default/strict/proactive/evolver/ralph)
+  - Intelligent interactive prompts (buttons)
+  - Response style (standard: conclusion + key evidence)
+  - Rule audit and health check procedures
+- **Exceptions**: Only if explicitly specified otherwise by user during channel creation
+- **Documentation**: New channels should reference `rules/INDEX.md` for rule navigation
+
 ## Response Style Preference
 
 - **Default**: Standard (balanced)
