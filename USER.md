@@ -1,3 +1,11 @@
+---
+id: rule-user-profile
+type: agent-profile
+priority: medium
+scope: [user, profile, identity, preference]
+description: "用户画像与稳定偏好事实，包含称呼、长期关注点等"
+---
+
 # USER.md - About Your Human
 
 _Learn about the person you're helping. Update this as you go._

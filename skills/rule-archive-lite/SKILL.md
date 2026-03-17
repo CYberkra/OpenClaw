@@ -1,6 +1,9 @@
 ---
-name: rule-archive-lite
-description: Persist user operating rules and execution constraints. Use when the user defines workflow rules (report cadence, evidence requirements, model policy, sub-agent policy) and asks to save/apply them across restarts.
+id: rule-archive-lite-snapshot
+type: core-system
+priority: medium
+scope: [archive, history, snapshot, rule]
+description: "规则历史归档快照，用于追溯和审计，非执行主源"
 ---
 
 # Rule Archive Lite

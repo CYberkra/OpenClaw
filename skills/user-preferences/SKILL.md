@@ -1,6 +1,9 @@
 ---
-name: user-preferences
-description: User-specific operating rules and response requirements for baiiy1. Use for any task or response in this workspace, especially GPR work, Discord/Telegram messaging, image outputs, or system configuration.
+id: rule-user-preferences-main
+type: core-system
+priority: high
+scope: [user, preference, rule, execution, routing, mode]
+description: "用户长期执行偏好与硬规则的主源（SSOT），包含路由、验收、模式、交互等核心执行策略"
 ---
 
 # User Preferences

@@ -1,3 +1,11 @@
+---
+id: rule-agents-overview
+type: core-system
+priority: high
+scope: [agent, session, startup, memory, bootstrap]
+description: "工作区高层规则与代理启动指引，包含内存管理、红线和技能速查"
+---
+
 # AGENTS.md - Your Workspace
 
 This folder is home. Treat it that way.

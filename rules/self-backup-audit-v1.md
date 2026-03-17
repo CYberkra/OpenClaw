@@ -1,3 +1,11 @@
+---
+id: rule-self-backup-audit
+type: skill-detail
+priority: medium
+scope: [backup, audit, maintenance, drift]
+description: "自我规则定期备份与漂移巡检方案，每3天执行一次一致性检查"
+---
+
 # 自我规则定期备份与巡检方案 v1（轻量）
 
 目标：在“事件驱动备份”之外，补一个低维护的定期一致性检查，防止规则漂移与入口过时。

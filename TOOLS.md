@@ -1,3 +1,11 @@
+---
+id: rule-tools-mappings
+type: tool-spec
+priority: medium
+scope: [tools, environment, mapping, config, alias]
+description: "环境特定映射与本地配置，包含路径、设备、主机、别名等"
+---
+
 # TOOLS.md - Local Notes
 
 Skills define _how_ tools work. This file is for _your_ specifics — the stuff that's unique to your setup.

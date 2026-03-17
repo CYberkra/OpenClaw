@@ -1,3 +1,11 @@
+---
+id: rule-system-bootstrap
+type: core-system
+priority: medium
+scope: [bootstrap, startup, quickstart, agent]
+description: "新代理快速启动入口，提供最小启动流程和规则优先级摘要"
+---
+
 # SYSTEM_BOOTSTRAP
 
 > 目标：给新 agent 的**快速入口**（不是全量手册）。
