@@ -14,7 +14,7 @@ _Learn about the person you're helping. Update this as you go._
 - **What to call them:** 宝宝
 - **Pronouns:** _(optional)_
 - **Timezone:** Asia/Shanghai
-- **Notes:** 偏好任务优先级：QMD > GPR > 语音；要求全平台同步。
+- **Notes:** 要求全平台同步。
 
 ## Context
 
