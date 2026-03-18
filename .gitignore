@@ -7,3 +7,4 @@ reports/screenshots/
 reports/*.xwd
 __pycache__/
 *.pyc
+skills/turix-cua/venv/

@@ -48,6 +48,50 @@
     "obsidian": {
       "version": "1.0.0",
       "installedAt": 1772305181469
+    },
+    "ontology": {
+      "version": "1.0.4",
+      "installedAt": 1773764410527
+    },
+    "skill-creator": {
+      "version": "0.1.0",
+      "installedAt": 1773765241776
+    },
+    "code-review": {
+      "version": "1.0.0",
+      "installedAt": 1773769118404
+    },
+    "github-actions-generator": {
+      "version": "1.0.0",
+      "installedAt": 1773769124403
+    },
+    "documentation": {
+      "version": "1.0.0",
+      "installedAt": 1773769124751
+    },
+    "python-dataviz": {
+      "version": "1.0.0",
+      "installedAt": 1773769124879
+    },
+    "project-management-2": {
+      "version": "0.1.0",
+      "installedAt": 1773769132143
+    },
+    "github-issue-resolver": {
+      "version": "1.0.0",
+      "installedAt": 1773769142167
+    },
+    "python-script-generator": {
+      "version": "1.0.0",
+      "installedAt": 1773769149404
+    },
+    "lsp-python": {
+      "version": "1.1.0",
+      "installedAt": 1773769149569
+    },
+    "self-improving-agent": {
+      "version": "3.0.5",
+      "installedAt": 1773810002740
     }
   }
 }

@@ -1,0 +1,54 @@
+types:
+  Person:
+    required: [name]
+    properties:
+      name: { type: string }
+      email: { type: string, format: email, optional: true }
+      role: { type: string, optional: true }
+
+  Project:
+    required: [name, status]
+    properties:
+      name: { type: string }
+      status: { type: enum, values: [planning, active, suspended, completed] }
+      owner_id: { type: string, optional: true } # 关联 Person ID
+      goals: { type: array, items: { type: string }, optional: true }
+
+  Task:
+    required: [title, status, project_id]
+    properties:
+      title: { type: string }
+      status: { type: enum, values: [todo, in_progress, blocked, done] }
+      priority: { type: enum, values: [low, medium, high], optional: true }
+      due_date: { type: string, format: date, optional: true }
+      assignee_id: { type: string, optional: true } # 关联 Person ID
+      project_id: { type: string } # 关联 Project ID
+
+  Document:
+    required: [title, project_id]
+    properties:
+      title: { type: string }
+      path: { type: string, optional: true }
+      url: { type: string, format: uri, optional: true }
+      project_id: { type: string } # 关联 Project ID
+
+relations:
+  has_owner:
+    from_types: [Project]
+    to_types: [Person]
+    cardinality: many_to one
+
+  has_task:
+    from_types: [Project]
+    to_types: [Task]
+    cardinality: one_to_many
+
+  assigned_to:
+    from_types: [Task]
+    to_types: [Person]
+    cardinality: many_to_one
+
+  related_to_document:
+    from_types: [Task]
+    to_types: [Document]
+    cardinality: many_to_many
