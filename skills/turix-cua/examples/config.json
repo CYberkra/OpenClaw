@@ -1,0 +1,43 @@
+{
+    "agent": {
+        "task": "",
+        "use_plan": true,
+        "use_skills": true,
+        "skills_dir": "skills",
+        "skills_max_chars": 4000,
+        "max_steps": 100,
+        "max_actions_per_step": 5,
+        "force_stop_hotkey": "ctrl+shift+2",
+        "memory_budget": 2000,
+        "resume": false,
+        "agent_id": ""
+    },
+    "brain_llm": {
+        "provider": "openai",
+        "model_name": "gpt-4o",
+        "api_key": "YOUR_API_KEY_HERE",
+        "base_url": "https://api.openai.com/v1",
+        "temperature": 0.3
+    },
+    "actor_llm": {
+        "provider": "openai",
+        "model_name": "gpt-4o-mini",
+        "api_key": "YOUR_API_KEY_HERE",
+        "base_url": "https://api.openai.com/v1",
+        "temperature": 0.3
+    },
+    "memory_llm": {
+        "provider": "openai",
+        "model_name": "gpt-4o-mini",
+        "api_key": "YOUR_API_KEY_HERE",
+        "base_url": "https://api.openai.com/v1",
+        "temperature": 0.3
+    },
+    "planner_llm": {
+        "provider": "openai",
+        "model_name": "gpt-4o",
+        "api_key": "YOUR_API_KEY_HERE",
+        "base_url": "https://api.openai.com/v1",
+        "temperature": 0.3
+    }
+}
