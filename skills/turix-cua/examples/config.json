@@ -15,28 +15,28 @@
     "brain_llm": {
         "provider": "openai",
         "model_name": "gpt-4o",
-        "api_key": "YOUR_API_KEY_HERE",
+        "api_key": "sk-M5Gd7bXZr34iGtjrDr78xaYGgu82TabzVmO8sBzGcI6ZJyYN",
         "base_url": "https://api.openai.com/v1",
         "temperature": 0.3
     },
     "actor_llm": {
         "provider": "openai",
         "model_name": "gpt-4o-mini",
-        "api_key": "YOUR_API_KEY_HERE",
+        "api_key": "sk-M5Gd7bXZr34iGtjrDr78xaYGgu82TabzVmO8sBzGcI6ZJyYN",
         "base_url": "https://api.openai.com/v1",
         "temperature": 0.3
     },
     "memory_llm": {
         "provider": "openai",
         "model_name": "gpt-4o-mini",
-        "api_key": "YOUR_API_KEY_HERE",
+        "api_key": "sk-M5Gd7bXZr34iGtjrDr78xaYGgu82TabzVmO8sBzGcI6ZJyYN",
         "base_url": "https://api.openai.com/v1",
         "temperature": 0.3
     },
     "planner_llm": {
         "provider": "openai",
         "model_name": "gpt-4o",
-        "api_key": "YOUR_API_KEY_HERE",
+        "api_key": "sk-M5Gd7bXZr34iGtjrDr78xaYGgu82TabzVmO8sBzGcI6ZJyYN",
         "base_url": "https://api.openai.com/v1",
         "temperature": 0.3
     }
