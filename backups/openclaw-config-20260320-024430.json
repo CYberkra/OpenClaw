@@ -1,0 +1,61 @@
+{
+  "auth": {
+    "profiles": {
+      "kimi-coding:default": {
+        "provider": "kimi-coding",
+        "mode": "api_key"
+      }
+    }
+  },
+  "gateway": {
+    "port": 18789,
+    "mode": "local",
+    "auth": {
+      "mode": "token",
+      "token": "clawx-1640191b577412615c7d90b74db8e3d5"
+    },
+    "controlUi": {
+      "allowedOrigins": [
+        "file://"
+      ]
+    }
+  },
+  "models": {
+    "providers": {
+      "kimi-coding": {
+        "api": "openai-completions",
+        "apiKey": "sk-kimi-UiakEaBA1fA0wfPG9wLfvFu1JaErb8337nwKUbYfSrxVtPsZfdlkjCkJfoeCLqDe",
+        "baseUrl": "https://api.kimi.com/coding/v1",
+        "models": [
+          {
+            "id": "k2p5",
+            "name": "Kimi K2.5",
+            "contextWindow": 262144,
+            "maxTokens": 32768
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openai-codex/gpt-5.3-codex",
+        "fallbacks": []
+      }
+    }
+  },
+  "commands": {
+    "restart": true
+  },
+  "tools": {
+    "profile": "full",
+    "sessions": {
+      "visibility": "all"
+    }
+  },
+  "browser": {
+    "enabled": true,
+    "defaultProfile": "openclaw"
+  }
+}
