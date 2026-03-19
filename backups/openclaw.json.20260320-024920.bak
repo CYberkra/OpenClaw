@@ -1,0 +1,70 @@
+{
+  "browser": {
+    "enabled": true,
+    "defaultProfile": "openclaw"
+  },
+  "auth": {
+    "profiles": {
+      "kimi-coding:default": {
+        "provider": "kimi-coding",
+        "mode": "api_key"
+      }
+    }
+  },
+  "models": {
+    "providers": {
+      "kimi-coding": {
+        "baseUrl": "https://api.kimi.com/coding/v1",
+        "apiKey": "sk-kimi-UiakEaBA1fA0wfPG9wLfvFu1JaErb8337nwKUbYfSrxVtPsZfdlkjCkJfoeCLqDe",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "k2p5",
+            "name": "Kimi K2.5",
+            "contextWindow": 262144,
+            "maxTokens": 32768
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openai-codex/gpt-5.3-codex",
+        "fallbacks": [
+          "kimi-coding/k2p5"
+        ]
+      }
+    }
+  },
+  "tools": {
+    "profile": "full",
+    "sessions": {
+      "visibility": "all"
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "gateway": {
+    "port": 18789,
+    "mode": "local",
+    "controlUi": {
+      "allowedOrigins": [
+        "file://"
+      ]
+    },
+    "auth": {
+      "mode": "token",
+      "token": "clawx-1640191b577412615c7d90b74db8e3d5"
+    }
+  },
+  "meta": {
+    "lastTouchedVersion": "2026.3.13",
+    "lastTouchedAt": "2026-03-19T18:44:39.661Z"
+  }
+}
