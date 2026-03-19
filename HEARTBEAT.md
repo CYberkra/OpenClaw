@@ -29,11 +29,13 @@ bash scripts/disk-monitor.sh
 
 自动执行：
 ```bash
-git add memory/ rules/ skills/ docs/ examples/
+git add memory/ rules/ skills/ docs/ examples/ reports/
 git commit -m "Sync: OpenClaw auto-archive $(date '+%Y-%m-%d')"
 git push memory main
 git push origin main
 ```
+
+**注意**：memory/ 目录现已纳入 GitHub 备份（2026-03-19 起）
 
 汇报格式：
 ```
