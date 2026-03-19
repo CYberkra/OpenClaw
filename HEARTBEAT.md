@@ -43,6 +43,40 @@ git push origin main
 - Commit: <hash>
 ```
 
+## 每周自动化任务（周日）
+
+### 周报生成
+```bash
+bash scripts/generate-weekly-report.sh
+```
+- 汇总本周记忆文件
+- 生成周报文档
+- 自动推送到 GitHub
+
+## 每月自动化任务（1号）
+
+### Memory.md 整理
+```bash
+bash scripts/archive-memory.sh
+```
+- 备份当前 Memory.md
+- 统计内容增长
+- 检查重复主题
+- 提供归档建议
+
+## 每季度自动化任务
+
+### 旧文件归档
+```bash
+bash scripts/quarterly-archive.sh
+```
+- 归档90天前的 memory 文件
+- 归档60天前的报告
+- 清理30天前的 tmp 文件
+- 生成归档清单
+
+---
+
 ## 手动检查项（需要时）
 
 - [ ] 日历事件（未来 24-48h）
@@ -61,4 +95,7 @@ git push origin main
 |------|------|------|------|
 | auto-cleanup.sh | 清理临时文件 | 每日 | scripts/ |
 | disk-monitor.sh | 磁盘空间监控 | 每日 | scripts/ |
+| generate-weekly-report.sh | 生成周报 | 每周 | scripts/ |
+| archive-memory.sh | 整理 Memory.md | 每月 | scripts/ |
+| quarterly-archive.sh | 季度归档 | 每季度 | scripts/ |
 
