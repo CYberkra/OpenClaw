@@ -35,7 +35,10 @@ git push memory main
 git push origin main
 ```
 
-**注意**：memory/ 目录现已纳入 GitHub 备份（2026-03-19 起）
+**备份仓库配置**（2026-03-19 更新）：
+- **主备份**: `memory` → https://github.com/CYberkra/openclaw-memory （专属仓库）
+- **备用**: `origin` → https://github.com/CYberkra/OpenClaw
+- **旧备份**: `old-memory` → https://github.com/CYberkra/Openclaw_memory （保留历史）
 
 汇报格式：
 ```
