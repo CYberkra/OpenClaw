@@ -1,67 +1,35 @@
-# HEARTBEAT
+# HEARTBEAT.md
 
-## Periodic Tasks
+## 自动化检查（每 3 天）
 
-- Every 2 hours: report system status to Discord channel: 1479758987728650445
-- Include: gateway status (running/port), disk usage summary, active subagents count, task queue summary, queued tasks if any, last commit hash if any.
+- [ ] Git 未推送的 memory 变更
+- [ ] 未归档的规则更新
+- [ ] Skill 更新/新增
 
-## Post-Build Checks (After GPR_GUI build)
+## 发现未推送变更时
 
-- [ ] **Release Version Tag** - Verify EXE filename or metadata contains version number per user rule (03-09)
-
-## Checklist (Rotate Through These)
-
-### Daily Checks (2-4 times per day)
-- [ ] **Gateway Health** - Check main gateway (port 18890) status
-- [ ] **Disk Usage** - Monitor workspace disk usage, warn if >80%
-- [ ] **Active Subagents** - Count and report active subagents
-- [ ] **Task Queue** - Check for queued tasks, report if any pending
-- [ ] **Token Efficiency** - Monitor daily token consumption trend, alert if >50% spike
-- [ ] **GPR Isolation Zone** - Check `isolated/GPR_GUI_evolve/` for pending optimizations ready to merge
-
-### Weekly Checks (every few days)
-- [ ] **Memory Maintenance** - Review recent `memory/YYYY-MM-DD.md` files, update `MEMORY.md`
-- [ ] **Project Sync** - Check `repos/` for uncommitted changes, remind if stale
-- [ ] **Log Cleanup** - Review and archive old logs if needed
-- [ ] **Skill Sync** - Check subagent-manager skill version consistency between `repos/openclaw-skill-subagent-manager/` and `skills/`
-- [ ] **GPR Performance Baseline** - Check isolated optimization results haven't regressed (compare to 236s→57s, 223ms→7ms benchmarks)
-- [ ] **Rule Backup & Drift Audit** - Every 3 days, review core rule files (`AGENTS.md`, `rules/INDEX.md`, `SYSTEM_BOOTSTRAP.md`, `skills/user-preferences/SKILL.md`, `skills/rule-archive-lite/SKILL.md`, `HEARTBEAT.md`) for drift, archive gaps, and commit/push needs
-- [ ] **Rule Backup & Drift Audit (7-14 days)** - Follow `rules/self-backup-audit-v1.md` for lightweight rule consistency check + optional backup snapshot + commit/push decision
-
-## When to Report (Not Just HEARTBEAT_OK)
-
-Report actively when:
-- Gateway is down or unstable
-- Disk usage >80%
-- Tasks are queued for >30 minutes
-- Uncommitted changes in repos for >3 days
-- Important events logged in recent memory files
-- Token consumption spikes >50% vs baseline
-- GPR isolation zone has completed optimization ready for merge
-- EXE release uploaded without version tag
-- Skill version mismatch detected
-
-## State Tracking
-
-Track last check times and baselines in `memory/heartbeat-state.json`:
-
-```json
-{
-  "lastChecks": {
-    "gateway": null,
-    "disk": null,
-    "subagents": null,
-    "queue": null,
-    "memory": null,
-    "token": null,
-    "isolation": null,
-    "skillSync": null,
-    "perfBaseline": null
-  },
-  "baselines": {
-    "tokenDailyAvg": null,
-    "gprOptRuntime": 57.42,
-    "gprDepthConvert": 7.00
-  }
-}
+自动执行：
+```bash
+git add memory/ rules/ skills/
+git commit -m "Sync: OpenClaw auto-archive $(date +%Y-%m-%d)"
+git push memory main
+git push origin main
 ```
+
+汇报格式：
+```
+已自动推送归档：
+- memory/YYYY-MM-DD.md（新增 X 条）
+- 规则更新（Y 处变更）
+- Commit: <hash>
+```
+
+## 手动检查项
+
+- [ ] 日历事件（未来 24-48h）
+- [ ] 邮件/通知
+- [ ] 天气（如需外出）
+
+## 无任务时
+
+回复：HEARTBEAT_OK

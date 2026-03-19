@@ -77,6 +77,44 @@ When a rule affects both execution and traceability, update multiple layers toge
 - User profile change that affects execution → `USER.md` + `user-preferences` (if it changes behavior)
 - Project workflow change → project-local docs/rules first; only elevate to workspace-level files if it generalizes across projects
 
+### 11) 模式精简规则 v1
+
+**可用模式**：default（默认）/ strict / proactive / evolver / ralph
+
+**使用频率统计**（基于历史数据）：
+- `default`: 90% 场景
+- `strict`: 5% 场景（高风险任务）
+- `proactive`: 3% 场景（需要主动建议）
+- `evolver`: 1% 场景（自我改进实验）
+- `ralph`: 1% 场景（特定实验）
+
+**简化策略**：
+- **90% 任务用 default**，无需切换
+- **高风险/关键任务用 strict**（用户明确指令）
+- **其他模式仅在明确请求时启用**，默认不推荐
+
+**模式冲突优先级**：`strict > ralph > evolver > proactive > default`
+
+---
+
+### 12) 心跳任务自动化规则 v1
+
+**自动检查项**（每 3 天）：
+- [ ] GitHub 未推送的 memory 变更
+- [ ] 未归档的规则更新
+- [ ] Skill 更新/新增
+
+**自动执行**：
+- 检测到未推送变更 → 自动 commit + push
+- 汇报："已自动推送 X 条未归档变更"
+
+**手动检查项**（需用户触发）：
+- 日历检查
+- 邮件检查
+- 天气检查
+
+---
+
 ## Workflow Clarifications v1.1（执行细化）
 
 1) 角色边界：`subagent_manager` 负责拆解编排；`opencode` 为默认代码执行器；`coder` 仅在 opencode 不可用/失败或明确指定时兜底。
