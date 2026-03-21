@@ -1,0 +1,328 @@
+{
+  "summary": {
+    "n_queries": 12,
+    "embed_hit1": 2,
+    "embed_hit3": 4,
+    "base_hit1": 3,
+    "base_hit3": 3,
+    "embed_avg_ms": 22.16,
+    "base_avg_ms": 0.0209
+  },
+  "rows": [
+    {
+      "id": "Q1",
+      "theme": "GPR",
+      "query": "GPR GUI 的仓库路径和默认示例数据是什么？",
+      "expect": "memory/ops-playbook.md",
+      "embed_top": [
+        "viking://resources/openclaw_eval_20260311/reports_GPR_next_steps_roadmap_2026-03-08/GPR_GUI_与处理流程下一阶段路线图深度调研版/GPR_GUI_与处理流程下一阶段路线图深度调研版_5more.md",
+        "viking://resources/openclaw_eval_20260311/memory_ops-playbook/memory__ops-playbook.md",
+        "viking://resources/openclaw_eval_20260311/reports_GPR_技术报告_2026-03-02/reports__GPR_技术报告_2026-03-02.md"
+      ],
+      "embed_scores": [
+        0.6475495576858521,
+        0.612813663482666,
+        0.6115312814712525
+      ],
+      "embed_hit1": 0,
+      "embed_hit3": 1,
+      "embed_subj": "中",
+      "embed_ms": 30.89,
+      "base_top": [
+        "memory/ops-playbook.md"
+      ],
+      "base_hit1": 1,
+      "base_hit3": 1,
+      "base_subj": "高",
+      "base_ms": 0.016
+    },
+    {
+      "id": "Q2",
+      "theme": "运维",
+      "query": "heartbeat 需要包含哪些状态项？",
+      "expect": "memory/ops-playbook.md",
+      "embed_top": [
+        "viking://resources/openclaw_eval_20260311/AGENTS/AGENTSmd_-_Your_Workspace/Heartbeats_-_Be_Proactive.md",
+        "viking://resources/openclaw_eval_20260311/reports_GPR_next_steps_roadmap_2026-03-08/GPR_GUI_与处理流程下一阶段路线图深度调研版/P2中期能力建设决定上限_6more.md",
+        "viking://resources/openclaw_eval_20260311/reports_GPR_next_steps_roadmap_2026-03-08/GPR_GUI_与处理流程下一阶段路线图深度调研版/5_最终建议一句话.md"
+      ],
+      "embed_scores": [
+        0.6568184852600097,
+        0.6299902200698853,
+        0.6255131483078002
+      ],
+      "embed_hit1": 0,
+      "embed_hit3": 0,
+      "embed_subj": "中",
+      "embed_ms": 37.77,
+      "base_top": [
+        "memory/ops-playbook.md"
+      ],
+      "base_hit1": 1,
+      "base_hit3": 1,
+      "base_subj": "高",
+      "base_ms": 0.0375
+    },
+    {
+      "id": "Q3",
+      "theme": "课程",
+      "query": "文献精读报告里总结了哪些处理算法？",
+      "expect": "reports/GPR_文献精读报告_2026-03-02.md",
+      "embed_top": [
+        "viking://resources/openclaw_eval_20260311/reports_GPR_next_steps_roadmap_2026-03-08/GPR_GUI_与处理流程下一阶段路线图深度调研版/P2中期能力建设决定上限_6more.md",
+        "viking://resources/openclaw_eval_20260311/reports_GPR_next_steps_roadmap_2026-03-08/GPR_GUI_与处理流程下一阶段路线图深度调研版/5_最终建议一句话.md",
+        "viking://resources/openclaw_eval_20260311/reports_GPR_技术报告_2026-03-02/reports__GPR_技术报告_2026-03-02.md"
+      ],
+      "embed_scores": [
+        0.6620062589645386,
+        0.6476191997528076,
+        0.6330925226211548
+      ],
+      "embed_hit1": 0,
+      "embed_hit3": 0,
+      "embed_subj": "中",
+      "embed_ms": 22.1,
+      "base_top": [],
+      "base_hit1": 0,
+      "base_hit3": 0,
+      "base_subj": "低",
+      "base_ms": 0.025
+    },
+    {
+      "id": "Q4",
+      "theme": "GPR",
+      "query": "下一步路线图中，短期和中期重点分别是什么？",
+      "expect": "reports/GPR_next_steps_roadmap_2026-03-08.md",
+      "embed_top": [
+        "viking://resources/openclaw_eval_20260311/reports_GPR_next_steps_roadmap_2026-03-08/GPR_GUI_与处理流程下一阶段路线图深度调研版/5_最终建议一句话.md",
+        "viking://resources/openclaw_eval_20260311/reports_GPR_next_steps_roadmap_2026-03-08/GPR_GUI_与处理流程下一阶段路线图深度调研版/P2中期能力建设决定上限_6more.md",
+        "viking://resources/openclaw_eval_20260311/reports_GPR_技术报告_2026-03-02/reports__GPR_技术报告_2026-03-02.md"
+      ],
+      "embed_scores": [
+        0.6417634963989258,
+        0.6228201627731323,
+        0.5979010343551636
+      ],
+      "embed_hit1": 1,
+      "embed_hit3": 1,
+      "embed_subj": "高",
+      "embed_ms": 19.89,
+      "base_top": [],
+      "base_hit1": 0,
+      "base_hit3": 0,
+      "base_subj": "低",
+      "base_ms": 0.0178
+    },
+    {
+      "id": "Q5",
+      "theme": "技能管理",
+      "query": "change-control-lite 技能主要用于什么场景？",
+      "expect": "skills/change-control-lite/SKILL.md",
+      "embed_top": [
+        "viking://resources/openclaw_eval_20260311/reports_GPR_next_steps_roadmap_2026-03-08/GPR_GUI_与处理流程下一阶段路线图深度调研版/GPR_GUI_与处理流程下一阶段路线图深度调研版_5more.md",
+        "viking://resources/openclaw_eval_20260311/reports_GPR_next_steps_roadmap_2026-03-08/GPR_GUI_与处理流程下一阶段路线图深度调研版/P2中期能力建设决定上限_6more.md",
+        "viking://resources/openclaw_eval_20260311/memory_2026-03-11/memory__2026-03-11.md"
+      ],
+      "embed_scores": [
+        0.5941030979156494,
+        0.5876289367675781,
+        0.5875799417495727
+      ],
+      "embed_hit1": 0,
+      "embed_hit3": 0,
+      "embed_subj": "中",
+      "embed_ms": 19.52,
+      "base_top": [],
+      "base_hit1": 0,
+      "base_hit3": 0,
+      "base_subj": "低",
+      "base_ms": 0.0197
+    },
+    {
+      "id": "Q6",
+      "theme": "技能管理",
+      "query": "如果要处理 Word 文档，应该用哪个 skill？",
+      "expect": "skills/docx-master/SKILL.md",
+      "embed_top": [
+        "viking://resources/openclaw_eval_20260311/reports_GPR_next_steps_roadmap_2026-03-08/GPR_GUI_与处理流程下一阶段路线图深度调研版/5_最终建议一句话.md",
+        "viking://resources/openclaw_eval_20260311/reports_GPR_next_steps_roadmap_2026-03-08/GPR_GUI_与处理流程下一阶段路线图深度调研版/P2中期能力建设决定上限_6more.md",
+        "viking://resources/openclaw_eval_20260311/reports_GPR_技术报告_2026-03-02/reports__GPR_技术报告_2026-03-02.md"
+      ],
+      "embed_scores": [
+        0.6245264768600464,
+        0.6184172868728638,
+        0.6161559104919434
+      ],
+      "embed_hit1": 0,
+      "embed_hit3": 0,
+      "embed_subj": "中",
+      "embed_ms": 18.75,
+      "base_top": [],
+      "base_hit1": 0,
+      "base_hit3": 0,
+      "base_subj": "低",
+      "base_ms": 0.0161
+    },
+    {
+      "id": "Q7",
+      "theme": "技能管理",
+      "query": "discord-voice 技能的能力是什么？",
+      "expect": "skills/discord-voice/SKILL.md",
+      "embed_top": [
+        "viking://resources/openclaw_eval_20260311/USER/USER.md",
+        "viking://resources/openclaw_eval_20260311/AGENTS/AGENTSmd_-_Your_Workspace/Group_Chats.md",
+        "viking://resources/openclaw_eval_20260311/memory_ops-playbook/memory__ops-playbook.md"
+      ],
+      "embed_scores": [
+        0.6044638156890869,
+        0.6017358779907227,
+        0.5896403551101684
+      ],
+      "embed_hit1": 0,
+      "embed_hit3": 0,
+      "embed_subj": "中",
+      "embed_ms": 19.53,
+      "base_top": [],
+      "base_hit1": 0,
+      "base_hit3": 0,
+      "base_subj": "低",
+      "base_ms": 0.0244
+    },
+    {
+      "id": "Q8",
+      "theme": "运维",
+      "query": "复杂任务默认应该怎么执行？",
+      "expect": "memory/ops-playbook.md",
+      "embed_top": [
+        "viking://resources/openclaw_eval_20260311/reports_GPR_next_steps_roadmap_2026-03-08/GPR_GUI_与处理流程下一阶段路线图深度调研版/5_最终建议一句话.md",
+        "viking://resources/openclaw_eval_20260311/reports_GPR_next_steps_roadmap_2026-03-08/GPR_GUI_与处理流程下一阶段路线图深度调研版/P2中期能力建设决定上限_6more.md",
+        "viking://resources/openclaw_eval_20260311/reports_GPR_技术报告_2026-03-02/reports__GPR_技术报告_2026-03-02.md"
+      ],
+      "embed_scores": [
+        0.6434768199920654,
+        0.6393841505050659,
+        0.633748459815979
+      ],
+      "embed_hit1": 0,
+      "embed_hit3": 0,
+      "embed_subj": "中",
+      "embed_ms": 20.75,
+      "base_top": [
+        "memory/ops-playbook.md",
+        "memory/2026-03-11.md"
+      ],
+      "base_hit1": 1,
+      "base_hit3": 1,
+      "base_subj": "高",
+      "base_ms": 0.0175
+    },
+    {
+      "id": "Q9",
+      "theme": "QMD/优先级",
+      "query": "用户偏好的任务优先级顺序是什么？",
+      "expect": "USER.md",
+      "embed_top": [
+        "viking://resources/openclaw_eval_20260311/reports_GPR_next_steps_roadmap_2026-03-08/GPR_GUI_与处理流程下一阶段路线图深度调研版/P2中期能力建设决定上限_6more.md",
+        "viking://resources/openclaw_eval_20260311/reports_GPR_next_steps_roadmap_2026-03-08/GPR_GUI_与处理流程下一阶段路线图深度调研版/5_最终建议一句话.md",
+        "viking://resources/openclaw_eval_20260311/reports_GPR_技术报告_2026-03-02/reports__GPR_技术报告_2026-03-02.md"
+      ],
+      "embed_scores": [
+        0.6537823677062988,
+        0.6511433362960816,
+        0.6339679718017578
+      ],
+      "embed_hit1": 0,
+      "embed_hit3": 0,
+      "embed_subj": "中",
+      "embed_ms": 17.83,
+      "base_top": [
+        "memory/ops-playbook.md",
+        "MEMORY.md"
+      ],
+      "base_hit1": 0,
+      "base_hit3": 0,
+      "base_subj": "中",
+      "base_ms": 0.0193
+    },
+    {
+      "id": "Q10",
+      "theme": "Agent规范",
+      "query": "什么时候应该保持安静并返回 HEARTBEAT_OK？",
+      "expect": "AGENTS.md",
+      "embed_top": [
+        "viking://resources/openclaw_eval_20260311/AGENTS/AGENTSmd_-_Your_Workspace/Heartbeats_-_Be_Proactive.md",
+        "viking://resources/openclaw_eval_20260311/reports_GPR_next_steps_roadmap_2026-03-08/GPR_GUI_与处理流程下一阶段路线图深度调研版/P2中期能力建设决定上限_6more.md",
+        "viking://resources/openclaw_eval_20260311/reports_GPR_next_steps_roadmap_2026-03-08/GPR_GUI_与处理流程下一阶段路线图深度调研版/5_最终建议一句话.md"
+      ],
+      "embed_scores": [
+        0.6676275253295898,
+        0.6581437110900878,
+        0.6563969850540161
+      ],
+      "embed_hit1": 1,
+      "embed_hit3": 1,
+      "embed_subj": "高",
+      "embed_ms": 18.94,
+      "base_top": [
+        "memory/ops-playbook.md",
+        "memory/2026-03-11.md"
+      ],
+      "base_hit1": 0,
+      "base_hit3": 0,
+      "base_subj": "中",
+      "base_ms": 0.0196
+    },
+    {
+      "id": "Q11",
+      "theme": "技能管理",
+      "query": "auto-project-launcher skill 是做什么的？",
+      "expect": "skills/auto-project-launcher/SKILL.md",
+      "embed_top": [
+        "viking://resources/openclaw_eval_20260311/memory_ops-playbook/memory__ops-playbook.md",
+        "viking://resources/openclaw_eval_20260311/AGENTS/AGENTSmd_-_Your_Workspace/Hard_Rules_User_Enforced_2more.md",
+        "viking://resources/openclaw_eval_20260311/memory_2026-03-11/memory__2026-03-11.md"
+      ],
+      "embed_scores": [
+        0.5527123212814331,
+        0.5388104438781739,
+        0.5383066177368164
+      ],
+      "embed_hit1": 0,
+      "embed_hit3": 0,
+      "embed_subj": "中",
+      "embed_ms": 19.29,
+      "base_top": [],
+      "base_hit1": 0,
+      "base_hit3": 0,
+      "base_subj": "低",
+      "base_ms": 0.0205
+    },
+    {
+      "id": "Q12",
+      "theme": "GPR",
+      "query": "技术报告里提到的实验目标是什么？",
+      "expect": "reports/GPR_技术报告_2026-03-02.md",
+      "embed_top": [
+        "viking://resources/openclaw_eval_20260311/reports_GPR_next_steps_roadmap_2026-03-08/GPR_GUI_与处理流程下一阶段路线图深度调研版/5_最终建议一句话.md",
+        "viking://resources/openclaw_eval_20260311/reports_GPR_next_steps_roadmap_2026-03-08/GPR_GUI_与处理流程下一阶段路线图深度调研版/P2中期能力建设决定上限_6more.md",
+        "viking://resources/openclaw_eval_20260311/reports_GPR_技术报告_2026-03-02/reports__GPR_技术报告_2026-03-02.md"
+      ],
+      "embed_scores": [
+        0.6298761129379272,
+        0.6147606611251831,
+        0.6094441652297974
+      ],
+      "embed_hit1": 0,
+      "embed_hit3": 1,
+      "embed_subj": "中",
+      "embed_ms": 20.64,
+      "base_top": [
+        "memory/ops-playbook.md"
+      ],
+      "base_hit1": 0,
+      "base_hit3": 0,
+      "base_subj": "中",
+      "base_ms": 0.0168
+    }
+  ]
+}

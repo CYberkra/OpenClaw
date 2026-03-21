@@ -1,0 +1,24 @@
+﻿D盘产出目录初始化完成: 2026-03-20 22:05:43
+Root: D:\ClawX-Data
+
+D:\ClawX-Data\exports\images | files=3 | sizeMB=0.27
+D:\ClawX-Data\sim\gprmax\inputs | files=1 | sizeMB=0.00
+D:\ClawX-Data\sim\gprmax\outputs | files=1 | sizeMB=0.79
+D:\ClawX-Data\sim\gprmax\processed | files=13 | sizeMB=5.13
+
+Top files:
+D:\ClawX-Data\sim\gprmax\processed\05_svd_bg.csv | 0.83 MB
+D:\ClawX-Data\sim\gprmax\processed\custom_uavgpr_bscan_2D_Ez.csv | 0.82 MB
+D:\ClawX-Data\sim\gprmax\outputs\custom_uavgpr_bscan_2D_merged.out | 0.79 MB
+D:\ClawX-Data\sim\gprmax\processed\03_mean_bg.csv | 0.69 MB
+D:\ClawX-Data\sim\gprmax\processed\02_agc.csv | 0.66 MB
+D:\ClawX-Data\sim\gprmax\processed\04_sliding_bg.csv | 0.65 MB
+D:\ClawX-Data\sim\gprmax\processed\01_dewow.csv | 0.63 MB
+D:\ClawX-Data\sim\gprmax\processed\comparison_round1.png | 0.37 MB
+D:\ClawX-Data\exports\images\gui_vmain_window_screenshot.png | 0.17 MB
+D:\ClawX-Data\sim\gprmax\processed\05_svd_bg.png | 0.12 MB
+D:\ClawX-Data\sim\gprmax\processed\custom_uavgpr_bscan_2D_Ez.png | 0.10 MB
+D:\ClawX-Data\sim\gprmax\processed\03_mean_bg.png | 0.09 MB
+D:\ClawX-Data\sim\gprmax\processed\02_agc.png | 0.06 MB
+D:\ClawX-Data\exports\images\GPR_GUI_Windows.window_only.png | 0.06 MB
+D:\ClawX-Data\sim\gprmax\processed\04_sliding_bg.png | 0.06 MB

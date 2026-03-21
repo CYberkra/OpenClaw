@@ -1,0 +1,14 @@
+GPR组会实战版终版已就绪（2026-03-14）。
+
+本次版本聚焦“GUI真实实跑证据链”，主文件：gpr_gui_组会实战版_2026-03-14.html。
+结论口径（A8-NEW-1样本）：SVD更稳健、SEC更保结构、AGC易过均衡；默认推荐链路为
+time-zero → dewow → SVD background → F-K → SEC → Hankel-SVD。
+
+附件内已包含：
+- 改动说明
+- 讲稿与答疑页
+- 参数建议表
+- 引用与口径说明
+- evidence图证与summary.json
+
+请下载 zip 后本地解压，直接打开 HTML 即可演示。

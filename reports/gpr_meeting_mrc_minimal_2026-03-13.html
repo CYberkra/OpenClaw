@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GPR 组会汇报｜方法-结果-结论</title>
+  <style>
+    :root{--w:1280px;--h:720px;--fg:#0f172a;--muted:#64748b;--line:#dbe4f0;--accent:#1d4ed8}
+    *{box-sizing:border-box} body{margin:0;background:#f3f5f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'PingFang SC','Noto Sans CJK SC',sans-serif;color:var(--fg)}
+    .deck{display:flex;flex-direction:column;gap:18px;padding:24px;align-items:center}
+    .slide{width:var(--w);height:var(--h);background:linear-gradient(160deg,#fff,#f8fbff);border:1px solid var(--line);border-radius:16px;padding:34px 42px;position:relative;overflow:hidden;box-shadow:0 8px 24px rgba(15,23,42,.08)}
+    h1{margin:0 0 12px;font-size:54px;line-height:1.1} h2{margin:0 0 8px;font-size:40px;color:#1e3a8a}
+    .sub{font-size:28px;color:#334155;margin-bottom:14px}.bul{font-size:30px;line-height:1.4;margin:0}.bul li{margin:8px 0}
+    .img-full{width:100%;height:560px;object-fit:contain;border:1px solid #d6e0ef;border-radius:10px;background:#fff}
+    .img-half-wrap{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+    .img-half{width:100%;height:500px;object-fit:contain;border:1px solid #d6e0ef;border-radius:10px;background:#fff}
+    .cap{margin-top:8px;font-size:20px;color:var(--muted)} .footer{position:absolute;right:28px;bottom:16px;font-size:16px;color:#64748b}
+  </style>
+</head>
+<body>
+  <main class="deck">
+    <section class="slide">
+      <h1>探地雷达组会汇报</h1>
+      <div class="sub">方法-结果-结论（极简版）</div>
+      <ul class="bul">
+        <li>目标：少字大图，只保留可决策信息</li>
+        <li>数据：同批次 B-scan，对比口径一致</li>
+      </ul>
+      <div class="footer">1/5</div>
+    </section>
+
+    <section class="slide">
+      <h2>方法（Method）</h2>
+      <ul class="bul" style="font-size:28px">
+        <li>去背景 → 增益（SEC/AGC）→ 滤波/成像</li>
+        <li>同色标、同量程、同窗长，保证可比性</li>
+      </ul>
+      <img class="img-full" src="../shared/processing_flow.jpg" alt="处理流程图" />
+      <div class="cap">截图引用：shared/processing_flow.jpg</div>
+      <div class="footer">2/5</div>
+    </section>
+
+    <section class="slide">
+      <h2>结果1：背景抑制</h2>
+      <img class="img-full" src="./compare_svd_background.png" alt="SVD背景抑制对比" />
+      <div class="cap">结论：水平条纹明显下降，弱目标边缘更清晰（截图：reports/compare_svd_background.png）</div>
+      <div class="footer">3/5</div>
+    </section>
+
+    <section class="slide">
+      <h2>结果2：增益与滤波</h2>
+      <div class="img-half-wrap">
+        <img class="img-half" src="./compare_fk_filter.png" alt="FK滤波对比" />
+        <img class="img-half" src="./compare_hankel_svd.png" alt="Hankel+SVD对比" />
+      </div>
+      <div class="cap">结论：深层可见性提升，事件连续性更好（截图：reports/compare_fk_filter.png, reports/compare_hankel_svd.png）</div>
+      <div class="footer">4/5</div>
+    </section>
+
+    <section class="slide">
+      <h2>结论（Conclusion）</h2>
+      <ul class="bul">
+        <li>方法有效：可见性↑、条纹噪声↓、可解释性↑</li>
+        <li>当前最稳组合：SVD 去背景 + 适度增益 + 频域抑噪</li>
+        <li>下一步：参数模板固化 + 多场景定量评估（SNR/对比度）</li>
+      </ul>
+      <div class="sub" style="margin-top:20px;color:var(--accent)">一句话：先“看清楚”，再“量准确”。</div>
+      <div class="footer">5/5</div>
+    </section>
+  </main>
+</body>
+</html>

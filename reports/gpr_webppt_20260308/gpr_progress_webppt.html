@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GPR GUI 处理流程进度汇报</title>
+<style>
+body{background:#f3f4f6;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans CJK SC",sans-serif;margin:0;padding:20px}
+.slide{width:1280px;height:720px;background:#fff;margin:24px auto;padding:40px 56px;box-shadow:0 6px 24px rgba(0,0,0,.12);overflow:hidden;position:relative}
+h1{font-size:54px;margin:0 0 14px;color:#1f2937} h2{font-size:34px;margin:0 0 16px;color:#1f2937;border-bottom:3px solid #2563eb;padding-bottom:8px}
+p,li{font-size:22px;line-height:1.6;color:#374151} ul{margin:8px 0 0 24px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid4{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.card{background:#f8fafc;border:1px solid #e5e7eb;border-radius:12px;padding:12px}
+img{width:100%;border-radius:10px;border:1px solid #d1d5db}
+.small{font-size:16px;color:#6b7280;position:absolute;bottom:22px;right:30px}
+.tag{display:inline-block;background:#e0ecff;color:#1d4ed8;padding:3px 10px;border-radius:999px;font-size:16px;margin-right:8px}
+</style></head><body>
+
+<section class="slide"><h1>GPR GUI 处理流程进度汇报</h1>
+<p><span class="tag">项目</span>测线main_40dbm_普通飞高.csv</p>
+<p><span class="tag">目标</span>按稳健流程输出中间产物、迁移与深度转换，并形成可复用参数</p>
+<ul>
+<li>当前主流程v2：time-zero → dewow(41) → 背景去除 → F-K(12-55,taper4) → SEC(4.5,1.1) → Hankel-SVD(80,2)</li>
+<li>速度参数：v=0.10 m/ns（εr≈9）</li>
+<li>输出：全流程截图 + 优化前后对比 + 迁移/深度转换</li>
+</ul><div class="small">生成时间：2026-03-08</div></section>
+
+<section class="slide"><h2>输入数据与基线</h2><div class="grid2">
+<div class="card"><img src="assets/bscan.png"><p>当前代码样式 B-扫（99%裁剪）</p></div>
+<div class="card"><p>数据头信息</p><ul>
+<li>Samples: 501</li><li>Time window: 900 ns</li><li>Traces: 2855</li><li>Trace interval: 0.11828 m</li>
+</ul><p>读取规则：5列CSV取D列振幅，按Samples×Traces重排。</p></div>
+</div></section>
+
+<section class="slide"><h2>流程中间产物（1-4步）</h2><div class="grid4">
+<div class="card"><img src="assets/01_time_zero.png"><p>1) time-zero</p></div>
+<div class="card"><img src="assets/02_dewow.png"><p>2) dewow</p></div>
+<div class="card"><img src="assets/03_bg.png"><p>3) 背景去除</p></div>
+<div class="card"><img src="assets/04_fk.png"><p>4) F-K滤波</p></div>
+</div></section>
+
+<section class="slide"><h2>流程中间产物（5-6步）</h2><div class="grid2">
+<div class="card"><img src="assets/05_sec.png"><p>5) SEC增益（更保守，深部增强平滑）</p></div>
+<div class="card"><img src="assets/06_hankel.png"><p>6) Hankel-SVD去噪（抑制高频虫迹）</p></div>
+</div>
+<ul><li>关键改进：较初版参数显著降低浅中层高频“虫迹”伪影</li><li>保持层状结构连续性，提升可判读性</li></ul>
+</section>
+
+<section class="slide"><h2>迁移与深度转换结果</h2><div class="grid2">
+<div class="card"><img src="assets/07_mig.png"><p>7) Kirchhoff迁移（v=0.10）</p></div>
+<div class="card"><img src="assets/08_depth.png"><p>8) 深度转换（v=0.10）</p></div>
+</div>
+<ul><li>迁移作用：反射能量聚焦、事件更集中</li><li>深度转换：z≈v*t/2，便于埋深判读（速度误差会传导至深度误差）</li></ul>
+</section>
+
+<section class="slide"><h2>优化前后对比与结论</h2>
+<div class="card"><img src="assets/compare.png"></div>
+<ul>
+<li><b>优化前：</b>浅中层高频纹理偏多，界面跟踪困难</li>
+<li><b>优化后：</b>噪纹减弱，层状分界更连续</li>
+<li><b>建议默认参数：</b>dewow=41, F-K=12-55/taper4, SEC=4.5/1.1, Hankel=80/2, v=0.10</li>
+</ul>
+</section>
+
+<section class="slide"><h2>后续可扩展模块（可选）</h2>
+<ul>
+<li>RPCA / WNNM 背景抑制（当前占位，可接实算法）</li>
+<li>速度扫描自动评分（聚焦度/连续性指标）</li>
+<li>属性切片扩展：RMS、包络、瞬时频率二维图</li>
+<li>地表拾取与地形校正（增强“地势”可见性）</li>
+<li>报告一键导出：参数、日志、关键截图自动打包</li>
+</ul>
+<p>交付物：本网页PPT可直接浏览，或浏览器“打印→另存为PDF”。</p>
+</section>
+
+</body></html>

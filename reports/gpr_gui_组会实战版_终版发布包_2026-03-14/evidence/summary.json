@@ -1,0 +1,272 @@
+{
+  "sample": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/sample_data/A8-NEW-1.csv",
+  "generated_dir": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/reports/subagent_gui_pipeline_20260313_0355",
+  "records": [
+    {
+      "step": 0,
+      "method": "raw_loaded",
+      "params": {},
+      "metrics": {
+        "focus_ratio": 0.9068564392138336,
+        "hot_pixels": 152,
+        "spikiness": 44.03035699400802,
+        "time_ms": 0.0
+      },
+      "snapshot": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/reports/subagent_gui_pipeline_20260313_0355/00_raw_loaded.png",
+      "shape": [
+        384,
+        79
+      ]
+    },
+    {
+      "step": 2,
+      "method": "set_zero_time",
+      "params": {
+        "new_zero_time": 5.0
+      },
+      "metrics": {
+        "focus_ratio": 0.906229472524295,
+        "hot_pixels": 150,
+        "spikiness": 58.16182979514803,
+        "time_ms": 688.7036740008625
+      },
+      "out_csv": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/output/set_zero_time_out.csv",
+      "out_png": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/output/set_zero_time_out.png",
+      "snapshot": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/reports/subagent_gui_pipeline_20260313_0355/01_set_zero_time.png",
+      "shape": [
+        379,
+        79
+      ]
+    },
+    {
+      "step": 3,
+      "method": "dewow",
+      "params": {
+        "window": 41
+      },
+      "metrics": {
+        "focus_ratio": 0.9039411965930199,
+        "hot_pixels": 150,
+        "spikiness": 57.726083671447,
+        "time_ms": 643.2831950005493
+      },
+      "out_csv": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/output/dewow_out.csv",
+      "out_png": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/output/dewow_out.png",
+      "snapshot": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/reports/subagent_gui_pipeline_20260313_0355/02_dewow.png",
+      "shape": [
+        379,
+        79
+      ]
+    },
+    {
+      "step": 4,
+      "method": "subtracting_average_2D",
+      "params": {},
+      "metrics": {
+        "focus_ratio": 0.6665728645589576,
+        "hot_pixels": 47,
+        "spikiness": 135.67283117112743,
+        "time_ms": 677.3470799998904
+      },
+      "out_csv": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/output/subtracting_average_2D_out.csv",
+      "out_png": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/output/subtracting_average_2D_out.png",
+      "snapshot": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/reports/subagent_gui_pipeline_20260313_0355/03_subtracting_average_2D.png",
+      "shape": [
+        379,
+        79
+      ]
+    },
+    {
+      "step": 5,
+      "method": "fk_filter",
+      "params": {
+        "angle_low": 12,
+        "angle_high": 55,
+        "taper_width": 4
+      },
+      "metrics": {
+        "focus_ratio": 0.6090361681612751,
+        "hot_pixels": 53,
+        "spikiness": 33.75556034240518,
+        "time_ms": 312.32576000184054
+      },
+      "out_csv": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/output/fk_filter_out.csv",
+      "out_png": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/output/fk_filter_out.png",
+      "snapshot": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/reports/subagent_gui_pipeline_20260313_0355/04_fk_filter.png",
+      "shape": [
+        379,
+        79
+      ]
+    },
+    {
+      "step": 6,
+      "method": "sec_gain",
+      "params": {
+        "gain_min": 1.0,
+        "gain_max": 4.5,
+        "power": 1.1
+      },
+      "metrics": {
+        "focus_ratio": 0.5319439456196609,
+        "hot_pixels": 48,
+        "spikiness": 18.855161562254303,
+        "time_ms": 305.6725030000962
+      },
+      "out_csv": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/output/sec_gain_out.csv",
+      "out_png": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/output/sec_gain_out.png",
+      "snapshot": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/reports/subagent_gui_pipeline_20260313_0355/05_sec_gain.png",
+      "shape": [
+        379,
+        79
+      ]
+    },
+    {
+      "step": 7,
+      "method": "hankel_svd",
+      "params": {
+        "window_length": 80,
+        "rank": 2
+      },
+      "metrics": {
+        "focus_ratio": 0.49738567754593477,
+        "hot_pixels": 4,
+        "spikiness": 5.326511934941905,
+        "time_ms": 10217.97641500234
+      },
+      "out_csv": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/output/hankel_svd_out.csv",
+      "out_png": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/output/hankel_svd_out.png",
+      "snapshot": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/reports/subagent_gui_pipeline_20260313_0355/06_hankel_svd.png",
+      "shape": [
+        379,
+        79
+      ]
+    },
+    {
+      "step": 8,
+      "method": "set_zero_time",
+      "params": {
+        "new_zero_time": 5.0
+      },
+      "metrics": {
+        "focus_ratio": 0.906229472524295,
+        "hot_pixels": 150,
+        "spikiness": 58.16182979514803,
+        "time_ms": 662.5710879998223
+      },
+      "out_csv": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/output/set_zero_time_out.csv",
+      "out_png": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/output/set_zero_time_out.png",
+      "snapshot": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/reports/subagent_gui_pipeline_20260313_0355/07_set_zero_time.png",
+      "shape": [
+        379,
+        79
+      ]
+    },
+    {
+      "step": 9,
+      "method": "dewow",
+      "params": {
+        "window": 41
+      },
+      "metrics": {
+        "focus_ratio": 0.9039411965930199,
+        "hot_pixels": 150,
+        "spikiness": 57.726083671447,
+        "time_ms": 642.9470460025186
+      },
+      "out_csv": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/output/dewow_out.csv",
+      "out_png": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/output/dewow_out.png",
+      "snapshot": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/reports/subagent_gui_pipeline_20260313_0355/08_dewow.png",
+      "shape": [
+        379,
+        79
+      ]
+    },
+    {
+      "step": 10,
+      "method": "svd_bg",
+      "params": {
+        "rank": 1
+      },
+      "metrics": {
+        "focus_ratio": 0.6160554163452014,
+        "hot_pixels": 46,
+        "spikiness": 12.200049181435348,
+        "time_ms": 416.36561899940716
+      },
+      "out_csv": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/output/svd_bg_out.csv",
+      "out_png": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/output/svd_bg_out.png",
+      "snapshot": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/reports/subagent_gui_pipeline_20260313_0355/09_svd_bg.png",
+      "shape": [
+        379,
+        79
+      ]
+    },
+    {
+      "step": 11,
+      "method": "fk_filter",
+      "params": {
+        "angle_low": 12,
+        "angle_high": 55,
+        "taper_width": 4
+      },
+      "metrics": {
+        "focus_ratio": 0.5830067008720317,
+        "hot_pixels": 45,
+        "spikiness": 9.33171344488425,
+        "time_ms": 366.6214500008209
+      },
+      "out_csv": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/output/fk_filter_out.csv",
+      "out_png": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/output/fk_filter_out.png",
+      "snapshot": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/reports/subagent_gui_pipeline_20260313_0355/10_fk_filter.png",
+      "shape": [
+        379,
+        79
+      ]
+    },
+    {
+      "step": 12,
+      "method": "agcGain",
+      "params": {
+        "window": 31
+      },
+      "metrics": {
+        "focus_ratio": 0.2570015576007245,
+        "hot_pixels": 0,
+        "spikiness": 0.0,
+        "time_ms": 743.2734309986699
+      },
+      "out_csv": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/output/agcGain_out.csv",
+      "out_png": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/output/agcGain_out.png",
+      "snapshot": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/reports/subagent_gui_pipeline_20260313_0355/11_agcGain.png",
+      "shape": [
+        379,
+        79
+      ]
+    },
+    {
+      "step": 13,
+      "method": "hankel_svd",
+      "params": {
+        "window_length": 80,
+        "rank": 2
+      },
+      "metrics": {
+        "focus_ratio": 0.2347123543074482,
+        "hot_pixels": 0,
+        "spikiness": 0.0,
+        "time_ms": 7975.4211510007735
+      },
+      "out_csv": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/output/hankel_svd_out.csv",
+      "out_png": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/output/hankel_svd_out.png",
+      "snapshot": "/home/baiiy1/.openclaw/workspace/repos/GPR_GUI/reports/subagent_gui_pipeline_20260313_0355/12_hankel_svd.png",
+      "shape": [
+        379,
+        79
+      ]
+    }
+  ],
+  "notes": {
+    "bandpass": "not exposed in current GUI method list (available: fk_filter)",
+    "wavelet": "not exposed in current GUI method list (available denoise: hankel_svd)"
+  }
+}
