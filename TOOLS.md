@@ -61,11 +61,4 @@ Add whatever helps you do your job. This is your cheat sheet.
 - Flow: `action="start"` → `action="snapshot"` (see page + get element refs like `e12`) → `action="act"` (click/type using refs).
 - Open new tabs: `action="open"` with `targetUrl`.
 - To just open a URL for the user to view, use `shell:openExternal` instead.
-
-### Discord 频道本地归档映射
-
-- 频道：`#制作app`（channel_id: `1485185960344948737`）
-- 用途：给妈妈做小产品，和主项目记忆分离
-- 本地归档目录：`local-archives/discord/mom-app/`
-- 同步策略：**仅本地存档，不纳入自动 GitHub 推送范围**（避免与 `memory/` 主项目记忆混叠）
 <!-- clawx:end -->

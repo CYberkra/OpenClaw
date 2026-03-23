@@ -1,137 +1,141 @@
 ---
-name: daily-newspaper
-description: |
-  每日时报 - 个性化复古报纸风格资讯聚合器。
-  
-  首次使用时会询问用户的兴趣领域，自动定制四个栏目：
-  - 栏目1：国内/国际新闻（如科技、财经、体育）
-  - 栏目2：专业技术（如GPR、嵌入式、AI等）
-  - 栏目3：工具/框架动态（如OpenClaw、Agent等）
-  - 栏目4：个人兴趣（可自定义）
-  
-  支持定时自动生成、Web服务器、往期存档。
+name: discord-interactive
+version: 1.1.1
+description: Send Discord Components v2 interactive messages (buttons, selects, modals, rich layouts) via the message tool.
+read_when:
+  - You need user confirmation (Yes/No, Approve/Reject)
+  - You need user selection from multiple options
+  - You want to display structured information with visual distinction
+  - You need to collect form data from users
+  - You want to send status cards with action buttons
+  - Plain text message is insufficient for the interaction
+metadata:
+  openclaw:
+    emoji: 🔘
+homepage: https://github.com/openclaw/openclaw
 ---
 
-# Daily Newspaper - 每日时报
+# Discord Interactive Components (Components v2)
 
-> 一份完全由你定制的个性化复古报纸 📰
+Send rich, interactive messages in Discord using the `message` tool's `components` parameter. This replaces plain text with buttons, select menus, modals, and structured layouts.
 
-## 首次使用配置
+## When to Use Components v2
 
-运行配置向导：
+**ALWAYS prefer components over plain text when:**
+- You need user confirmation → buttons (Yes/No, Approve/Reject)
+- You need user selection → select menus (agents, priorities, options)
+- You want structured information display → text blocks + sections + separators
+- You want to collect form data → modals with text inputs, selects, checkboxes
+- You want visual distinction → accent-colored containers
 
-```bash
-uv run ~/.openclaw/workspace/skills/daily-newspaper/scripts/config_wizard.py
-```
+**Use plain text when:**
+- Simple conversational response, no actions needed
+- Quick one-liner answer
 
-或直接编辑配置文件：
+## Quick Reference
 
-```bash
-# 配置文件位置
-~/.openclaw/daily-newspaper/config.json
-```
+The `components` parameter is an object with this structure:
 
-### 配置示例
-
-```json
+```json5
 {
-  "user_profile": {
-    "name": "Linn",
-    "research_field": "GPR信号处理",
-    "interests": ["无人机", "嵌入式开发", "FPGA"]
+  // Top-level fields
+  text: "Optional top-level text (rendered as first TextDisplay)",
+  reusable: true,  // Keep buttons/selects active for multiple clicks (default: single-use)
+  container: {
+    accentColor: "#3498db",  // Left border color (hex string or number)
+    spoiler: false
   },
-  "columns": [
-    {
-      "id": "domestic",
-      "name": "🇨🇳 国内科技",
-      "sources": ["ithome", "36kr"],
-      "keywords": ["AI", "芯片", "无人机"]
-    },
-    {
-      "id": "tech", 
-      "name": "📡 GPR·嵌入式",
-      "sources": ["ieee", "arxiv"],
-      "keywords": ["GPR", "UAV", "FPGA", "ARM", "STM32"]
-    },
-    {
-      "id": "tools",
-      "name": "🤖 AI Agent·工具", 
-      "sources": ["github", "hackernews"],
-      "keywords": ["OpenClaw", "Codex", "Claude Code", "Agent"]
-    },
-    {
-      "id": "general",
-      "name": "📚 综合资讯",
-      "sources": ["rss"],
-      "rss_urls": ["https://example.com/feed.xml"]
-    }
+  // Content blocks (rendered in order inside the container)
+  blocks: [
+    { type: "text", text: "Markdown text block" },
+    { type: "section", text: "Main text", accessory: { type: "thumbnail", url: "https://..." } },
+    { type: "separator", spacing: "small", divider: true },
+    { type: "actions", buttons: [{ label: "Click me", style: "success" }] },
+    { type: "actions", select: { type: "string", placeholder: "Choose...", options: [...] } },
+    { type: "media-gallery", items: [{ url: "https://...", description: "..." }] },
+    { type: "file", file: "attachment://report.pdf" }
   ],
-  "schedule": {
-    "enabled": true,
-    "time": "08:00",
-    "timezone": "Asia/Shanghai"
-  },
-  "server": {
-    "enabled": true,
-    "port": 8090,
-    "auto_start": false
+  // Optional modal form (auto-generates a trigger button)
+  modal: {
+    title: "Form Title",
+    triggerLabel: "Open Form",
+    fields: [{ type: "text", label: "Your name" }]
   }
 }
 ```
 
-## 使用方法
+## Quick Start — Confirmation
 
-### 生成今日报纸
-
-```bash
-uv run ~/.openclaw/workspace/skills/daily-newspaper/scripts/generate.py
+```json5
+// message tool call
+{
+  action: "send",
+  channel: "discord",
+  target: "channel:CHANNEL_ID",
+  components: {
+    text: "**Confirm action?**",
+    reusable: false,
+    container: { accentColor: "#3498db" },
+    blocks: [
+      {
+        type: "actions",
+        buttons: [
+          { label: "Yes", style: "success" },
+          { label: "No", style: "secondary" }
+        ]
+      }
+    ]
+  }
+}
 ```
 
-### 启动 Web 服务器
+No `custom_id` needed — OpenClaw generates unique IDs automatically. When the user clicks, you receive a message like `Clicked "Yes".`
 
-```bash
-# 前台运行
-uv run python -m http.server 8090 --directory ~/.openclaw/daily-newspaper
+## Key Differences from Raw Discord API
 
-# 或使用后��脚本
-~/.openclaw/daily-newspaper/start-server.bat
-```
+| What you might expect | What OpenClaw actually uses |
+|---|---|
+| `type: "container"` wrapper | `container: { accentColor: "..." }` config object |
+| `type: "text_display"` | `type: "text"` in blocks |
+| `type: "action_row"` with nested components | `type: "actions"` with `buttons` or `select` |
+| Manual `custom_id` on buttons | Auto-generated — just set `label` and `style` |
+| `accent_color: 0x3498db` | `accentColor: "#3498db"` (hex string preferred) |
+| `type: "string_select"` | `select: { type: "string", ... }` inside actions block |
 
-### 添加单条资讯
+## Block Types Summary
 
-```bash
-# 添加头条
-uv run scripts/manager.py add-headline "标题" "摘要"
+| Block Type | Purpose | See |
+|---|---|---|
+| `text` | Markdown text | [components.md](references/components.md) |
+| `section` | Text + optional thumbnail/button | [components.md](references/components.md) |
+| `separator` | Divider line | [components.md](references/components.md) |
+| `actions` | Buttons or select menu | [components.md](references/components.md) |
+| `media-gallery` | Image gallery | [components.md](references/components.md) |
+| `file` | File attachment | [components.md](references/components.md) |
 
-# 添加栏目资讯
-uv run scripts/manager.py add-news [栏目ID] "标题" "内容" "来源" "链接"
-```
+## Handling Interactions
 
-## 目录结构
+When a user clicks a button or selects an option, OpenClaw delivers it as a normal inbound message:
 
-```
-~/.openclaw/daily-newspaper/
-├── config.json          # 用户配置文件
-├── index.html           # 今日报纸
-├── archive.html         # 往期索引
-├── hanako-logo.jpg      # 用户头像/logo
-├── assets/              # 样式资源
-└── archive/             # 历史存档
-    ├── 2026-03-22.json
-    └── 2026-03-22.html
-```
+- Button click → `Clicked "Yes".`
+- Select → `Selected option_a from "Pick an option".`
 
-## 定时任务
+No special callback handling needed — just read the incoming message text. See [handling.md](references/handling.md) for patterns.
 
-默认每天早上 8:00 自动生成报纸并发送通知。
+## Important Rules
 
-```bash
-# 查看定时任务
-openclaw cron list
+- **No `custom_id`** — OpenClaw auto-generates unique IDs for all interactive elements
+- **No `embeds`** — Components v2 and embeds cannot coexist in the same message
+- **`reusable: true`** — Set this to allow buttons/selects to be clicked multiple times
+- **`allowedUsers`** — Optionally restrict who can click a button (array of Discord user IDs)
+- **Actions block** — Must have EITHER `buttons` OR `select`, never both
+- **Max 5 buttons** per actions block, max 1 select per actions block
 
-# 手动触发
-openclaw cron run daily-newspaper-generator
-```
+## Examples
 
----
-*个性化资讯，复古体验 🌸*
+See [references/examples.md](references/examples.md) for complete scenarios:
+- Yes/No confirmation
+- Agent/option selection
+- Status card with actions
+- Modal form collection
+- Multi-step workflow
